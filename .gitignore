@@ -1,0 +1,25 @@
+# Video footage — large binaries, never belong in git (kept locally only)
+video demo/
+*.mp4
+*.mov
+
+# Local tooling / editor settings (contains local paths + tunnel URLs)
+.claude/
+docs/.claude/
+
+# Internal working documents — NOT for public consumption.
+# These hold internal build/process notes and are deliberately kept local.
+# The public build story lives in docs/BUILD_NOTES.md instead.
+docs/DEMO_deduction_classification_build_log.md
+docs/deduction_classification_build_brief.md
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS cruft
+.DS_Store
+Thumbs.db
+desktop.ini

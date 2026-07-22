@@ -1,0 +1,363 @@
+{
+  "name": "MVP_VERSION_-_V1_-_DEDUCTION_CLASSIFICATION_(CSV_MATCH-CLASSIFY-VERIFY_XLSX)",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "7262467a-2ece-4039-8bba-4bb3b2aa2425",
+      "name": "Start",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [240, 336]
+    },
+    {
+      "parameters": {
+        "fileSelector": "/home/node/.n8n-files/settlement_deductions.csv",
+        "options": {}
+      },
+      "id": "ff9181fb-7fc7-49a9-98cd-5a5ea810802c",
+      "name": "Read Settlement CSV",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [464, 256]
+    },
+    {
+      "parameters": {
+        "options": { "headerRow": true, "readAsString": true }
+      },
+      "id": "07d8b7d3-39b2-42c2-9def-19fdea685ac3",
+      "name": "Extract Settlement Lines",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [688, 256]
+    },
+    {
+      "parameters": {
+        "jsCode": "function normaliseVendor(name) {\n  if (!name) return '';\n  return String(name).toLowerCase().replace(/[*\\-_.]/g, '').replace(/\\s+/g, ' ').trim();\n}\nfunction parseDateValue(raw) {\n  const str = String(raw).trim();\n  if (/^\\d{5}$/.test(str)) {\n    const serial = parseInt(str, 10);\n    const epochMs = Date.UTC(1899, 10, 30);\n    const d = new Date(epochMs + serial * 86400000);\n    return { iso: d.toISOString().slice(0, 10), method: 'excel_serial', matchable: true, error: null };\n  }\n  let m = str.match(/^(\\d{4})[-\\/](\\d{1,2})[-\\/](\\d{1,2})$/);\n  if (m) {\n    const [, y, mo, d] = m;\n    return { iso: y + '-' + mo.padStart(2, '0') + '-' + d.padStart(2, '0'), method: 'iso', matchable: true, error: null };\n  }\n  m = str.match(/^(\\d{1,2})\\/(\\d{1,2})\\/(\\d{4})$/);\n  if (m) {\n    const [, a, b, y] = m;\n    const an = parseInt(a, 10), bn = parseInt(b, 10);\n    if (an > 12 && bn <= 12) return { iso: y + '-' + String(bn).padStart(2, '0') + '-' + String(an).padStart(2, '0'), method: 'slash_unambiguous_dmy', matchable: true, error: null };\n    if (bn > 12 && an <= 12) return { iso: y + '-' + String(an).padStart(2, '0') + '-' + String(bn).padStart(2, '0'), method: 'slash_unambiguous_mdy', matchable: true, error: null };\n    return { iso: null, method: 'ambiguous_slash_date', matchable: false, error: 'ambiguous_slash_date' };\n  }\n  return { iso: null, method: 'unparseable', matchable: false, error: 'unparseable_date' };\n}\nfunction fnv1a(str) {\n  let hash = 2166136261;\n  for (let i = 0; i < str.length; i++) { hash ^= str.charCodeAt(i); hash = Math.imul(hash, 16777619); }\n  return (hash >>> 0).toString(16);\n}\nconst inputItems = $input.all();\nreturn inputItems.map(item => {\n  const j = item.json;\n  const dateInfo = parseDateValue(j.transaction_date);\n  const normVendor = normaliseVendor(j.vendor_name);\n  const amount = parseFloat(j.amount);\n  const key = (dateInfo.matchable && !isNaN(amount)) ? fnv1a(dateInfo.iso + '|' + amount.toFixed(2) + '|' + normVendor) : null;\n  return { json: { ...j, amount: amount, _normalised_vendor: normVendor, _normalised_date: dateInfo.iso, _date_parse_method: dateInfo.method, matchable: dateInfo.matchable && !isNaN(amount) && !!j.vendor_name, error: dateInfo.error, _match_key: key } };\n});"
+      },
+      "id": "b647eeed-9237-4e56-8b15-d445003bae2e",
+      "name": "Code (Settlement: normalise + key)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [912, 256]
+    },
+    {
+      "parameters": {},
+      "id": "aac3988a-77e4-472c-b076-3d0192a66d35",
+      "name": "Merge Settlement and Accrual",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [1136, 336]
+    },
+    {
+      "parameters": {
+        "fileSelector": "/home/node/.n8n-files/invoice_accruals.csv",
+        "options": {}
+      },
+      "id": "7ef8a545-1714-4488-8395-4c9da9d1402e",
+      "name": "Read Accrual CSV",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [464, 448]
+    },
+    {
+      "parameters": {
+        "options": { "headerRow": true, "readAsString": true }
+      },
+      "id": "4803ae91-b5d4-436a-869b-38872cfda3a9",
+      "name": "Extract Accrual Lines",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [688, 448]
+    },
+    {
+      "parameters": {
+        "jsCode": "function normaliseVendor(name) {\n  if (!name) return '';\n  return String(name).toLowerCase().replace(/[*\\-_.]/g, '').replace(/\\s+/g, ' ').trim();\n}\nfunction parseDateValue(raw) {\n  const str = String(raw).trim();\n  if (/^\\d{5}$/.test(str)) {\n    const serial = parseInt(str, 10);\n    const epochMs = Date.UTC(1899, 10, 30);\n    const d = new Date(epochMs + serial * 86400000);\n    return { iso: d.toISOString().slice(0, 10), method: 'excel_serial', matchable: true, error: null };\n  }\n  let m = str.match(/^(\\d{4})[-\\/](\\d{1,2})[-\\/](\\d{1,2})$/);\n  if (m) {\n    const [, y, mo, d] = m;\n    return { iso: y + '-' + mo.padStart(2, '0') + '-' + d.padStart(2, '0'), method: 'iso', matchable: true, error: null };\n  }\n  m = str.match(/^(\\d{1,2})\\/(\\d{1,2})\\/(\\d{4})$/);\n  if (m) {\n    const [, a, b, y] = m;\n    const an = parseInt(a, 10), bn = parseInt(b, 10);\n    if (an > 12 && bn <= 12) return { iso: y + '-' + String(bn).padStart(2, '0') + '-' + String(an).padStart(2, '0'), method: 'slash_unambiguous_dmy', matchable: true, error: null };\n    if (bn > 12 && an <= 12) return { iso: y + '-' + String(an).padStart(2, '0') + '-' + String(bn).padStart(2, '0'), method: 'slash_unambiguous_mdy', matchable: true, error: null };\n    return { iso: null, method: 'ambiguous_slash_date', matchable: false, error: 'ambiguous_slash_date' };\n  }\n  return { iso: null, method: 'unparseable', matchable: false, error: 'unparseable_date' };\n}\nfunction fnv1a(str) {\n  let hash = 2166136261;\n  for (let i = 0; i < str.length; i++) { hash ^= str.charCodeAt(i); hash = Math.imul(hash, 16777619); }\n  return (hash >>> 0).toString(16);\n}\nconst inputItems = $input.all();\nreturn inputItems.map(item => {\n  const j = item.json;\n  const dateInfo = parseDateValue(j.accrual_date);\n  const normVendor = normaliseVendor(j.vendor_name);\n  const amount = parseFloat(j.amount);\n  const key = (dateInfo.matchable && !isNaN(amount)) ? fnv1a(dateInfo.iso + '|' + amount.toFixed(2) + '|' + normVendor) : null;\n  return { json: { ...j, amount: amount, _normalised_vendor: normVendor, _normalised_date: dateInfo.iso, _date_parse_method: dateInfo.method, matchable: dateInfo.matchable && !isNaN(amount) && !!j.vendor_name, error: dateInfo.error, _match_key: key, _consumed: false } };\n});"
+      },
+      "id": "c8c4a887-9a8f-414c-837d-d2086cebb9c3",
+      "name": "Code (Accrual: normalise + key)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [912, 448]
+    },
+    {
+      "parameters": {
+        "jsCode": "function vendorScore(a, b) {\n  if (!a || !b) return 0;\n  if (a === b) return 100;\n  if (a.includes(b) || b.includes(a)) return 90;\n  const tokensA = a.split(' ').filter(Boolean);\n  const tokensB = b.split(' ').filter(Boolean);\n  const setB = new Set(tokensB);\n  const overlap = tokensA.filter(t => setB.has(t) && t.length >= 3);\n  if (overlap.length === 0) return 0;\n  const minTokenCount = Math.min(tokensA.length, tokensB.length);\n  if (overlap.length >= minTokenCount) return 70;\n  return 60;\n}\nfunction daysBetween(isoA, isoB) {\n  const a = new Date(isoA + 'T00:00:00Z').getTime();\n  const b = new Date(isoB + 'T00:00:00Z').getTime();\n  return Math.round(Math.abs(a - b) / 86400000);\n}\nfunction toCents(n) { return Math.round(n * 100); }\n\nconst all = $input.all();\nconst settlementItems = all.filter(i => i.json.deduction_id !== undefined).map(i => i.json);\nconst accrualItems = all.filter(i => i.json.accrual_id !== undefined).map(i => ({ ...i.json, _consumed: false }));\n\nconst candidates = [];\nfor (const s of settlementItems) {\n  if (!s.matchable) continue;\n  const settlementAbsCents = toCents(Math.abs(s.amount));\n  for (const acc of accrualItems) {\n    if (!acc.matchable) continue;\n    const amountDeltaCents = Math.abs(settlementAbsCents - toCents(acc.amount));\n    if (amountDeltaCents > 1) continue;\n    const dateDelta = daysBetween(s._normalised_date, acc._normalised_date);\n    if (dateDelta > 1) continue;\n    const vScore = vendorScore(s._normalised_vendor, acc._normalised_vendor);\n    if (vScore < 60) continue;\n    candidates.push({ deduction_id: s.deduction_id, accrual_id: acc.accrual_id, vScore, dateDelta, amountDeltaCents });\n  }\n}\ncandidates.sort((a, b) => {\n  if (b.vScore !== a.vScore) return b.vScore - a.vScore;\n  if (a.dateDelta !== b.dateDelta) return a.dateDelta - b.dateDelta;\n  return a.amountDeltaCents - b.amountDeltaCents;\n});\n\nconst settlementById = new Map(settlementItems.map(s => [s.deduction_id, s]));\nconst accrualById = new Map(accrualItems.map(a => [a.accrual_id, a]));\nconst matchedSettlementIds = new Set();\n\nfor (const c of candidates) {\n  const acc = accrualById.get(c.accrual_id);\n  if (matchedSettlementIds.has(c.deduction_id) || acc._consumed) continue;\n  acc._consumed = true;\n  matchedSettlementIds.add(c.deduction_id);\n  settlementById.get(c.deduction_id)._match_result = {\n    matched_accrual_id: acc.accrual_id,\n    matched_bucket: acc.bucket,\n    vendor_score: c.vScore,\n    date_delta_days: c.dateDelta,\n    match_reason: 'Amount matched within £0.01, date within ' + c.dateDelta + ' day(s), vendor score ' + c.vScore + ' against accrual ' + acc.accrual_id\n  };\n}\n\nconst results = [];\nfor (const s of settlementItems) {\n  if (!s.matchable) {\n    results.push({ json: { ...s, _record_type: 'settlement', _route: 'data_quality_issue', matched: false } });\n  } else if (s._match_result) {\n    const { _match_result, ...rest } = s;\n    results.push({ json: { ...rest, _record_type: 'settlement', _route: 'auto_matched', matched: true, ..._match_result } });\n  } else {\n    results.push({ json: { ...s, _record_type: 'settlement', _route: 'needs_classification', matched: false } });\n  }\n}\nfor (const acc of accrualItems) {\n  results.push({ json: { ...acc, _record_type: 'accrual' } });\n}\nreturn results;"
+      },
+      "id": "fea73d63-b2ca-421d-b1d8-928517911a5a",
+      "name": "Code (Deterministic Match: one-to-one)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1360, 336]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            { "conditions": { "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict", "version": 1 }, "conditions": [{ "leftValue": "={{ $json._route }}", "operator": { "type": "string", "operation": "equals" }, "rightValue": "auto_matched" }], "combinator": "and" } },
+            { "conditions": { "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict", "version": 1 }, "conditions": [{ "leftValue": "={{ $json._route }}", "operator": { "type": "string", "operation": "equals" }, "rightValue": "needs_classification" }], "combinator": "and" } },
+            { "conditions": { "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict", "version": 1 }, "conditions": [{ "leftValue": "={{ $json._route }}", "operator": { "type": "string", "operation": "equals" }, "rightValue": "data_quality_issue" }], "combinator": "and" } }
+          ]
+        },
+        "options": { "fallbackOutput": "extra", "renameFallbackOutput": "Accrual Pool" }
+      },
+      "id": "ebfdec08-4014-4a1f-bc0b-9f4f8072ffb5",
+      "name": "Route by Match Result",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [1584, 304]
+    },
+    {
+      "parameters": { "assignments": { "assignments": [] }, "includeOtherFields": true, "options": {} },
+      "id": "8127ede4-701b-40e3-adf1-bd5b908aafae",
+      "name": "Auto Matched Lines",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [1808, -64]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            { "conditions": { "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict", "version": 1 }, "conditions": [{ "leftValue": "={{ $json._route }}", "operator": { "type": "string", "operation": "equals" }, "rightValue": "classified_verified" }], "combinator": "and" } },
+            { "conditions": { "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict", "version": 1 }, "conditions": [{ "leftValue": "={{ $json._route }}", "operator": { "type": "string", "operation": "equals" }, "rightValue": "needs_review" }], "combinator": "and" } },
+            { "conditions": { "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict", "version": 1 }, "conditions": [{ "leftValue": "={{ $json._route }}", "operator": { "type": "string", "operation": "equals" }, "rightValue": "unresolvable" }], "combinator": "and" } }
+          ]
+        },
+        "options": { "fallbackOutput": "none" }
+      },
+      "id": "d7458f95-42e4-42d2-8a66-6841454a0f16",
+      "name": "Route Classification Results",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [2256, 448]
+    },
+    {
+      "parameters": { "assignments": { "assignments": [] }, "includeOtherFields": true, "options": {} },
+      "id": "5098dc50-b6da-4c88-aa41-6a5ced12c39d",
+      "name": "Classified Verified Lines",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [2480, 320]
+    },
+    {
+      "parameters": { "assignments": { "assignments": [] }, "includeOtherFields": true, "options": {} },
+      "id": "fbd44d56-1ca1-4065-a85b-c45e123484d7",
+      "name": "Needs Review Lines",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [2480, 512]
+    },
+    {
+      "parameters": { "assignments": { "assignments": [] }, "includeOtherFields": true, "options": {} },
+      "id": "19d1abee-410d-416c-8150-a93bd0fba38b",
+      "name": "Unresolvable Lines",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [2480, 704]
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst originalItems = items.map(i => i.json);\nconst batchLines = originalItems.map(j => ({\n  deduction_id: j.deduction_id,\n  transaction_date: j.transaction_date,\n  vendor_name: j.vendor_name,\n  amount: j.amount,\n  reference_code: j.reference_code,\n  description: j.description\n}));\n\nconst systemPrompt = \"You are a deduction classification assistant. You will be given a batch of marketplace settlement deduction lines that could not be automatically matched to an accrual record on amount, date, and vendor alone.\\n\\nFor each line, classify it into exactly ONE of these six categories, using the reference code, description, vendor, amount, and date as evidence:\\n- Promotional Accrual\\n- Shortage Claim\\n- Price Dispute\\n- Damaged Goods\\n- Chargeback/Other\\n- Unresolvable (use ONLY when there is genuinely no signal pointing to a specific bucket in the reference code or description - do not guess just to avoid this option)\\n\\nCall the submit_classifications tool exactly once with your results. Return exactly one classification per input line, in the same order as given. Do not skip any line.\";\n\nconst tool = {\n  name: 'submit_classifications',\n  description: 'Submit classification results for this batch of deduction lines.',\n  input_schema: {\n    type: 'object',\n    properties: {\n      classifications: {\n        type: 'array',\n        items: {\n          type: 'object',\n          properties: {\n            deduction_id: { type: 'string' },\n            bucket: { type: 'string', enum: ['Promotional Accrual','Shortage Claim','Price Dispute','Damaged Goods','Chargeback/Other','Unresolvable'] },\n            confidence: { type: 'number' },\n            reasoning: { type: 'string' }\n          },\n          required: ['deduction_id', 'bucket', 'confidence', 'reasoning']\n        }\n      }\n    },\n    required: ['classifications']\n  }\n};\n\nreturn [{\n  json: {\n    _original_items: originalItems,\n    request_body: {\n      model: 'claude-sonnet-5',\n      max_tokens: 16384,\n      system: systemPrompt,\n      tools: [tool],\n      tool_choice: { type: 'tool', name: 'submit_classifications' },\n      messages: [{ role: 'user', content: JSON.stringify(batchLines, null, 2) }]\n    }\n  }\n}];"
+      },
+      "id": "d54fd525-89cf-46d8-aff5-d71aa37c952a",
+      "name": "Code (Build Classification Prompt)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2256, 128]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "anthropicApi",
+        "sendHeaders": true,
+        "headerParameters": { "parameters": [{ "name": "anthropic-version", "value": "2023-06-01" }] },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.request_body }}",
+        "options": {}
+      },
+      "id": "53be991f-8691-44ae-b683-02c32b99d519",
+      "name": "Classify Batch via Claude",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [2480, 128],
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 3000,
+      "credentials": {
+        "anthropicApi": { "id": "ysFhwyWcnQK6QDA1", "name": "Anthropic account" }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst originalItems = $('Code (Build Classification Prompt)').first().json._original_items || [];\nconst results = [];\nconst validBuckets = new Set(['Promotional Accrual','Shortage Claim','Price Dispute','Damaged Goods','Chargeback/Other','Unresolvable']);\n\nfor (const item of items) {\n  const response = item.json;\n  const callId = response.id || null;\n  let usage = { input_tokens: null, output_tokens: null, cache_creation_input_tokens: 0, cache_read_input_tokens: 0 };\n  let parsed = null;\n  let parseError = null;\n\n  try {\n    usage = {\n      input_tokens: (response.usage && response.usage.input_tokens != null) ? response.usage.input_tokens : null,\n      output_tokens: (response.usage && response.usage.output_tokens != null) ? response.usage.output_tokens : null,\n      cache_creation_input_tokens: (response.usage && response.usage.cache_creation_input_tokens != null) ? response.usage.cache_creation_input_tokens : 0,\n      cache_read_input_tokens: (response.usage && response.usage.cache_read_input_tokens != null) ? response.usage.cache_read_input_tokens : 0\n    };\n\n    if (response.stop_reason && response.stop_reason !== 'end_turn' && response.stop_reason !== 'tool_use') {\n      throw new Error('unexpected stop_reason: ' + response.stop_reason);\n    }\n\n    const toolBlock = (response.content || []).find(function(c) { return c.type === 'tool_use' && c.name === 'submit_classifications'; });\n    if (toolBlock && toolBlock.input && Array.isArray(toolBlock.input.classifications)) {\n      parsed = toolBlock.input.classifications;\n    } else {\n      const textBlock = (response.content || []).find(function(c) { return c.type === 'text'; });\n      let rawText = (textBlock && textBlock.text) || '';\n      rawText = rawText.trim();\n      if (rawText.startsWith('```')) {\n        rawText = rawText.replace(/^```(?:json)?\\s*/i, '').replace(/```\\s*$/, '');\n      }\n      parsed = JSON.parse(rawText);\n    }\n    if (!Array.isArray(parsed)) throw new Error('response is not a JSON array');\n  } catch (e) {\n    parseError = e.message;\n  }\n\n  if (parseError) {\n    for (const orig of originalItems) {\n      results.push({ json: { ...orig, _record_type: 'settlement', _route: 'needs_review', _classification_error: parseError, _llm_call_id: callId, input_tokens: usage.input_tokens, output_tokens: usage.output_tokens, cache_creation_input_tokens: usage.cache_creation_input_tokens, cache_read_input_tokens: usage.cache_read_input_tokens } });\n    }\n    continue;\n  }\n\n  const byId = new Map(parsed.map(p => [p.deduction_id, p]));\n  for (const orig of originalItems) {\n    const p = byId.get(orig.deduction_id);\n    if (!p || !validBuckets.has(p.bucket)) {\n      results.push({ json: { ...orig, _record_type: 'settlement', _route: 'needs_review', _classification_error: 'missing or invalid bucket for this line', _llm_call_id: callId, input_tokens: usage.input_tokens, output_tokens: usage.output_tokens, cache_creation_input_tokens: usage.cache_creation_input_tokens, cache_read_input_tokens: usage.cache_read_input_tokens } });\n    } else {\n      results.push({ json: { ...orig, _record_type: 'settlement', _route: 'pending_verification', llm_bucket: p.bucket, llm_confidence: p.confidence, llm_reasoning: p.reasoning, _classification_error: null, _llm_call_id: callId, input_tokens: usage.input_tokens, output_tokens: usage.output_tokens, cache_creation_input_tokens: usage.cache_creation_input_tokens, cache_read_input_tokens: usage.cache_read_input_tokens } });\n    }\n  }\n}\nreturn results;"
+      },
+      "id": "d654e2b0-093a-465a-9d55-1bb39218573f",
+      "name": "Code (Parse Classification Response)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2704, 128]
+    },
+    {
+      "parameters": {
+        "jsCode": "function vendorScore(a, b) {\n  if (!a || !b) return 0;\n  if (a === b) return 100;\n  if (a.includes(b) || b.includes(a)) return 90;\n  const tokensA = a.split(' ').filter(Boolean);\n  const tokensB = b.split(' ').filter(Boolean);\n  const setB = new Set(tokensB);\n  const overlap = tokensA.filter(t => setB.has(t) && t.length >= 3);\n  if (overlap.length === 0) return 0;\n  const minTokenCount = Math.min(tokensA.length, tokensB.length);\n  if (overlap.length >= minTokenCount) return 70;\n  return 60;\n}\nfunction daysBetween(isoA, isoB) {\n  const a = new Date(isoA + 'T00:00:00Z').getTime();\n  const b = new Date(isoB + 'T00:00:00Z').getTime();\n  return Math.round(Math.abs(a - b) / 86400000);\n}\n\nconst accrualPool = $('Code (Deterministic Match: one-to-one)').all()\n  .map(i => i.json)\n  .filter(j => j._record_type === 'accrual' && !j._consumed && j.matchable);\n\nconst DATE_WINDOW_DAYS = 45;\nconst AMOUNT_BAND_MULTIPLIER = 4;\n\nfunction findEvidence(settlementAbsAmount, settlementDate, bucketFilter, settlementVendor, requireVendorMatch) {\n  let best = null;\n  let bestDelta = Infinity;\n  for (const acc of accrualPool) {\n    if (bucketFilter && acc.bucket !== bucketFilter) continue;\n    if (requireVendorMatch && vendorScore(settlementVendor, acc._normalised_vendor) < 60) continue;\n    const dateDelta = daysBetween(settlementDate, acc._normalised_date);\n    if (dateDelta > DATE_WINDOW_DAYS) continue;\n    const ratio = settlementAbsAmount / acc.amount;\n    if (ratio < 1 / AMOUNT_BAND_MULTIPLIER || ratio > AMOUNT_BAND_MULTIPLIER) continue;\n    if (dateDelta < bestDelta) {\n      bestDelta = dateDelta;\n      best = acc;\n    }\n  }\n  return best;\n}\n\nconst items = $input.all();\nconst results = items.map(item => {\n  const j = item.json;\n\n  if (j._route === 'needs_review') {\n    return { json: j };\n  }\n\n  const settlementAbsAmount = Math.abs(j.amount);\n\n  if (j.llm_bucket === 'Unresolvable') {\n    const evidence = findEvidence(settlementAbsAmount, j._normalised_date, null, j._normalised_vendor, true);\n    if (evidence) {\n      return { json: { ...j, _route: 'needs_review', _evidence_agrees: false, _evidence_note: 'LLM said Unresolvable, but a plausible accrual exists in bucket ' + evidence.bucket + ' (' + evidence.accrual_id + ') with a matching vendor - needs human review' } };\n    }\n    return { json: { ...j, _route: 'unresolvable', _evidence_agrees: true, _evidence_note: 'No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable' } };\n  }\n\n  const evidence = findEvidence(settlementAbsAmount, j._normalised_date, j.llm_bucket, j._normalised_vendor, false);\n  if (evidence) {\n    return { json: { ...j, _route: 'classified_verified', _evidence_agrees: true, _evidence_accrual_id: evidence.accrual_id, _evidence_note: 'Supporting accrual ' + evidence.accrual_id + ' found in claimed bucket ' + j.llm_bucket + ', ' + daysBetween(j._normalised_date, evidence._normalised_date) + ' day(s) from accrual date' } };\n  }\n  return { json: { ...j, _route: 'needs_review', _evidence_agrees: false, _evidence_note: 'No supporting accrual found in claimed bucket ' + j.llm_bucket + ' within tolerance' } };\n});\n\nreturn results;"
+      },
+      "id": "81b60238-260c-4b63-a34d-563eedaaa9a4",
+      "name": "Code (Verify Classification Against Evidence)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2928, 160]
+    },
+    {
+      "parameters": { "batchSize": 25, "options": {} },
+      "id": "1cc6a1e3-e7d5-4e3d-bc5e-59c29adc401f",
+      "name": "Loop Over Unmatched Lines",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [2032, 352]
+    },
+    {
+      "parameters": { "assignments": { "assignments": [] }, "includeOtherFields": true, "options": {} },
+      "id": "87915015-b6ed-4aed-a497-45ba37225ca0",
+      "name": "Data Quality Issues",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [1808, 1024]
+    },
+    {
+      "parameters": { "operation": "toJson", "options": { "format": true, "fileName": "auto_matched.json" } },
+      "id": "4b1cf07e-930f-4f38-a9e2-adfa6bee4a8c",
+      "name": "Convert Auto Matched to JSON",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [2032, -64]
+    },
+    {
+      "parameters": { "operation": "write", "fileName": "/home/node/.n8n-files/output/auto_matched.json", "options": {} },
+      "id": "3ca87c75-b878-4b51-a773-54cb5219c809",
+      "name": "Write Auto Matched JSON",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [2256, -64]
+    },
+    {
+      "parameters": { "operation": "toJson", "options": { "format": true, "fileName": "data_quality_issues.json" } },
+      "id": "2fcadb3f-75e1-463a-868a-2d1511e127af",
+      "name": "Convert Data Quality Issues to JSON",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [2032, 1024]
+    },
+    {
+      "parameters": { "operation": "write", "fileName": "/home/node/.n8n-files/output/data_quality_issues.json", "options": {} },
+      "id": "03d2128b-73a6-4c4c-9c22-ea78465a054e",
+      "name": "Write Data Quality Issues JSON",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [2256, 1024]
+    },
+    {
+      "parameters": { "operation": "toJson", "options": { "format": true, "fileName": "classified_verified.json" } },
+      "id": "1eada9a4-f4b5-4933-b26d-214a078daa9e",
+      "name": "Convert Classified Verified to JSON",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [2704, 320]
+    },
+    {
+      "parameters": { "operation": "write", "fileName": "/home/node/.n8n-files/output/classified_verified.json", "options": {} },
+      "id": "c9795999-47f8-4c27-b271-143c1de69296",
+      "name": "Write Classified Verified JSON",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [2928, 368]
+    },
+    {
+      "parameters": { "operation": "toJson", "options": { "format": true, "fileName": "needs_review.json" } },
+      "id": "c0eb4004-7696-4700-8ec1-5575fd6d4405",
+      "name": "Convert Needs Review to JSON",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [2704, 512]
+    },
+    {
+      "parameters": { "operation": "write", "fileName": "/home/node/.n8n-files/output/needs_review.json", "options": {} },
+      "id": "90808867-5fc6-4b9d-a1b4-a4c52f8c2c0d",
+      "name": "Write Needs Review JSON",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [2928, 560]
+    },
+    {
+      "parameters": { "operation": "toJson", "options": { "format": true, "fileName": "unresolvable.json" } },
+      "id": "6db2a2fb-cbec-4210-85fd-d8bbca3c1c6b",
+      "name": "Convert Unresolvable to JSON",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [2704, 704]
+    },
+    {
+      "parameters": { "operation": "write", "fileName": "/home/node/.n8n-files/output/unresolvable.json", "options": {} },
+      "id": "19ad3103-de6d-4abc-94cc-e2e4885e8bbd",
+      "name": "Write Unresolvable JSON",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [2928, 752]
+    },
+    {
+      "parameters": { "content": "Deduction classification demo: matches, classifies, verifies, exports to XLSX", "height": 80, "width": 352 },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [1152, 48],
+      "typeVersion": 1,
+      "id": "71d47210-0905-4ed3-8b5d-9e4f91997d5a",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Start": { "main": [[{ "node": "Read Settlement CSV", "type": "main", "index": 0 }, { "node": "Read Accrual CSV", "type": "main", "index": 0 }]] },
+    "Read Settlement CSV": { "main": [[{ "node": "Extract Settlement Lines", "type": "main", "index": 0 }]] },
+    "Extract Settlement Lines": { "main": [[{ "node": "Code (Settlement: normalise + key)", "type": "main", "index": 0 }]] },
+    "Code (Settlement: normalise + key)": { "main": [[{ "node": "Merge Settlement and Accrual", "type": "main", "index": 0 }]] },
+    "Merge Settlement and Accrual": { "main": [[{ "node": "Code (Deterministic Match: one-to-one)", "type": "main", "index": 0 }]] },
+    "Read Accrual CSV": { "main": [[{ "node": "Extract Accrual Lines", "type": "main", "index": 0 }]] },
+    "Extract Accrual Lines": { "main": [[{ "node": "Code (Accrual: normalise + key)", "type": "main", "index": 0 }]] },
+    "Code (Accrual: normalise + key)": { "main": [[{ "node": "Merge Settlement and Accrual", "type": "main", "index": 1 }]] },
+    "Code (Deterministic Match: one-to-one)": { "main": [[{ "node": "Route by Match Result", "type": "main", "index": 0 }]] },
+    "Route by Match Result": { "main": [[{ "node": "Auto Matched Lines", "type": "main", "index": 0 }], [{ "node": "Loop Over Unmatched Lines", "type": "main", "index": 0 }], [{ "node": "Data Quality Issues", "type": "main", "index": 0 }]] },
+    "Route Classification Results": { "main": [[{ "node": "Classified Verified Lines", "type": "main", "index": 0 }], [{ "node": "Needs Review Lines", "type": "main", "index": 0 }], [{ "node": "Unresolvable Lines", "type": "main", "index": 0 }]] },
+    "Code (Build Classification Prompt)": { "main": [[{ "node": "Classify Batch via Claude", "type": "main", "index": 0 }]] },
+    "Classify Batch via Claude": { "main": [[{ "node": "Code (Parse Classification Response)", "type": "main", "index": 0 }]] },
+    "Code (Parse Classification Response)": { "main": [[{ "node": "Code (Verify Classification Against Evidence)", "type": "main", "index": 0 }]] },
+    "Code (Verify Classification Against Evidence)": { "main": [[{ "node": "Loop Over Unmatched Lines", "type": "main", "index": 0 }]] },
+    "Loop Over Unmatched Lines": { "main": [[{ "node": "Route Classification Results", "type": "main", "index": 0 }], [{ "node": "Code (Build Classification Prompt)", "type": "main", "index": 0 }]] },
+    "Auto Matched Lines": { "main": [[{ "node": "Convert Auto Matched to JSON", "type": "main", "index": 0 }]] },
+    "Convert Auto Matched to JSON": { "main": [[{ "node": "Write Auto Matched JSON", "type": "main", "index": 0 }]] },
+    "Data Quality Issues": { "main": [[{ "node": "Convert Data Quality Issues to JSON", "type": "main", "index": 0 }]] },
+    "Convert Data Quality Issues to JSON": { "main": [[{ "node": "Write Data Quality Issues JSON", "type": "main", "index": 0 }]] },
+    "Classified Verified Lines": { "main": [[{ "node": "Convert Classified Verified to JSON", "type": "main", "index": 0 }]] },
+    "Convert Classified Verified to JSON": { "main": [[{ "node": "Write Classified Verified JSON", "type": "main", "index": 0 }]] },
+    "Needs Review Lines": { "main": [[{ "node": "Convert Needs Review to JSON", "type": "main", "index": 0 }]] },
+    "Convert Needs Review to JSON": { "main": [[{ "node": "Write Needs Review JSON", "type": "main", "index": 0 }]] },
+    "Unresolvable Lines": { "main": [[{ "node": "Convert Unresolvable to JSON", "type": "main", "index": 0 }]] },
+    "Convert Unresolvable to JSON": { "main": [[{ "node": "Write Unresolvable JSON", "type": "main", "index": 0 }]] }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": true
+  },
+  "versionId": "c942c50b-03a6-40cb-bd12-aa7523e74ae8",
+  "meta": {
+    "aiBuilderAssisted": true,
+    "builderVariant": "mcp",
+    "instanceId": "48dfc7a5183a40c733a245eb7c14bc5d90cd2a245dec4250fcbd7957c0030dee"
+  },
+  "nodeGroups": [],
+  "id": "Wz05RWbstTOkI7fX",
+  "tags": []
+}
