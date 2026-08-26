@@ -40,6 +40,7 @@ class PublicBoundaryTests(unittest.TestCase):
     def test_public_candidates_contain_no_recognisable_secret_material(self):
         patterns = {
             "Anthropic API key": re.compile("sk" + r"-ant-[A-Za-z0-9_-]{20,}"),
+            "Anthropic response ID": re.compile(r"\bmsg_[A-Za-z0-9_-]{20,}\b"),
             "Slack token": re.compile("xo" + r"x[baprs]-[A-Za-z0-9-]{10,}"),
             "Private key": re.compile("BEGIN " + r"(?:RSA |EC |OPENSSH )?PRIVATE KEY"),
         }

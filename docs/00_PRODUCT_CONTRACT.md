@@ -1,4 +1,4 @@
-# V2 product contract
+# Product contract
 
 ## Decision
 

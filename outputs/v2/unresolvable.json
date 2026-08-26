@@ -23,13 +23,13 @@
     "llm_reasoning": "Generic ADJ reference code not in alias list and description gives no specific signal; unknown remitter adds ambiguity.",
     "_classification_method": "ai_proposal",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CeR86EGQvHQzAfMrVdUNx",
     "input_tokens": 4018,
     "output_tokens": 2126,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger."
+    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger.",
+    "_llm_batch_ref": "batch-001"
   },
   {
     "deduction_id": "DED-2026-00823",
@@ -55,13 +55,13 @@
     "llm_reasoning": "Reference code SETTLEMENT is not among configured aliases and description offers no category-specific signal.",
     "_classification_method": "ai_proposal",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CeR86EGQvHQzAfMrVdUNx",
     "input_tokens": 4018,
     "output_tokens": 2126,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger."
+    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger.",
+    "_llm_batch_ref": "batch-001"
   },
   {
     "deduction_id": "DED-2026-00843",
@@ -87,13 +87,13 @@
     "llm_reasoning": "Generic REF reference code not in alias list and description gives no specific signal.",
     "_classification_method": "ai_proposal",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CeR86EGQvHQzAfMrVdUNx",
     "input_tokens": 4018,
     "output_tokens": 2126,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger."
+    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger.",
+    "_llm_batch_ref": "batch-001"
   },
   {
     "deduction_id": "DED-2026-00819",
@@ -119,13 +119,13 @@
     "llm_reasoning": "Generic DED reference code not in alias list and description gives no specific signal.",
     "_classification_method": "ai_proposal",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CeR86EGQvHQzAfMrVdUNx",
     "input_tokens": 4018,
     "output_tokens": 2126,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger."
+    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger.",
+    "_llm_batch_ref": "batch-001"
   },
   {
     "deduction_id": "DED-2026-00827",
@@ -151,13 +151,13 @@
     "llm_reasoning": "Generic REF reference code not in alias list and description offers no category-specific signal.",
     "_classification_method": "ai_proposal",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CeR86EGQvHQzAfMrVdUNx",
     "input_tokens": 4018,
     "output_tokens": 2126,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger."
+    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger.",
+    "_llm_batch_ref": "batch-001"
   },
   {
     "deduction_id": "DED-2026-00829",
@@ -183,13 +183,13 @@
     "llm_reasoning": "Generic NOTE reference code and vague description with no mapped alias signal.",
     "_classification_method": "ai_proposal",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CeR87Ho2HEmXNoMBCXhP6",
     "input_tokens": 3986,
     "output_tokens": 1912,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger."
+    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger.",
+    "_llm_batch_ref": "batch-002"
   },
   {
     "deduction_id": "DED-2026-00831",
@@ -215,13 +215,13 @@
     "llm_reasoning": "Generic DED reference code and vague general ledger adjustment description with no mapped alias signal.",
     "_classification_method": "ai_proposal",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CeR87Ho2HEmXNoMBCXhP6",
     "input_tokens": 3986,
     "output_tokens": 1912,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger."
+    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger.",
+    "_llm_batch_ref": "batch-002"
   },
   {
     "deduction_id": "DED-2026-00847",
@@ -247,13 +247,13 @@
     "llm_reasoning": "Generic ADJ reference code and vague general ledger adjustment description with no mapped alias signal.",
     "_classification_method": "ai_proposal",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CeR87Ho2HEmXNoMBCXhP6",
     "input_tokens": 3986,
     "output_tokens": 1912,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger."
+    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger.",
+    "_llm_batch_ref": "batch-002"
   },
   {
     "deduction_id": "DED-2026-00811",
@@ -279,13 +279,13 @@
     "llm_reasoning": "Generic ADJ reference code and vague balance adjustment description with no mapped alias signal.",
     "_classification_method": "ai_proposal",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CeR87Ho2HEmXNoMBCXhP6",
     "input_tokens": 3986,
     "output_tokens": 1912,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger."
+    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger.",
+    "_llm_batch_ref": "batch-002"
   },
   {
     "deduction_id": "DED-2026-00813",
@@ -311,13 +311,13 @@
     "llm_reasoning": "Generic REF reference code and vague description with no mapped alias signal.",
     "_classification_method": "ai_proposal",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CeR87Ho2HEmXNoMBCXhP6",
     "input_tokens": 3986,
     "output_tokens": 1912,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger."
+    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger.",
+    "_llm_batch_ref": "batch-002"
   },
   {
     "deduction_id": "DED-2026-00837",
@@ -343,13 +343,13 @@
     "llm_reasoning": "Generic REF reference code and vague general ledger adjustment description with no mapped alias signal.",
     "_classification_method": "ai_proposal",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CeR87Ho2HEmXNoMBCXhP6",
     "input_tokens": 3986,
     "output_tokens": 1912,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger."
+    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger.",
+    "_llm_batch_ref": "batch-002"
   },
   {
     "deduction_id": "DED-2026-00845",
@@ -375,13 +375,13 @@
     "llm_reasoning": "Reference code SETTLEMENT-846 does not match any configured alias, and description is generic with no specific signal.",
     "_classification_method": "ai_proposal",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CeR88Ku3wxzwmVnbbzUcB",
     "input_tokens": 3997,
     "output_tokens": 2409,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger."
+    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger.",
+    "_llm_batch_ref": "batch-003"
   },
   {
     "deduction_id": "DED-2026-00807",
@@ -407,13 +407,13 @@
     "llm_reasoning": "Reference code NOTE-808 is not a recognized alias, and description is generic 'refer to portal' with no specific bucket signal.",
     "_classification_method": "ai_proposal",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CeR88Ku3wxzwmVnbbzUcB",
     "input_tokens": 3997,
     "output_tokens": 2409,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger."
+    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger.",
+    "_llm_batch_ref": "batch-003"
   },
   {
     "deduction_id": "DED-2026-00817",
@@ -439,13 +439,13 @@
     "llm_reasoning": "Reference code NOTE-818 is not a recognized alias, and description is generic account adjustment language with no specific signal.",
     "_classification_method": "ai_proposal",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CeR88Ku3wxzwmVnbbzUcB",
     "input_tokens": 3997,
     "output_tokens": 2409,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger."
+    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger.",
+    "_llm_batch_ref": "batch-003"
   },
   {
     "deduction_id": "DED-2026-00799",
@@ -471,13 +471,13 @@
     "llm_reasoning": "Reference code NOTE-800 is not a recognized alias, and description 'General ledger adjustment' gives no specific bucket signal.",
     "_classification_method": "ai_proposal",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CeR88Ku3wxzwmVnbbzUcB",
     "input_tokens": 3997,
     "output_tokens": 2409,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger."
+    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger.",
+    "_llm_batch_ref": "batch-003"
   },
   {
     "deduction_id": "DED-2026-00815",
@@ -503,13 +503,13 @@
     "llm_reasoning": "Reference code REF-816 is not a recognized alias, and description 'no further detail' provides no specific signal.",
     "_classification_method": "ai_proposal",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CeR88Ku3wxzwmVnbbzUcB",
     "input_tokens": 3997,
     "output_tokens": 2409,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger."
+    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger.",
+    "_llm_batch_ref": "batch-003"
   },
   {
     "deduction_id": "DED-2026-00833",
@@ -535,13 +535,13 @@
     "llm_reasoning": "Reference code DED-834 is not a recognized alias, and description is generic 'refer to portal' with no specific bucket signal.",
     "_classification_method": "ai_proposal",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CeR88Ku3wxzwmVnbbzUcB",
     "input_tokens": 3997,
     "output_tokens": 2409,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger."
+    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger.",
+    "_llm_batch_ref": "batch-003"
   },
   {
     "deduction_id": "DED-2026-00839",
@@ -567,13 +567,13 @@
     "llm_reasoning": "Reference code NOTE and description refer to portal give no specific bucket signal.",
     "_classification_method": "ai_proposal",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CeR89ZGzWaUw2jDUmfKW6",
     "input_tokens": 3994,
     "output_tokens": 1993,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger."
+    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger.",
+    "_llm_batch_ref": "batch-004"
   },
   {
     "deduction_id": "DED-2026-00805",
@@ -599,13 +599,13 @@
     "llm_reasoning": "Reference code ADJ and generic description give no specific bucket signal.",
     "_classification_method": "ai_proposal",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CeR89ZGzWaUw2jDUmfKW6",
     "input_tokens": 3994,
     "output_tokens": 1993,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger."
+    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger.",
+    "_llm_batch_ref": "batch-004"
   },
   {
     "deduction_id": "DED-2026-00835",
@@ -631,13 +631,13 @@
     "llm_reasoning": "Reference code DED and generic description give no specific bucket signal.",
     "_classification_method": "ai_proposal",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CeR89ZGzWaUw2jDUmfKW6",
     "input_tokens": 3994,
     "output_tokens": 1993,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger."
+    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger.",
+    "_llm_batch_ref": "batch-004"
   },
   {
     "deduction_id": "DED-2026-00801",
@@ -663,13 +663,13 @@
     "llm_reasoning": "Reference code SETTLEMENT and generic description give no specific bucket signal.",
     "_classification_method": "ai_proposal",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CeR89ZGzWaUw2jDUmfKW6",
     "input_tokens": 3994,
     "output_tokens": 1993,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger."
+    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger.",
+    "_llm_batch_ref": "batch-004"
   },
   {
     "deduction_id": "DED-2026-00809",
@@ -695,13 +695,13 @@
     "llm_reasoning": "Reference code SETTLEMENT and generic description give no specific bucket signal.",
     "_classification_method": "ai_proposal",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CeR89ZGzWaUw2jDUmfKW6",
     "input_tokens": 3994,
     "output_tokens": 1993,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger."
+    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger.",
+    "_llm_batch_ref": "batch-004"
   },
   {
     "deduction_id": "DED-2026-00803",
@@ -727,13 +727,13 @@
     "llm_reasoning": "Reference code ADJ and generic ledger adjustment description give no specific bucket signal.",
     "_classification_method": "ai_proposal",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CeR89ZGzWaUw2jDUmfKW6",
     "input_tokens": 3994,
     "output_tokens": 1993,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger."
+    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger.",
+    "_llm_batch_ref": "batch-004"
   },
   {
     "deduction_id": "DED-2026-00825",
@@ -759,13 +759,13 @@
     "llm_reasoning": "Reference code REF and generic description give no specific bucket signal.",
     "_classification_method": "ai_proposal",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CeR89ZGzWaUw2jDUmfKW6",
     "input_tokens": 3994,
     "output_tokens": 1993,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger."
+    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger.",
+    "_llm_batch_ref": "batch-004"
   },
   {
     "deduction_id": "DED-2026-00841",
@@ -791,12 +791,12 @@
     "llm_reasoning": "Reference code REF and generic description give no specific bucket signal.",
     "_classification_method": "ai_proposal",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CeR89ZGzWaUw2jDUmfKW6",
     "input_tokens": 3994,
     "output_tokens": 1993,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger."
+    "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger.",
+    "_llm_batch_ref": "batch-004"
   }
 ]

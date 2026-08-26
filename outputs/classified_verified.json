@@ -20,14 +20,14 @@
     "llm_confidence": 0.95,
     "llm_reasoning": "Reference code DAMAGED-RMA and description 'Inbound damage adjustment' clearly indicate damaged goods.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFix5Myb3G3hErLuY5Ba",
     "input_tokens": 3806,
     "output_tokens": 2199,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00191",
-    "_evidence_note": "Supporting accrual ACR-2026-00191 found in claimed bucket Damaged Goods, 7 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00191 found in claimed bucket Damaged Goods, 7 day(s) from accrual date",
+    "_llm_batch_ref": "batch-001"
   },
   {
     "deduction_id": "DED-2026-00723",
@@ -50,14 +50,14 @@
     "llm_confidence": 0.85,
     "llm_reasoning": "Reference code OTHER-DEDUCT and description 'Aggregated chargeback' point to chargeback/other category.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFix5Myb3G3hErLuY5Ba",
     "input_tokens": 3806,
     "output_tokens": 2199,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00283",
-    "_evidence_note": "Supporting accrual ACR-2026-00283 found in claimed bucket Chargeback/Other, 1 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00283 found in claimed bucket Chargeback/Other, 1 day(s) from accrual date",
+    "_llm_batch_ref": "batch-001"
   },
   {
     "deduction_id": "DED-2026-00665",
@@ -80,14 +80,14 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "Reference code PRC-DISP and description 'Cost price discrepancy claim' indicate a price dispute.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFix5Myb3G3hErLuY5Ba",
     "input_tokens": 3806,
     "output_tokens": 2199,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00165",
-    "_evidence_note": "Supporting accrual ACR-2026-00165 found in claimed bucket Price Dispute, 1 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00165 found in claimed bucket Price Dispute, 1 day(s) from accrual date",
+    "_llm_batch_ref": "batch-001"
   },
   {
     "deduction_id": "DED-2026-00605",
@@ -110,14 +110,14 @@
     "llm_confidence": 0.95,
     "llm_reasoning": "Reference code TRADE-PROMO and description 'Trade promotion funding adjustment' clearly indicate promotional accrual.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFix5Myb3G3hErLuY5Ba",
     "input_tokens": 3806,
     "output_tokens": 2199,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00043",
-    "_evidence_note": "Supporting accrual ACR-2026-00043 found in claimed bucket Promotional Accrual, 14 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00043 found in claimed bucket Promotional Accrual, 14 day(s) from accrual date",
+    "_llm_batch_ref": "batch-001"
   },
   {
     "deduction_id": "DED-2026-00679",
@@ -140,14 +140,14 @@
     "llm_confidence": 0.85,
     "llm_reasoning": "Reference code PPD (price protection dispute) and description 'Retroactive price adjustment' indicate a price dispute.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFix5Myb3G3hErLuY5Ba",
     "input_tokens": 3806,
     "output_tokens": 2199,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00177",
-    "_evidence_note": "Supporting accrual ACR-2026-00177 found in claimed bucket Price Dispute, 8 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00177 found in claimed bucket Price Dispute, 8 day(s) from accrual date",
+    "_llm_batch_ref": "batch-001"
   },
   {
     "deduction_id": "DED-2026-00691",
@@ -170,14 +170,14 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "Reference code DMG-CLAIM and description 'Damaged inventory write-down claim' indicate damaged goods.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFix5Myb3G3hErLuY5Ba",
     "input_tokens": 3806,
     "output_tokens": 2199,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00215",
-    "_evidence_note": "Supporting accrual ACR-2026-00215 found in claimed bucket Damaged Goods, 1 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00215 found in claimed bucket Damaged Goods, 1 day(s) from accrual date",
+    "_llm_batch_ref": "batch-001"
   },
   {
     "deduction_id": "DED-2026-00703",
@@ -200,14 +200,14 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "Reference code WHSE-DMG and description 'Damaged inventory write-down claim' indicate damaged goods.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFix5Myb3G3hErLuY5Ba",
     "input_tokens": 3806,
     "output_tokens": 2199,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00191",
-    "_evidence_note": "Supporting accrual ACR-2026-00191 found in claimed bucket Damaged Goods, 1 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00191 found in claimed bucket Damaged Goods, 1 day(s) from accrual date",
+    "_llm_batch_ref": "batch-001"
   },
   {
     "deduction_id": "DED-2026-00669",
@@ -230,14 +230,14 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "Reference code PRC-DISP and description 'Price protection dispute adjustment' clearly indicate price dispute.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFix5Myb3G3hErLuY5Ba",
     "input_tokens": 3806,
     "output_tokens": 2199,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00165",
-    "_evidence_note": "Supporting accrual ACR-2026-00165 found in claimed bucket Price Dispute, 7 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00165 found in claimed bucket Price Dispute, 7 day(s) from accrual date",
+    "_llm_batch_ref": "batch-001"
   },
   {
     "deduction_id": "DED-2026-00741",
@@ -260,14 +260,14 @@
     "llm_confidence": 0.8,
     "llm_reasoning": "Reference code CHB indicates chargeback despite generic description.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFix5Myb3G3hErLuY5Ba",
     "input_tokens": 3806,
     "output_tokens": 2199,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00283",
-    "_evidence_note": "Supporting accrual ACR-2026-00283 found in claimed bucket Chargeback/Other, 4 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00283 found in claimed bucket Chargeback/Other, 4 day(s) from accrual date",
+    "_llm_batch_ref": "batch-001"
   },
   {
     "deduction_id": "DED-2026-00729",
@@ -290,14 +290,14 @@
     "llm_confidence": 0.75,
     "llm_reasoning": "Reference code OTHER-DEDUCT and description 'Other adjustment' point to chargeback/other.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFix5Myb3G3hErLuY5Ba",
     "input_tokens": 3806,
     "output_tokens": 2199,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00283",
-    "_evidence_note": "Supporting accrual ACR-2026-00283 found in claimed bucket Chargeback/Other, 4 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00283 found in claimed bucket Chargeback/Other, 4 day(s) from accrual date",
+    "_llm_batch_ref": "batch-001"
   },
   {
     "deduction_id": "DED-2026-00733",
@@ -320,14 +320,14 @@
     "llm_confidence": 0.85,
     "llm_reasoning": "Reference code CHB clearly indicates chargeback despite generic description.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFix5Myb3G3hErLuY5Ba",
     "input_tokens": 3806,
     "output_tokens": 2199,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00283",
-    "_evidence_note": "Supporting accrual ACR-2026-00283 found in claimed bucket Chargeback/Other, 0 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00283 found in claimed bucket Chargeback/Other, 0 day(s) from accrual date",
+    "_llm_batch_ref": "batch-001"
   },
   {
     "deduction_id": "DED-2026-00689",
@@ -350,14 +350,14 @@
     "llm_confidence": 0.85,
     "llm_reasoning": "Reference code PPD and description 'Cost price discrepancy claim' indicate price dispute.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFix5Myb3G3hErLuY5Ba",
     "input_tokens": 3806,
     "output_tokens": 2199,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00177",
-    "_evidence_note": "Supporting accrual ACR-2026-00177 found in claimed bucket Price Dispute, 4 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00177 found in claimed bucket Price Dispute, 4 day(s) from accrual date",
+    "_llm_batch_ref": "batch-001"
   },
   {
     "deduction_id": "DED-2026-00633",
@@ -380,14 +380,14 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "Reference code QTY-SHORT and description 'Inventory receipt shortfall claim' indicate a shortage claim.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFix5Myb3G3hErLuY5Ba",
     "input_tokens": 3806,
     "output_tokens": 2199,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00077",
-    "_evidence_note": "Supporting accrual ACR-2026-00077 found in claimed bucket Shortage Claim, 14 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00077 found in claimed bucket Shortage Claim, 14 day(s) from accrual date",
+    "_llm_batch_ref": "batch-001"
   },
   {
     "deduction_id": "DED-2026-00645",
@@ -410,14 +410,14 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "Reference code QTY-SHORT and description 'Aggregated shortage adjustment' indicate shortage claim.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFix5Myb3G3hErLuY5Ba",
     "input_tokens": 3806,
     "output_tokens": 2199,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00077",
-    "_evidence_note": "Supporting accrual ACR-2026-00077 found in claimed bucket Shortage Claim, 5 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00077 found in claimed bucket Shortage Claim, 5 day(s) from accrual date",
+    "_llm_batch_ref": "batch-001"
   },
   {
     "deduction_id": "DED-2026-00619",
@@ -440,14 +440,14 @@
     "llm_confidence": 0.95,
     "llm_reasoning": "Reference code TRADE-PROMO and description 'Aggregated promo rebate' clearly indicate promotional accrual.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFix5Myb3G3hErLuY5Ba",
     "input_tokens": 3806,
     "output_tokens": 2199,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00043",
-    "_evidence_note": "Supporting accrual ACR-2026-00043 found in claimed bucket Promotional Accrual, 18 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00043 found in claimed bucket Promotional Accrual, 18 day(s) from accrual date",
+    "_llm_batch_ref": "batch-001"
   },
   {
     "deduction_id": "DED-2026-00659",
@@ -470,14 +470,14 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "Reference code QTY-SHORT and description 'Inventory receipt shortfall claim' indicate shortage claim.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFix5Myb3G3hErLuY5Ba",
     "input_tokens": 3806,
     "output_tokens": 2199,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00077",
-    "_evidence_note": "Supporting accrual ACR-2026-00077 found in claimed bucket Shortage Claim, 8 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00077 found in claimed bucket Shortage Claim, 8 day(s) from accrual date",
+    "_llm_batch_ref": "batch-001"
   },
   {
     "deduction_id": "DED-2026-00675",
@@ -500,14 +500,14 @@
     "llm_confidence": 0.85,
     "llm_reasoning": "Reference code PRICE-ADJ and description explicitly mention retroactive price adjustment.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFiy9mQwsekwCrgJxjb1",
     "input_tokens": 3883,
     "output_tokens": 2460,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00165",
-    "_evidence_note": "Supporting accrual ACR-2026-00165 found in claimed bucket Price Dispute, 5 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00165 found in claimed bucket Price Dispute, 5 day(s) from accrual date",
+    "_llm_batch_ref": "batch-002"
   },
   {
     "deduction_id": "DED-2026-00613",
@@ -530,14 +530,14 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "Reference code MKTG-REBATE and description 'promo rebate' clearly indicate promotional accrual.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFiy9mQwsekwCrgJxjb1",
     "input_tokens": 3883,
     "output_tokens": 2460,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00043",
-    "_evidence_note": "Supporting accrual ACR-2026-00043 found in claimed bucket Promotional Accrual, 13 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00043 found in claimed bucket Promotional Accrual, 13 day(s) from accrual date",
+    "_llm_batch_ref": "batch-002"
   },
   {
     "deduction_id": "DED-2026-00695",
@@ -560,14 +560,14 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "Reference code DMG-CLAIM and description 'Inbound damage adjustment' point to damaged goods.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFiy9mQwsekwCrgJxjb1",
     "input_tokens": 3883,
     "output_tokens": 2460,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00215",
-    "_evidence_note": "Supporting accrual ACR-2026-00215 found in claimed bucket Damaged Goods, 6 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00215 found in claimed bucket Damaged Goods, 6 day(s) from accrual date",
+    "_llm_batch_ref": "batch-002"
   },
   {
     "deduction_id": "DED-2026-00739",
@@ -590,14 +590,14 @@
     "llm_confidence": 0.85,
     "llm_reasoning": "Description explicitly states 'Aggregated chargeback - see case file'.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFiy9mQwsekwCrgJxjb1",
     "input_tokens": 3883,
     "output_tokens": 2460,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00283",
-    "_evidence_note": "Supporting accrual ACR-2026-00283 found in claimed bucket Chargeback/Other, 4 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00283 found in claimed bucket Chargeback/Other, 4 day(s) from accrual date",
+    "_llm_batch_ref": "batch-002"
   },
   {
     "deduction_id": "DED-2026-00601",
@@ -620,14 +620,14 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "Reference code TRADE-PROMO and 'promo rebate' description indicate promotional accrual.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFiy9mQwsekwCrgJxjb1",
     "input_tokens": 3883,
     "output_tokens": 2460,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00043",
-    "_evidence_note": "Supporting accrual ACR-2026-00043 found in claimed bucket Promotional Accrual, 9 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00043 found in claimed bucket Promotional Accrual, 9 day(s) from accrual date",
+    "_llm_batch_ref": "batch-002"
   },
   {
     "deduction_id": "DED-2026-00647",
@@ -650,14 +650,14 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "Reference code MISSING-UNITS and 'shortage adjustment' description indicate shortage claim.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFiy9mQwsekwCrgJxjb1",
     "input_tokens": 3883,
     "output_tokens": 2460,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00077",
-    "_evidence_note": "Supporting accrual ACR-2026-00077 found in claimed bucket Shortage Claim, 1 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00077 found in claimed bucket Shortage Claim, 1 day(s) from accrual date",
+    "_llm_batch_ref": "batch-002"
   },
   {
     "deduction_id": "DED-2026-00649",
@@ -680,14 +680,14 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "Reference code MISSING-UNITS and description 'Units short on receipt - claim filed' indicate shortage claim.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFiy9mQwsekwCrgJxjb1",
     "input_tokens": 3883,
     "output_tokens": 2460,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00077",
-    "_evidence_note": "Supporting accrual ACR-2026-00077 found in claimed bucket Shortage Claim, 3 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00077 found in claimed bucket Shortage Claim, 3 day(s) from accrual date",
+    "_llm_batch_ref": "batch-002"
   },
   {
     "deduction_id": "DED-2026-00671",
@@ -710,14 +710,14 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "Reference code PPD (price protection dispute) and description explicitly mention price protection dispute.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFiy9mQwsekwCrgJxjb1",
     "input_tokens": 3883,
     "output_tokens": 2460,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00165",
-    "_evidence_note": "Supporting accrual ACR-2026-00165 found in claimed bucket Price Dispute, 3 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00165 found in claimed bucket Price Dispute, 3 day(s) from accrual date",
+    "_llm_batch_ref": "batch-002"
   },
   {
     "deduction_id": "DED-2026-00727",
@@ -740,14 +740,14 @@
     "llm_confidence": 0.6,
     "llm_reasoning": "OTHER-DEDUCT reference code and 'other adjustment - multiple references' fits general chargeback/other category.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFiy9mQwsekwCrgJxjb1",
     "input_tokens": 3883,
     "output_tokens": 2460,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00283",
-    "_evidence_note": "Supporting accrual ACR-2026-00283 found in claimed bucket Chargeback/Other, 7 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00283 found in claimed bucket Chargeback/Other, 7 day(s) from accrual date",
+    "_llm_batch_ref": "batch-002"
   },
   {
     "deduction_id": "DED-2026-00637",
@@ -770,14 +770,14 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "Reference code QTY-SHORT and description 'shortage adjustment' indicate shortage claim.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFiy9mQwsekwCrgJxjb1",
     "input_tokens": 3883,
     "output_tokens": 2460,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00077",
-    "_evidence_note": "Supporting accrual ACR-2026-00077 found in claimed bucket Shortage Claim, 27 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00077 found in claimed bucket Shortage Claim, 27 day(s) from accrual date",
+    "_llm_batch_ref": "batch-002"
   },
   {
     "deduction_id": "DED-2026-00621",
@@ -800,14 +800,14 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "Reference code TRADE-PROMO and description 'Trade promotion funding adjustment' indicate promotional accrual.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFiy9mQwsekwCrgJxjb1",
     "input_tokens": 3883,
     "output_tokens": 2460,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00043",
-    "_evidence_note": "Supporting accrual ACR-2026-00043 found in claimed bucket Promotional Accrual, 2 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00043 found in claimed bucket Promotional Accrual, 2 day(s) from accrual date",
+    "_llm_batch_ref": "batch-002"
   },
   {
     "deduction_id": "DED-2026-00629",
@@ -830,14 +830,14 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "Reference code MKTG-REBATE and description 'Marketing rebate accrual drawdown' indicate promotional accrual.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFiy9mQwsekwCrgJxjb1",
     "input_tokens": 3883,
     "output_tokens": 2460,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00043",
-    "_evidence_note": "Supporting accrual ACR-2026-00043 found in claimed bucket Promotional Accrual, 8 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00043 found in claimed bucket Promotional Accrual, 8 day(s) from accrual date",
+    "_llm_batch_ref": "batch-002"
   },
   {
     "deduction_id": "DED-2026-00607",
@@ -860,14 +860,14 @@
     "llm_confidence": 0.95,
     "llm_reasoning": "Reference code TRADE-PROMO and description explicitly mention marketing rebate accrual drawdown.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFizLuAs4Bk8Va3Je4VW",
     "input_tokens": 3821,
     "output_tokens": 2409,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00043",
-    "_evidence_note": "Supporting accrual ACR-2026-00043 found in claimed bucket Promotional Accrual, 5 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00043 found in claimed bucket Promotional Accrual, 5 day(s) from accrual date",
+    "_llm_batch_ref": "batch-003"
   },
   {
     "deduction_id": "DED-2026-00617",
@@ -890,14 +890,14 @@
     "llm_confidence": 0.95,
     "llm_reasoning": "PROMO reference code and marketing rebate accrual drawdown description clearly indicate promotional accrual.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFizLuAs4Bk8Va3Je4VW",
     "input_tokens": 3821,
     "output_tokens": 2409,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00043",
-    "_evidence_note": "Supporting accrual ACR-2026-00043 found in claimed bucket Promotional Accrual, 0 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00043 found in claimed bucket Promotional Accrual, 0 day(s) from accrual date",
+    "_llm_batch_ref": "batch-003"
   },
   {
     "deduction_id": "DED-2026-00663",
@@ -920,14 +920,14 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "PRC-DISP code and 'cost price discrepancy claim' description directly indicate a price dispute.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFizLuAs4Bk8Va3Je4VW",
     "input_tokens": 3821,
     "output_tokens": 2409,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00165",
-    "_evidence_note": "Supporting accrual ACR-2026-00165 found in claimed bucket Price Dispute, 1 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00165 found in claimed bucket Price Dispute, 1 day(s) from accrual date",
+    "_llm_batch_ref": "batch-003"
   },
   {
     "deduction_id": "DED-2026-00643",
@@ -950,14 +950,14 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "SHORT reference code and 'units short on receipt' description indicate a shortage claim.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFizLuAs4Bk8Va3Je4VW",
     "input_tokens": 3821,
     "output_tokens": 2409,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00077",
-    "_evidence_note": "Supporting accrual ACR-2026-00077 found in claimed bucket Shortage Claim, 5 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00077 found in claimed bucket Shortage Claim, 5 day(s) from accrual date",
+    "_llm_batch_ref": "batch-003"
   },
   {
     "deduction_id": "DED-2026-00701",
@@ -980,14 +980,14 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "DAMAGED-RMA code and warehouse damage claim description indicate damaged goods.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFizLuAs4Bk8Va3Je4VW",
     "input_tokens": 3821,
     "output_tokens": 2409,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00191",
-    "_evidence_note": "Supporting accrual ACR-2026-00191 found in claimed bucket Damaged Goods, 7 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00191 found in claimed bucket Damaged Goods, 7 day(s) from accrual date",
+    "_llm_batch_ref": "batch-003"
   },
   {
     "deduction_id": "DED-2026-00707",
@@ -1010,14 +1010,14 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "DMG-CLAIM code and inbound damage adjustment description indicate damaged goods.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFizLuAs4Bk8Va3Je4VW",
     "input_tokens": 3821,
     "output_tokens": 2409,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00191",
-    "_evidence_note": "Supporting accrual ACR-2026-00191 found in claimed bucket Damaged Goods, 5 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00191 found in claimed bucket Damaged Goods, 5 day(s) from accrual date",
+    "_llm_batch_ref": "batch-003"
   },
   {
     "deduction_id": "DED-2026-00603",
@@ -1040,14 +1040,14 @@
     "llm_confidence": 0.95,
     "llm_reasoning": "PROMO reference code and marketing rebate accrual drawdown description indicate promotional accrual.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFizLuAs4Bk8Va3Je4VW",
     "input_tokens": 3821,
     "output_tokens": 2409,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00043",
-    "_evidence_note": "Supporting accrual ACR-2026-00043 found in claimed bucket Promotional Accrual, 13 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00043 found in claimed bucket Promotional Accrual, 13 day(s) from accrual date",
+    "_llm_batch_ref": "batch-003"
   },
   {
     "deduction_id": "DED-2026-00743",
@@ -1070,14 +1070,14 @@
     "llm_confidence": 0.6,
     "llm_reasoning": "OTHER-DEDUCT code and 'other adjustment - multiple references' description suggest a general chargeback/other category.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFizLuAs4Bk8Va3Je4VW",
     "input_tokens": 3821,
     "output_tokens": 2409,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00283",
-    "_evidence_note": "Supporting accrual ACR-2026-00283 found in claimed bucket Chargeback/Other, 11 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00283 found in claimed bucket Chargeback/Other, 11 day(s) from accrual date",
+    "_llm_batch_ref": "batch-003"
   },
   {
     "deduction_id": "DED-2026-00641",
@@ -1100,14 +1100,14 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "MISSING-UNITS code and 'aggregated shortage adjustment' description indicate a shortage claim.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFizLuAs4Bk8Va3Je4VW",
     "input_tokens": 3821,
     "output_tokens": 2409,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00077",
-    "_evidence_note": "Supporting accrual ACR-2026-00077 found in claimed bucket Shortage Claim, 25 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00077 found in claimed bucket Shortage Claim, 25 day(s) from accrual date",
+    "_llm_batch_ref": "batch-003"
   },
   {
     "deduction_id": "DED-2026-00711",
@@ -1130,14 +1130,14 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "WHSE-DMG code and inbound damage adjustment description indicate damaged goods.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFizLuAs4Bk8Va3Je4VW",
     "input_tokens": 3821,
     "output_tokens": 2409,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00215",
-    "_evidence_note": "Supporting accrual ACR-2026-00215 found in claimed bucket Damaged Goods, 5 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00215 found in claimed bucket Damaged Goods, 5 day(s) from accrual date",
+    "_llm_batch_ref": "batch-003"
   },
   {
     "deduction_id": "DED-2026-00625",
@@ -1160,14 +1160,14 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "MKTG-REBATE code and 'trade promotion funding adjustment' description indicate promotional accrual.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFizLuAs4Bk8Va3Je4VW",
     "input_tokens": 3821,
     "output_tokens": 2409,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00043",
-    "_evidence_note": "Supporting accrual ACR-2026-00043 found in claimed bucket Promotional Accrual, 0 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00043 found in claimed bucket Promotional Accrual, 0 day(s) from accrual date",
+    "_llm_batch_ref": "batch-003"
   },
   {
     "deduction_id": "DED-2026-00713",
@@ -1190,14 +1190,14 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "DMG-CLAIM code and inbound damage adjustment description indicate damaged goods.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFizLuAs4Bk8Va3Je4VW",
     "input_tokens": 3821,
     "output_tokens": 2409,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00215",
-    "_evidence_note": "Supporting accrual ACR-2026-00215 found in claimed bucket Damaged Goods, 9 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00215 found in claimed bucket Damaged Goods, 9 day(s) from accrual date",
+    "_llm_batch_ref": "batch-003"
   },
   {
     "deduction_id": "DED-2026-00611",
@@ -1220,14 +1220,14 @@
     "llm_confidence": 0.95,
     "llm_reasoning": "TRADE-PROMO code and marketing rebate accrual drawdown description indicate promotional accrual.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFizLuAs4Bk8Va3Je4VW",
     "input_tokens": 3821,
     "output_tokens": 2409,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00043",
-    "_evidence_note": "Supporting accrual ACR-2026-00043 found in claimed bucket Promotional Accrual, 10 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00043 found in claimed bucket Promotional Accrual, 10 day(s) from accrual date",
+    "_llm_batch_ref": "batch-003"
   },
   {
     "deduction_id": "DED-2026-00627",
@@ -1250,14 +1250,14 @@
     "llm_confidence": 0.95,
     "llm_reasoning": "TRADE-PROMO code and marketing rebate accrual drawdown description indicate promotional accrual.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFizLuAs4Bk8Va3Je4VW",
     "input_tokens": 3821,
     "output_tokens": 2409,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00043",
-    "_evidence_note": "Supporting accrual ACR-2026-00043 found in claimed bucket Promotional Accrual, 5 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00043 found in claimed bucket Promotional Accrual, 5 day(s) from accrual date",
+    "_llm_batch_ref": "batch-003"
   },
   {
     "deduction_id": "DED-2026-00719",
@@ -1280,14 +1280,14 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "DMG-CLAIM code and 'damaged inventory write-down claim' description indicate damaged goods.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFizLuAs4Bk8Va3Je4VW",
     "input_tokens": 3821,
     "output_tokens": 2409,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00191",
-    "_evidence_note": "Supporting accrual ACR-2026-00191 found in claimed bucket Damaged Goods, 1 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00191 found in claimed bucket Damaged Goods, 1 day(s) from accrual date",
+    "_llm_batch_ref": "batch-003"
   },
   {
     "deduction_id": "DED-2026-00615",
@@ -1310,14 +1310,14 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "MKTG-REBATE code and marketing rebate accrual drawdown description indicate promotional accrual.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFizLuAs4Bk8Va3Je4VW",
     "input_tokens": 3821,
     "output_tokens": 2409,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00043",
-    "_evidence_note": "Supporting accrual ACR-2026-00043 found in claimed bucket Promotional Accrual, 24 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00043 found in claimed bucket Promotional Accrual, 24 day(s) from accrual date",
+    "_llm_batch_ref": "batch-003"
   },
   {
     "deduction_id": "DED-2026-00661",
@@ -1340,14 +1340,14 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "Reference code PPD (price protection dispute) and description explicitly mention price protection dispute adjustment.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFj1YxVTuML6YpJhSUrB",
     "input_tokens": 3806,
     "output_tokens": 2533,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00165",
-    "_evidence_note": "Supporting accrual ACR-2026-00165 found in claimed bucket Price Dispute, 11 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00165 found in claimed bucket Price Dispute, 11 day(s) from accrual date",
+    "_llm_batch_ref": "batch-004"
   },
   {
     "deduction_id": "DED-2026-00653",
@@ -1370,14 +1370,14 @@
     "llm_confidence": 0.92,
     "llm_reasoning": "Reference code QTY-SHORT and description 'Inventory receipt shortfall claim' clearly indicate a shortage claim.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFj1YxVTuML6YpJhSUrB",
     "input_tokens": 3806,
     "output_tokens": 2533,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00077",
-    "_evidence_note": "Supporting accrual ACR-2026-00077 found in claimed bucket Shortage Claim, 27 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00077 found in claimed bucket Shortage Claim, 27 day(s) from accrual date",
+    "_llm_batch_ref": "batch-004"
   },
   {
     "deduction_id": "DED-2026-00683",
@@ -1400,14 +1400,14 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "Reference code PRICE-ADJ and description 'Retroactive price adjustment' indicate a price dispute.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFj1YxVTuML6YpJhSUrB",
     "input_tokens": 3806,
     "output_tokens": 2533,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00165",
-    "_evidence_note": "Supporting accrual ACR-2026-00165 found in claimed bucket Price Dispute, 21 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00165 found in claimed bucket Price Dispute, 21 day(s) from accrual date",
+    "_llm_batch_ref": "batch-004"
   },
   {
     "deduction_id": "DED-2026-00677",
@@ -1430,14 +1430,14 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "Reference code PRC-DISP explicitly denotes price dispute, matching description of retroactive price adjustment.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFj1YxVTuML6YpJhSUrB",
     "input_tokens": 3806,
     "output_tokens": 2533,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00165",
-    "_evidence_note": "Supporting accrual ACR-2026-00165 found in claimed bucket Price Dispute, 7 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00165 found in claimed bucket Price Dispute, 7 day(s) from accrual date",
+    "_llm_batch_ref": "batch-004"
   },
   {
     "deduction_id": "DED-2026-00639",
@@ -1460,14 +1460,14 @@
     "llm_confidence": 0.92,
     "llm_reasoning": "Reference code SHORT and description 'Units short on receipt - claim filed' clearly indicate shortage claim.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFj1YxVTuML6YpJhSUrB",
     "input_tokens": 3806,
     "output_tokens": 2533,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00077",
-    "_evidence_note": "Supporting accrual ACR-2026-00077 found in claimed bucket Shortage Claim, 21 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00077 found in claimed bucket Shortage Claim, 21 day(s) from accrual date",
+    "_llm_batch_ref": "batch-004"
   },
   {
     "deduction_id": "DED-2026-00687",
@@ -1490,14 +1490,14 @@
     "llm_confidence": 0.85,
     "llm_reasoning": "Reference code PRC-DISP and description 'Cost price discrepancy claim' indicate a price dispute.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFj1YxVTuML6YpJhSUrB",
     "input_tokens": 3806,
     "output_tokens": 2533,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00177",
-    "_evidence_note": "Supporting accrual ACR-2026-00177 found in claimed bucket Price Dispute, 3 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00177 found in claimed bucket Price Dispute, 3 day(s) from accrual date",
+    "_llm_batch_ref": "batch-004"
   },
   {
     "deduction_id": "DED-2026-00609",
@@ -1520,14 +1520,14 @@
     "llm_confidence": 0.92,
     "llm_reasoning": "Reference code TRADE-PROMO and description 'Trade promotion funding adjustment' clearly indicate a promotional accrual.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFj1YxVTuML6YpJhSUrB",
     "input_tokens": 3806,
     "output_tokens": 2533,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00043",
-    "_evidence_note": "Supporting accrual ACR-2026-00043 found in claimed bucket Promotional Accrual, 8 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00043 found in claimed bucket Promotional Accrual, 8 day(s) from accrual date",
+    "_llm_batch_ref": "batch-004"
   },
   {
     "deduction_id": "DED-2026-00673",
@@ -1550,14 +1550,14 @@
     "llm_confidence": 0.8,
     "llm_reasoning": "Description 'Cost price discrepancy claim' indicates price dispute despite PPD reference code typically used for price protection disputes.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFj1YxVTuML6YpJhSUrB",
     "input_tokens": 3806,
     "output_tokens": 2533,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00165",
-    "_evidence_note": "Supporting accrual ACR-2026-00165 found in claimed bucket Price Dispute, 1 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00165 found in claimed bucket Price Dispute, 1 day(s) from accrual date",
+    "_llm_batch_ref": "batch-004"
   },
   {
     "deduction_id": "DED-2026-00721",
@@ -1580,14 +1580,14 @@
     "llm_confidence": 0.85,
     "llm_reasoning": "Description explicitly states 'Aggregated chargeback - see case file', clearly indicating a chargeback.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFj1YxVTuML6YpJhSUrB",
     "input_tokens": 3806,
     "output_tokens": 2533,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00283",
-    "_evidence_note": "Supporting accrual ACR-2026-00283 found in claimed bucket Chargeback/Other, 27 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00283 found in claimed bucket Chargeback/Other, 27 day(s) from accrual date",
+    "_llm_batch_ref": "batch-004"
   },
   {
     "deduction_id": "DED-2026-00681",
@@ -1610,14 +1610,14 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "Reference code PPD and description 'Price protection dispute adjustment' clearly indicate a price dispute.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFj1YxVTuML6YpJhSUrB",
     "input_tokens": 3806,
     "output_tokens": 2533,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00177",
-    "_evidence_note": "Supporting accrual ACR-2026-00177 found in claimed bucket Price Dispute, 11 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00177 found in claimed bucket Price Dispute, 11 day(s) from accrual date",
+    "_llm_batch_ref": "batch-004"
   },
   {
     "deduction_id": "DED-2026-00709",
@@ -1640,14 +1640,14 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "Reference code WHSE-DMG and description 'Inbound damage adjustment' clearly indicate damaged goods.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFj1YxVTuML6YpJhSUrB",
     "input_tokens": 3806,
     "output_tokens": 2533,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00215",
-    "_evidence_note": "Supporting accrual ACR-2026-00215 found in claimed bucket Damaged Goods, 8 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00215 found in claimed bucket Damaged Goods, 8 day(s) from accrual date",
+    "_llm_batch_ref": "batch-004"
   },
   {
     "deduction_id": "DED-2026-00635",
@@ -1670,14 +1670,14 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "Reference code MISSING-UNITS and description 'Aggregated shortage adjustment - multiple SKUs' indicate a shortage claim.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFj1YxVTuML6YpJhSUrB",
     "input_tokens": 3806,
     "output_tokens": 2533,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00077",
-    "_evidence_note": "Supporting accrual ACR-2026-00077 found in claimed bucket Shortage Claim, 23 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00077 found in claimed bucket Shortage Claim, 23 day(s) from accrual date",
+    "_llm_batch_ref": "batch-004"
   },
   {
     "deduction_id": "DED-2026-00631",
@@ -1700,14 +1700,14 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "Reference code QTY-SHORT and description 'Aggregated shortage adjustment - multiple SKUs' indicate a shortage claim.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFj1YxVTuML6YpJhSUrB",
     "input_tokens": 3806,
     "output_tokens": 2533,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00077",
-    "_evidence_note": "Supporting accrual ACR-2026-00077 found in claimed bucket Shortage Claim, 9 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00077 found in claimed bucket Shortage Claim, 9 day(s) from accrual date",
+    "_llm_batch_ref": "batch-004"
   },
   {
     "deduction_id": "DED-2026-00685",
@@ -1730,14 +1730,14 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "Reference code PRC-DISP and description 'Retroactive price adjustment - multiple POs' indicate a price dispute.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFj1YxVTuML6YpJhSUrB",
     "input_tokens": 3806,
     "output_tokens": 2533,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00177",
-    "_evidence_note": "Supporting accrual ACR-2026-00177 found in claimed bucket Price Dispute, 2 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00177 found in claimed bucket Price Dispute, 2 day(s) from accrual date",
+    "_llm_batch_ref": "batch-004"
   },
   {
     "deduction_id": "DED-2026-00717",
@@ -1760,14 +1760,14 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "Reference code DMG-CLAIM and description 'Inbound damage adjustment' clearly indicate a damaged goods claim.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFj2n9Gk65DCD6MVV51k",
     "input_tokens": 2007,
     "output_tokens": 1019,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00191",
-    "_evidence_note": "Supporting accrual ACR-2026-00191 found in claimed bucket Damaged Goods, 5 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00191 found in claimed bucket Damaged Goods, 5 day(s) from accrual date",
+    "_llm_batch_ref": "batch-005"
   },
   {
     "deduction_id": "DED-2026-00705",
@@ -1790,14 +1790,14 @@
     "llm_confidence": 0.92,
     "llm_reasoning": "Reference code DAMAGED-RMA and description 'Warehouse damage claim - multiple units' clearly point to damaged goods.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFj2n9Gk65DCD6MVV51k",
     "input_tokens": 2007,
     "output_tokens": 1019,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00191",
-    "_evidence_note": "Supporting accrual ACR-2026-00191 found in claimed bucket Damaged Goods, 8 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00191 found in claimed bucket Damaged Goods, 8 day(s) from accrual date",
+    "_llm_batch_ref": "batch-005"
   },
   {
     "deduction_id": "DED-2026-00697",
@@ -1820,14 +1820,14 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "Reference code DMG-CLAIM and description 'Inbound damage adjustment' clearly indicate a damaged goods claim, consistent with similar entry DED-2026-00717.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFj2n9Gk65DCD6MVV51k",
     "input_tokens": 2007,
     "output_tokens": 1019,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00191",
-    "_evidence_note": "Supporting accrual ACR-2026-00191 found in claimed bucket Damaged Goods, 11 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00191 found in claimed bucket Damaged Goods, 11 day(s) from accrual date",
+    "_llm_batch_ref": "batch-005"
   },
   {
     "deduction_id": "DED-2026-00667",
@@ -1850,14 +1850,14 @@
     "llm_confidence": 0.88,
     "llm_reasoning": "Reference code PPD (likely Purchase Price Discrepancy) and description 'Cost price discrepancy claim' indicate a price dispute.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFj2n9Gk65DCD6MVV51k",
     "input_tokens": 2007,
     "output_tokens": 1019,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00165",
-    "_evidence_note": "Supporting accrual ACR-2026-00165 found in claimed bucket Price Dispute, 1 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00165 found in claimed bucket Price Dispute, 1 day(s) from accrual date",
+    "_llm_batch_ref": "batch-005"
   },
   {
     "deduction_id": "DED-2026-00715",
@@ -1880,14 +1880,14 @@
     "llm_confidence": 0.92,
     "llm_reasoning": "Reference code WHSE-DMG and description 'Warehouse damage claim - multiple units' clearly indicate damaged goods.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFj2n9Gk65DCD6MVV51k",
     "input_tokens": 2007,
     "output_tokens": 1019,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00215",
-    "_evidence_note": "Supporting accrual ACR-2026-00215 found in claimed bucket Damaged Goods, 5 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00215 found in claimed bucket Damaged Goods, 5 day(s) from accrual date",
+    "_llm_batch_ref": "batch-005"
   },
   {
     "deduction_id": "DED-2026-00623",
@@ -1910,14 +1910,14 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "Reference code MKTG-REBATE and description 'Aggregated promo rebate - multiple campaigns' clearly indicate a promotional accrual.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFj2n9Gk65DCD6MVV51k",
     "input_tokens": 2007,
     "output_tokens": 1019,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00043",
-    "_evidence_note": "Supporting accrual ACR-2026-00043 found in claimed bucket Promotional Accrual, 13 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00043 found in claimed bucket Promotional Accrual, 13 day(s) from accrual date",
+    "_llm_batch_ref": "batch-005"
   },
   {
     "deduction_id": "DED-2026-00657",
@@ -1940,13 +1940,13 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "Reference code MISSING-UNITS and description 'Units short on receipt - claim filed' clearly indicate a shortage claim.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFj2n9Gk65DCD6MVV51k",
     "input_tokens": 2007,
     "output_tokens": 1019,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
     "_evidence_accrual_id": "ACR-2026-00077",
-    "_evidence_note": "Supporting accrual ACR-2026-00077 found in claimed bucket Shortage Claim, 19 day(s) from accrual date"
+    "_evidence_note": "Supporting accrual ACR-2026-00077 found in claimed bucket Shortage Claim, 19 day(s) from accrual date",
+    "_llm_batch_ref": "batch-005"
   }
 ]

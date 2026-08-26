@@ -22,7 +22,22 @@ BRANCH_FILES = [
 
 def settlement_ids(path: Path) -> list[str]:
     with path.open("r", encoding="utf-8", newline="") as handle:
-        return [row["deduction_id"] for row in csv.DictReader(handle)]
+        reader = csv.DictReader(handle)
+        if not reader.fieldnames or "deduction_id" not in reader.fieldnames:
+            raise ValueError("Settlement CSV must contain a deduction_id column")
+        identifiers = [str(row.get("deduction_id") or "").strip() for row in reader]
+    counts = Counter(identifiers)
+    blank_count = counts.get("", 0)
+    duplicate_ids = sorted(
+        identifier for identifier, count in counts.items()
+        if identifier and count > 1
+    )
+    if blank_count or duplicate_ids:
+        raise ValueError(
+            "Settlement deduction_id values must be present and unique: "
+            f"blank={blank_count}, duplicates={len(duplicate_ids)}"
+        )
+    return identifiers
 
 
 def load_existing_ids(outputs_dir: Path):
@@ -35,9 +50,16 @@ def load_existing_ids(outputs_dir: Path):
         data = json.loads(path.read_text(encoding="utf-8"))
         if isinstance(data, dict):
             data = [data]
-        if not isinstance(data, list):
-            raise ValueError(f"{filename} must contain a JSON array")
-        ids = [str(row.get("deduction_id")) for row in data]
+        if not isinstance(data, list) or any(not isinstance(row, dict) for row in data):
+            raise ValueError(f"{filename} must contain a JSON array of objects")
+        ids = []
+        for row in data:
+            identifier = row.get("deduction_id")
+            if not isinstance(identifier, str) or not identifier.strip():
+                raise ValueError(
+                    f"{filename} contains a blank or non-string deduction_id"
+                )
+            ids.append(identifier.strip())
         routed.extend(ids)
         counts[filename] = len(ids)
     return routed, counts, missing

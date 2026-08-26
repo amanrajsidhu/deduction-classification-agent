@@ -21,6 +21,9 @@ and the client's own legal, security and procurement requirements.
 - API credentials, host-specific paths and live n8n instance/workflow identifiers
   must never be committed. Portable container paths used by the synthetic demo
   may be documented.
+- Provider request/response identifiers and raw execution metadata must not be
+  committed. Local batch references may be used when aggregate usage needs to
+  be deduplicated without exposing provider identifiers.
 - Public workflow exports must remain inactive, unavailable over MCP and use
   placeholder credential references. Select credentials only after local import.
 - Output workbooks generated from real data must never be committed.

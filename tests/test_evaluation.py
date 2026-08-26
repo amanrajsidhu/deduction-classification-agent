@@ -35,6 +35,7 @@ class EvaluationIntegrityTests(unittest.TestCase):
         self.assertEqual(metrics["evidence_allocation_coverage"], 0.0)
         self.assertAlmostEqual(metrics["resolved_value_gbp"], 84525.13)
         self.assertAlmostEqual(metrics["v1_plausibility_only_value_gbp"], 47461.98)
+        self.assertEqual(metrics["token_totals"]["calls"], 5)
 
     def test_missing_output_can_never_be_reported_as_zero(self):
         metrics = compute_metrics(
@@ -88,6 +89,7 @@ class EvaluationIntegrityTests(unittest.TestCase):
         metrics = compute_metrics(outputs, entries, problems, accruals, accrual_problems)
         self.assertEqual(metrics["accepted_classification_method_counts"], {"configured_alias": 75})
         self.assertEqual(metrics["unresolvable_method_counts"], {"ai_proposal": 25})
+        self.assertEqual(metrics["token_totals"]["calls"], 4)
         with tempfile.TemporaryDirectory() as directory:
             destination = Path(directory) / "v2-report.xlsx"
             build_workbook(outputs, metrics, destination)
@@ -182,6 +184,83 @@ class EvaluationIntegrityTests(unittest.TestCase):
         self.assertEqual(metrics["overall_status"], "Needs Repair")
         self.assertFalse(metrics["source_allocation_integrity"])
         self.assertTrue(metrics["overallocated_accrual_ids"])
+
+    def test_semantically_ineligible_programme_evidence_cannot_pass(self):
+        outputs, problems = load_run_outputs(ROOT / "outputs" / "v2")
+        _counts, entries = load_answer_key(ROOT / "fixtures" / "v2" / "answer_key.json.gz")
+        accruals, accrual_problems = load_source_accruals(
+            ROOT / "fixtures" / "v2" / "invoice_accruals.csv"
+        )
+        deduction_id = outputs["classified_verified"][0]["deduction_id"]
+        evidence_id = outputs["classified_verified"][0]["_evidence_accrual_id"]
+
+        controls = {
+            "wrong bucket": {"bucket": "Price Dispute"},
+            "wrong vendor": {"vendor_name": "Unrelated Supplier"},
+            "outside date window": {"accrual_date": "2025-01-01"},
+        }
+        for label, replacement in controls.items():
+            with self.subTest(label=label):
+                altered = copy.deepcopy(accruals)
+                source = next(row for row in altered if row["accrual_id"] == evidence_id)
+                source.update(replacement)
+                metrics = compute_metrics(
+                    outputs, entries, problems, altered, accrual_problems
+                )
+                self.assertEqual(metrics["overall_status"], "Needs Repair")
+                self.assertFalse(metrics["source_allocation_integrity"])
+                self.assertIn(deduction_id, metrics["invalid_evidence_semantic_ids"])
+                self.assertLess(metrics["evidence_allocation_coverage"], 1.0)
+                self.assertLess(metrics["resolved_value_gbp"], 130293.09)
+
+        wrong_support = copy.deepcopy(outputs)
+        wrong_support["classified_verified"][0]["_evidence_accrual_id"] = next(
+            row["accrual_id"] for row in accruals
+            if row["evidence_scope"] == "programme_pool" and row["accrual_id"] != evidence_id
+        )
+        metrics = compute_metrics(
+            wrong_support, entries, problems, accruals, accrual_problems
+        )
+        self.assertEqual(metrics["overall_status"], "Needs Repair")
+        self.assertFalse(metrics["source_allocation_integrity"])
+        self.assertIn(deduction_id, metrics["invalid_evidence_semantic_ids"])
+        self.assertLess(metrics["evidence_allocation_coverage"], 1.0)
+
+    def test_forged_normalised_fields_cannot_bypass_source_binding(self):
+        outputs, problems = load_run_outputs(ROOT / "outputs" / "v2")
+        _counts, entries = load_answer_key(ROOT / "fixtures" / "v2" / "answer_key.json.gz")
+        accruals, accrual_problems = load_source_accruals(
+            ROOT / "fixtures" / "v2" / "invoice_accruals.csv"
+        )
+        altered = copy.deepcopy(outputs)
+        row = altered["classified_verified"][0]
+        row["vendor_name"] = "Unrelated Supplier"
+        row["transaction_date"] = "2025-01-01"
+        metrics = compute_metrics(
+            altered, entries, problems, accruals, accrual_problems
+        )
+        self.assertEqual(metrics["overall_status"], "Needs Repair")
+        self.assertIn(row["deduction_id"], metrics["invalid_evidence_semantic_ids"])
+
+        with tempfile.TemporaryDirectory() as directory:
+            destination = Path(directory) / "source-bound-review.xlsx"
+            build_workbook(altered, metrics, destination)
+            workbook = load_workbook(destination, read_only=False, data_only=False)
+            classified = workbook["Classified_Evidence"]
+            headers = {cell.value: cell.column for cell in classified[1]}
+            target_row = next(
+                index for index in range(2, classified.max_row + 1)
+                if classified.cell(index, headers["Deduction ID"]).value == row["deduction_id"]
+            )
+            self.assertEqual(
+                classified.cell(target_row, headers["Status"]).value,
+                "Evidence gap",
+            )
+            worklist_ids = {
+                workbook["Priority_Worklist"].cell(index, 3).value
+                for index in range(2, workbook["Priority_Worklist"].max_row + 1)
+            }
+            self.assertIn(row["deduction_id"], worklist_ids)
 
     def test_negative_allocation_and_reused_transaction_source_cannot_pass(self):
         outputs, problems = load_run_outputs(ROOT / "outputs" / "v2")

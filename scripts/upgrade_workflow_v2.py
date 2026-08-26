@@ -168,6 +168,15 @@ def strengthen_classification_controls(workflow):
 
     parse_node = node_by_name(workflow, "Code (Parse Classification Response)")
     parse_code = parse_node["parameters"]["jsCode"]
+    parse_code = parse_code.replace(
+        "  const callId = response.id || null;",
+        "  const batchIds = originalItems.map(row => String(row.deduction_id || '')).filter(Boolean);\n"
+        "  const batchRef = batchIds.length ? "
+        "'batch:' + batchIds[0] + ':' + batchIds[batchIds.length - 1] + ':' + batchIds.length : null;",
+        1,
+    ).replace("_llm_call_id: callId", "_llm_batch_ref: batchRef")
+    if "response.id" in parse_code or "_llm_call_id" in parse_code:
+        raise ValueError("Provider response identifiers were not removed from the public workflow")
     valid_marker = "const validBuckets = new Set(['Promotional Accrual','Shortage Claim','Price Dispute','Damaged Goods','Chargeback/Other','Unresolvable']);\n"
     alias_function = r"""function configuredBucket(referenceCode) {
   const ref = String(referenceCode || '').trim().toUpperCase();
@@ -187,18 +196,18 @@ def strengthen_classification_controls(workflow):
     parse_code = parse_code.replace(valid_marker, valid_marker + alias_function, 1)
     old_block = """    const p = byId.get(orig.deduction_id);
     if (!p || !validBuckets.has(p.bucket)) {
-      results.push({ json: { ...orig, _record_type: 'settlement', _route: 'needs_review', _classification_error: 'missing or invalid bucket for this line', _llm_call_id: callId, input_tokens: usage.input_tokens, output_tokens: usage.output_tokens, cache_creation_input_tokens: usage.cache_creation_input_tokens, cache_read_input_tokens: usage.cache_read_input_tokens } });
+      results.push({ json: { ...orig, _record_type: 'settlement', _route: 'needs_review', _classification_error: 'missing or invalid bucket for this line', _llm_batch_ref: batchRef, input_tokens: usage.input_tokens, output_tokens: usage.output_tokens, cache_creation_input_tokens: usage.cache_creation_input_tokens, cache_read_input_tokens: usage.cache_read_input_tokens } });
     } else {
-      results.push({ json: { ...orig, _record_type: 'settlement', _route: 'pending_verification', llm_bucket: p.bucket, llm_confidence: p.confidence, llm_reasoning: p.reasoning, _classification_error: null, _llm_call_id: callId, input_tokens: usage.input_tokens, output_tokens: usage.output_tokens, cache_creation_input_tokens: usage.cache_creation_input_tokens, cache_read_input_tokens: usage.cache_read_input_tokens } });
+      results.push({ json: { ...orig, _record_type: 'settlement', _route: 'pending_verification', llm_bucket: p.bucket, llm_confidence: p.confidence, llm_reasoning: p.reasoning, _classification_error: null, _llm_batch_ref: batchRef, input_tokens: usage.input_tokens, output_tokens: usage.output_tokens, cache_creation_input_tokens: usage.cache_creation_input_tokens, cache_read_input_tokens: usage.cache_read_input_tokens } });
     }
 """
     new_block = """    const p = byId.get(orig.deduction_id);
     const aliasBucket = configuredBucket(orig.reference_code);
     const proposed = aliasBucket ? { bucket: aliasBucket, confidence: 1, reasoning: 'Configured reference alias: ' + orig.reference_code } : p;
     if (!proposed || !validBuckets.has(proposed.bucket)) {
-      results.push({ json: { ...orig, _record_type: 'settlement', _route: 'needs_review', _classification_error: 'missing or invalid bucket for this line', _llm_call_id: callId, input_tokens: usage.input_tokens, output_tokens: usage.output_tokens, cache_creation_input_tokens: usage.cache_creation_input_tokens, cache_read_input_tokens: usage.cache_read_input_tokens } });
+      results.push({ json: { ...orig, _record_type: 'settlement', _route: 'needs_review', _classification_error: 'missing or invalid bucket for this line', _llm_batch_ref: batchRef, input_tokens: usage.input_tokens, output_tokens: usage.output_tokens, cache_creation_input_tokens: usage.cache_creation_input_tokens, cache_read_input_tokens: usage.cache_read_input_tokens } });
     } else {
-      results.push({ json: { ...orig, _record_type: 'settlement', _route: 'pending_verification', llm_bucket: proposed.bucket, llm_confidence: proposed.confidence, llm_reasoning: proposed.reasoning, _classification_method: aliasBucket ? 'configured_alias' : 'ai_proposal', _classification_error: null, _llm_call_id: callId, input_tokens: usage.input_tokens, output_tokens: usage.output_tokens, cache_creation_input_tokens: usage.cache_creation_input_tokens, cache_read_input_tokens: usage.cache_read_input_tokens } });
+      results.push({ json: { ...orig, _record_type: 'settlement', _route: 'pending_verification', llm_bucket: proposed.bucket, llm_confidence: proposed.confidence, llm_reasoning: proposed.reasoning, _classification_method: aliasBucket ? 'configured_alias' : 'ai_proposal', _classification_error: null, _llm_batch_ref: batchRef, input_tokens: usage.input_tokens, output_tokens: usage.output_tokens, cache_creation_input_tokens: usage.cache_creation_input_tokens, cache_read_input_tokens: usage.cache_read_input_tokens } });
     }
 """
     if old_block not in parse_code:

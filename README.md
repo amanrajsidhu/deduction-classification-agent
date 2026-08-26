@@ -1,155 +1,137 @@
 # Deduction Resolution Workbench
 
-A public, synthetic demonstration of a controlled finance-automation pattern:
-rules resolve clean retailer deductions, AI proposes categories for the
-remainder, ledger balances constrain what can be accepted, and uncertain lines
-stop for a person.
+Turn retailer deduction and accrual exports into a ranked finance worklist that
+shows what matched, what has sufficient ledger support, and what a person must
+investigate next.
 
-> **Current status:** V2 has been run end to end in the local n8n instance on
-> the 250-line synthetic fixture. The complete run passed the independent
-> evaluator as **Ready for Demo**. This is synthetic technical
-> evidence, not production accuracy or approval for real client data.
-
-## The 12-year-old explanation
-
-A retailer sometimes pays a supplier less than the invoice and attaches a
-confusing note explaining why. A finance analyst then has to work out which
-deductions were expected, which accounting bucket they belong in, and which
-ones need more information.
-
-This workbench sorts the clear cases, proposes an answer for the harder cases,
-checks that the relevant accrual balance can support that answer, and puts
-anything unsafe into a human worklist—starting with the largest amounts.
+This repository is a public, synthetic demonstration. It shows a controlled
+automation pattern; it is not a hosted product, an accounting authority, or
+evidence of production accuracy.
 
 ## Who it helps
 
-- **Daily user:** deductions or accounts-receivable analyst.
-- **Executive reader:** Financial Controller or Finance Director.
-- **Best-fit context:** a consumer-products finance team processing recurring
+- **Daily user:** a deductions or accounts-receivable analyst.
+- **Executive reader:** a Financial Controller or Finance Director.
+- **Best-fit setting:** a consumer-products finance team processing recurring
   retailer or marketplace settlement deductions.
 
-The analyst gets a ranked worklist. The finance leader gets a value-led summary
-showing what was resolved, what remains exposed and why.
+The analyst receives a value-ranked worklist with an explanation and next action
+for every line. The finance leader receives a summary of value resolved, value
+still exposed, and the controls behind the result.
 
-## The problem it addresses
+## The problem
 
-Retailer deduction lines are frequently cryptic. Counterparty names vary,
-reference codes are opaque and the supporting information may sit across an ERP,
-a retailer portal and spreadsheets. Clean matches are not the hard part. The
-problem is the residue that has to be classified, evidenced and investigated.
+A retailer may pay less than the invoiced amount and attach a cryptic reference.
+Finance then has to determine whether the deduction matches an existing accrual,
+which configured category it belongs to, whether supporting balance exists, and
+what needs investigation.
 
-This repository demonstrates that residue-handling pattern. It complements
-deduction-recovery products and ERPs; it does not claim to replace them.
+ERPs and deduction-recovery platforms already address parts of this problem.
+This workbench demonstrates the difficult last-mile pattern: resolve clean cases,
+constrain uncertain classification with ledger evidence, and make exceptions
+visible without treating AI as an accounting decision-maker.
 
-## How V2 works
+## What the workbench does
 
-1. **Validate and normalise.** Dates, amounts and counterparty names are parsed.
-   Known aliases such as `AMZN Mktp UK` and `Amazon` share one canonical identity.
-2. **Match deterministically.** Exact-value, near-date, same-counterparty pairs
-   are assigned globally and one-to-one. These lines never reach AI.
-3. **Apply controlled aliases, then constrain the AI proposal.** Approved
-   reference aliases take priority. When no alias exists, Claude proposes one
-   configured bucket or abstains as `Unresolvable`.
-4. **Allocate ledger evidence once across the full run.** An accepted proposal
-   must have a same-counterparty programme accrual in the proposed bucket with
-   enough available balance. The allocation reduces that balance, preventing
-   one accrual from being reused indefinitely.
-5. **Fail closed.** Conflicts, exhausted balances, malformed model output and an
-   `Unresolvable` proposal with an exact-amount near-date ledger candidate stop
-   for human review.
-6. **Report money and next actions.** The workbook begins with value resolved,
-   value requiring a person, unsafe-routing exposure and the first item to
-   investigate.
+1. **Validates the exports.** Dates, amounts, identifiers and counterparties are
+   checked before matching. Invalid rows stop as data-quality issues.
+2. **Matches clean cases deterministically.** Exact-value, near-date,
+   same-counterparty accruals are assigned globally and one-to-one. These cases
+   never need an AI classification.
+3. **Applies finance configuration before AI.** Approved reference aliases take
+   priority. When no alias exists, Claude may propose one configured category or
+   abstain as `Unresolvable`.
+4. **Allocates supporting evidence once.** An accepted category must have an
+   eligible same-counterparty programme balance in the same bucket, within the
+   date window and with sufficient remaining value. Consumed balance cannot be
+   reused indefinitely.
+5. **Fails closed.** Conflicts, missing evidence, exhausted balances and malformed
+   model output go to a person rather than a confident-looking answer.
+6. **Produces the decision aid.** The Excel workbook begins with monetary
+   outcomes and the next investigation, followed by the detailed audit trail.
 
-The system proposes. A person retains responsibility for journals, write-offs,
-disputes, approvals and every decision of record.
+The system proposes and checks. A person remains responsible for journals,
+write-offs, disputes, approvals and every decision of record.
 
-## What the V1 audit found
+## What the user receives
 
-V1 looked stronger than it was. The new evaluator recomputes the canonical
-250-line run as follows:
+- A finance-first summary of total, resolved and human-work value.
+- A priority worklist ordered by financial exposure.
+- Separate views for deterministic matches, supported classifications,
+  unresolved lines and data-quality issues.
+- The reason, source evidence, balance movement, owner and next action for each
+  route.
+- Recomputable metrics and a clear result: `Ready for Demo`, `Needs Repair` or
+  `Incomplete Run`.
 
-| Outcome | Lines | Value |
-|---|---:|---:|
-| Auto-matched | 141 | £84,525.13 |
-| Classified using V1's bucket-plausibility check | 65 | £47,461.98 |
-| Needs review | 10 | £1,733.51 |
-| Labelled unresolvable | 34 | £6,325.43 |
-| **Total** | **250** | **£140,046.05** |
+## Verified synthetic demonstration
 
-The important correction is not hidden:
-
-- all 25 truly unresolvable lines were found: **100% recall**;
-- only 25 of the 34 lines labelled unresolvable were truly unresolvable:
-  **73.5% precision**;
-- nine matchable Amazon lines worth **£3,212.35** were accepted into the wrong
-  terminal outcome; and
-- the 65 accepted classifications reused a small set of leftover accruals under
-  a permissive bucket-level check. That demonstrated plausibility, not allocated
-  evidence.
-
-The preserved V1 evidence therefore says **Needs Repair**, not Excellent. See
-[`docs/01_EVALUATION.md`](docs/01_EVALUATION.md) for every denominator and status
-gate, and [`docs/02_EVIDENCE_AND_POSITIONING.md`](docs/02_EVIDENCE_AND_POSITIONING.md)
-for the conversation, market and competitor evidence with its limitations.
-
-## What V2 changes
-
-- One alias rule set across fixture generation and workflow matching.
-- A separate programme-balance population for classifiable deductions.
-- Available-balance allocation across the complete run, after all AI batches.
-- Exact-amount near-date conflicts forced to human review.
-- Required branch files and exact ID coverage before a run can be complete.
-- Full confusion matrix, precision, recall, coverage and value-weighted errors.
-- Finance-first workbook with a priority worklist, owner, status and next action.
-- Reproducible fixtures, adversarial regression/control tests and continuous integration.
-
-## Verified V2 result
-
-The 25 August 2026 full synthetic run produced:
+The complete 250-line fixture produced:
 
 | Outcome | Lines | Value |
 |---|---:|---:|
 | Auto-matched deterministically | 150 | £87,737.48 |
 | Classified with allocated evidence | 75 | £42,555.61 |
 | Needs review | 0 | £0.00 |
-| Unresolvable from the supplied data | 25 | £3,460.10 |
+| Unresolvable from supplied data | 25 | £3,460.10 |
 | Data-quality issue | 0 | £0.00 |
 | **Total** | **250** | **£133,753.19** |
 
-Every seeded line was routed exactly once. Pair correctness, accepted
-classification precision, evidence-allocation coverage, unresolvable precision
-and unresolvable recall were all 100% on this controlled fixture, with zero
-unsafe terminal misroutes. The evaluator's conclusion is **Ready for Demo**.
-Those figures describe this synthetic answer key only.
+Every seeded line was routed exactly once. The separate, source-bound evaluator
+recomputed the transaction pairs, category outcomes, source eligibility and
+balance chains and returned **Ready for Demo** with zero unsafe terminal
+misroutes.
 
-The classification result needs one important qualification: all 75 accepted
-classifications came from deterministic, configured reference aliases. No AI
-proposal was accepted as a classification in this fixture. The AI's accepted
-contribution was to abstain on 25 deliberately vague lines, which the conflict
-check then confirmed as unresolvable from the supplied data. The 100%
-classification-precision result therefore measures all accepted classifications;
-it must not be presented as 100% AI accuracy.
+That statement has an important limit: all 75 accepted classifications came
+from deterministic configured aliases. No AI-proposed category was accepted in
+this fixture. The AI's accepted contribution was 25 abstentions, which the
+conflict check confirmed as unresolvable from the supplied synthetic data.
+Therefore, 100% accepted-classification precision is **not** 100% AI accuracy.
 
-Auto-match recall and classifiable automation coverage are reported as monitoring
-indicators, not **Ready for Demo** gates. A safe stop can reduce coverage without
-creating an unsafe terminal result.
+## Why it is designed this way
+
+- **Rules first:** predictable matching should not consume model calls.
+- **AI for bounded ambiguity:** the model proposes inside a configured category
+  set; it cannot create accounting policy.
+- **Ledger evidence over confidence:** a high model score cannot replace an
+  eligible source balance.
+- **Human authority:** uncertainty creates a work item, not an automated posting.
+- **Source-bound evaluation:** the evaluator independently checks the raw
+  counterparty, date, bucket, intended synthetic support and balance chain.
+- **Synthetic and local:** the public proof does not require prospect data or a
+  hosted upload.
+
+## How the build improved
+
+The original demonstration exposed useful controls but its evaluation overstated
+one result and treated bucket-level plausibility as evidence. The current
+workbench corrects that by:
+
+- separating unresolvable precision from recall;
+- canonicalising known counterparty aliases consistently;
+- allocating programme balances across the whole run;
+- treating missing files and duplicate identities as failures;
+- independently rebinding accepted evidence to the raw source rules; and
+- presenting monetary outcomes and human actions before technical metrics.
+
+The preserved original workflow and outputs are historical regression evidence,
+not the supported implementation and should not be imported or run. The curated
+engineering account is in [Build notes](docs/BUILD_NOTES.md); raw internal build
+and reasoning logs are deliberately excluded from Git.
 
 ## Repository map
 
 ```text
-fixtures/v2/                  reproducible V2 synthetic inputs and sealed key
-outputs/                      preserved V1 baseline evidence
-outputs/v2/                   verified V2 branches, manifest, metrics and workbook
-scripts/deduction_rules.py    canonical Python control rules used by tests
-scripts/generate_dataset.py   deterministic V2 fixture generator
-scripts/finalize_run.py       proves exact coverage before creating empty branches
-scripts/generate_xlsx_output.py strict evaluator and workbook builder
-scripts/upgrade_workflow_v2.py deterministic V1-to-V2 workflow builder
-tests/                        evaluation, fixture, allocation and workflow tests
-workflows/...V1...json        preserved baseline workflow
-workflows/DEDUCTION_RESOLUTION_WORKBENCH_V2.json  V2 workflow
-docs/                         contract, evaluation, dataset and security boundary
+fixtures/v2/                  reproducible synthetic inputs and sealed answer key
+outputs/v2/                   verified branch results, metrics and workbook
+scripts/deduction_rules.py    canonical control rules
+scripts/finalize_run.py       exact source-to-output coverage check
+scripts/generate_xlsx_output.py source-bound evaluator and workbook builder
+scripts/upgrade_workflow_v2.py reproducible workflow builder
+tests/                        control, evaluation and publication-boundary tests
+workflows/DEDUCTION_RESOLUTION_WORKBENCH_V2.json current portable workflow
+outputs/ and workflows/...V1...json historical regression evidence; do not run
+docs/                         contract, evidence, risks, dataset and security notes
 ```
 
 ## Verify locally
@@ -159,6 +141,9 @@ python -m pip install -r requirements.txt
 python scripts/generate_dataset.py
 python scripts/upgrade_workflow_v2.py
 python -m unittest discover -s tests -v
+python scripts/finalize_run.py \
+  --outputs-dir outputs/v2 \
+  --settlement-csv fixtures/v2/settlement_deductions.csv
 python scripts/generate_xlsx_output.py \
   --outputs-dir outputs/v2 \
   --answer-key fixtures/v2/answer_key.json.gz \
@@ -167,63 +152,26 @@ python scripts/generate_xlsx_output.py \
   --metrics-json outputs/v2/evaluation_metrics.json
 ```
 
-These commands require no AI key. They prove fixture reproducibility, alias
-behaviour, allocation safety, workflow structure and source-ledger-bound V2
-evaluation. They do not execute n8n or call Anthropic.
+These checks require no AI key and do not call Anthropic. Continuous integration
+uses Python 3.12 for the byte-reproducibility check.
 
-Continuous integration pins Python 3.12. The byte-for-byte fixture reproducibility
-claim applies to that pinned runtime.
+## Run locally in n8n
 
-## Re-run V2 in n8n
+The portable workflow export is inactive, unavailable over MCP and contains no
+live credential, workflow or instance identifiers. After import, the operator
+must attach an authorised Anthropic credential and ensure the configured
+`/files/deduction-workbench/v2/` paths are mapped to an appropriate local Docker
+volume. Use synthetic inputs and execute it manually.
 
-The local workflow is `Deduction Resolution Workbench V2` and remains inactive.
-The public export contains no live workflow, instance or credential identifiers;
-select the intended n8n credential after import. Its dedicated Docker file volume is
-mounted at `/files`; no input or output is stored inside n8n's protected settings
-directory.
+## Security and limitations
 
-1. Copy the two fixture CSVs into
-   `/files/deduction-workbench/v2/input/`.
-2. Confirm the existing Anthropic credential is attached and run the workflow
-   manually.
-3. Copy the five JSON branch exports into `outputs/v2/`.
-4. Prove routing coverage and materialise any genuinely empty branch:
+Do not upload real settlement exports, ledgers, invoices, customer details or
+portal credentials to this public demonstration. Real-data work requires a
+separately authorised client environment with agreed access, retention and
+deletion controls.
 
-   ```bash
-   python scripts/finalize_run.py
-   ```
-
-5. Evaluate V2 without overwriting the V1 baseline:
-
-   ```bash
-   python scripts/generate_xlsx_output.py \
-     --outputs-dir outputs/v2 \
-     --answer-key fixtures/v2/answer_key.json.gz \
-     --accrual-csv fixtures/v2/invoice_accruals.csv \
-     --xlsx outputs/v2/deduction_resolution_workbench_v2.xlsx \
-     --metrics-json outputs/v2/evaluation_metrics.json
-   ```
-
-A result may be called **Ready for Demo** only if the complete run has zero
-unsafe terminal misroutes and passes every published precision and evidence gate.
-
-## Data and security boundary
-
-Everything committed here is synthetic. Do not send, request or upload real
-settlement exports, ledgers, invoices, customer details or portal credentials to
-the public demo. Real-data work requires a separately authorised client
-environment and agreed access, retention and deletion controls. See
-[`docs/SECURITY_AND_DATA_BOUNDARY.md`](docs/SECURITY_AND_DATA_BOUNDARY.md).
-
-## Non-goals
-
-- No automatic journal posting, write-off, dispute or approval.
-- No retailer-portal or ERP integration in the public repository.
-- No hosted SaaS and no production-accuracy claim.
-- No claim to replace enterprise deduction platforms.
-- No automated LinkedIn or outreach activity.
-
-The value of this repository is the visible reasoning: a useful finance workflow,
-measurable controls, honest failure disclosure and a repair that can be rerun.
-The ways this could still fail are recorded in
-[`docs/03_RISK_REGISTER.md`](docs/03_RISK_REGISTER.md).
+The repository does not claim production accuracy, time saved, recovered
+revenue, compliance certification, buyer willingness to pay or superiority over
+established deduction platforms. See the [security boundary](docs/SECURITY_AND_DATA_BOUNDARY.md),
+[evaluation standard](docs/01_EVALUATION.md), [evidence note](docs/02_EVIDENCE_AND_POSITIONING.md)
+and [risk register](docs/03_RISK_REGISTER.md).

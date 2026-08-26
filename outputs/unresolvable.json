@@ -20,13 +20,13 @@
     "llm_confidence": 0.6,
     "llm_reasoning": "Generic 'NOTE' reference code and vague 'refer to portal' description offer no specific bucket signal.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFix5Myb3G3hErLuY5Ba",
     "input_tokens": 3806,
     "output_tokens": 2199,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable"
+    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable",
+    "_llm_batch_ref": "batch-001"
   },
   {
     "deduction_id": "DED-2026-00783",
@@ -49,13 +49,13 @@
     "llm_confidence": 0.65,
     "llm_reasoning": "Generic ADJ reference code and 'no further detail' description provide no specific signal.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFix5Myb3G3hErLuY5Ba",
     "input_tokens": 3806,
     "output_tokens": 2199,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable"
+    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable",
+    "_llm_batch_ref": "batch-001"
   },
   {
     "deduction_id": "DED-2026-00789",
@@ -78,13 +78,13 @@
     "llm_confidence": 0.6,
     "llm_reasoning": "Generic REF reference code and 'General ledger adjustment' description offer no specific bucket signal.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFix5Myb3G3hErLuY5Ba",
     "input_tokens": 3806,
     "output_tokens": 2199,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable"
+    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable",
+    "_llm_batch_ref": "batch-001"
   },
   {
     "deduction_id": "DED-2026-00769",
@@ -107,13 +107,13 @@
     "llm_confidence": 0.6,
     "llm_reasoning": "Generic SETTLEMENT reference code and vague 'refer to portal' description offer no specific bucket signal.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFix5Myb3G3hErLuY5Ba",
     "input_tokens": 3806,
     "output_tokens": 2199,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable"
+    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable",
+    "_llm_batch_ref": "batch-001"
   },
   {
     "deduction_id": "DED-2026-00583",
@@ -136,13 +136,13 @@
     "llm_confidence": 0.6,
     "llm_reasoning": "Generic REF reference code and vague 'Adjustment applied at settlement' description offer no specific bucket signal.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFix5Myb3G3hErLuY5Ba",
     "input_tokens": 3806,
     "output_tokens": 2199,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable"
+    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable",
+    "_llm_batch_ref": "batch-001"
   },
   {
     "deduction_id": "DED-2026-00785",
@@ -165,13 +165,13 @@
     "llm_confidence": 0.6,
     "llm_reasoning": "Generic SETTLEMENT reference code and 'General ledger adjustment' description offer no specific bucket signal.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFix5Myb3G3hErLuY5Ba",
     "input_tokens": 3806,
     "output_tokens": 2199,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable"
+    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable",
+    "_llm_batch_ref": "batch-001"
   },
   {
     "deduction_id": "DED-2026-00797",
@@ -194,13 +194,13 @@
     "llm_confidence": 0.65,
     "llm_reasoning": "Generic ADJ reference code and 'no further detail' description provide no specific signal.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFix5Myb3G3hErLuY5Ba",
     "input_tokens": 3806,
     "output_tokens": 2199,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable"
+    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable",
+    "_llm_batch_ref": "batch-001"
   },
   {
     "deduction_id": "DED-2026-00751",
@@ -223,13 +223,13 @@
     "llm_confidence": 0.55,
     "llm_reasoning": "Generic 'account adjustment - see remittance advice' with no specific reference code signal pointing to any bucket.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFiy9mQwsekwCrgJxjb1",
     "input_tokens": 3883,
     "output_tokens": 2460,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable"
+    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable",
+    "_llm_batch_ref": "batch-002"
   },
   {
     "deduction_id": "DED-2026-00515",
@@ -252,13 +252,13 @@
     "llm_confidence": 0.5,
     "llm_reasoning": "Generic 'reimbursement adjustment - see portal' with SETTLEMENT reference code, no clear category signal.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFiy9mQwsekwCrgJxjb1",
     "input_tokens": 3883,
     "output_tokens": 2460,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable"
+    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable",
+    "_llm_batch_ref": "batch-002"
   },
   {
     "deduction_id": "DED-2026-00787",
@@ -281,13 +281,13 @@
     "llm_confidence": 0.55,
     "llm_reasoning": "Generic 'account adjustment - see remittance advice' with generic NOTE reference code.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFiy9mQwsekwCrgJxjb1",
     "input_tokens": 3883,
     "output_tokens": 2460,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable"
+    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable",
+    "_llm_batch_ref": "batch-002"
   },
   {
     "deduction_id": "DED-2026-00761",
@@ -310,13 +310,13 @@
     "llm_confidence": 0.55,
     "llm_reasoning": "Generic 'general ledger adjustment' with generic REF code, no specific bucket signal.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFiy9mQwsekwCrgJxjb1",
     "input_tokens": 3883,
     "output_tokens": 2460,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable"
+    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable",
+    "_llm_batch_ref": "batch-002"
   },
   {
     "deduction_id": "DED-2026-00795",
@@ -339,13 +339,13 @@
     "llm_confidence": 0.55,
     "llm_reasoning": "Generic 'account adjustment - see remittance advice' with generic REF code and unknown remitter.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFiy9mQwsekwCrgJxjb1",
     "input_tokens": 3883,
     "output_tokens": 2460,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable"
+    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable",
+    "_llm_batch_ref": "batch-002"
   },
   {
     "deduction_id": "DED-2026-00431",
@@ -368,13 +368,13 @@
     "llm_confidence": 0.5,
     "llm_reasoning": "Generic 'reimbursement adjustment - see portal' with SETTLEMENT reference code, no clear category signal.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFiy9mQwsekwCrgJxjb1",
     "input_tokens": 3883,
     "output_tokens": 2460,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable"
+    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable",
+    "_llm_batch_ref": "batch-002"
   },
   {
     "deduction_id": "DED-2026-00791",
@@ -397,13 +397,13 @@
     "llm_confidence": 0.55,
     "llm_reasoning": "Generic 'account adjustment - see remittance advice' with generic DED reference code.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFiy9mQwsekwCrgJxjb1",
     "input_tokens": 3883,
     "output_tokens": 2460,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable"
+    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable",
+    "_llm_batch_ref": "batch-002"
   },
   {
     "deduction_id": "DED-2026-00377",
@@ -426,13 +426,13 @@
     "llm_confidence": 0.55,
     "llm_reasoning": "Generic 'Adjustment applied at settlement' with generic NOTE reference code, no clear bucket signal.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFiy9mQwsekwCrgJxjb1",
     "input_tokens": 3883,
     "output_tokens": 2460,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable"
+    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable",
+    "_llm_batch_ref": "batch-002"
   },
   {
     "deduction_id": "DED-2026-00773",
@@ -455,13 +455,13 @@
     "llm_confidence": 0.6,
     "llm_reasoning": "Generic 'Balance adjustment - no further detail' explicitly states no further detail, no bucket signal.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFiy9mQwsekwCrgJxjb1",
     "input_tokens": 3883,
     "output_tokens": 2460,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable"
+    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable",
+    "_llm_batch_ref": "batch-002"
   },
   {
     "deduction_id": "DED-2026-00799",
@@ -484,13 +484,13 @@
     "llm_confidence": 0.55,
     "llm_reasoning": "Generic 'General ledger adjustment' with generic DED reference code and unknown remitter, no bucket signal.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFiy9mQwsekwCrgJxjb1",
     "input_tokens": 3883,
     "output_tokens": 2460,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable"
+    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable",
+    "_llm_batch_ref": "batch-002"
   },
   {
     "deduction_id": "DED-2026-00781",
@@ -513,13 +513,13 @@
     "llm_confidence": 0.6,
     "llm_reasoning": "Generic 'ADJ' code and description with no further detail provided; no signal to specific bucket.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFizLuAs4Bk8Va3Je4VW",
     "input_tokens": 3821,
     "output_tokens": 2409,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable"
+    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable",
+    "_llm_batch_ref": "batch-003"
   },
   {
     "deduction_id": "DED-2026-00477",
@@ -542,13 +542,13 @@
     "llm_confidence": 0.6,
     "llm_reasoning": "Generic 'NOTE' code and 'see note' description give no indication of a specific category.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFizLuAs4Bk8Va3Je4VW",
     "input_tokens": 3821,
     "output_tokens": 2409,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable"
+    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable",
+    "_llm_batch_ref": "batch-003"
   },
   {
     "deduction_id": "DED-2026-00763",
@@ -571,13 +571,13 @@
     "llm_confidence": 0.6,
     "llm_reasoning": "Generic 'NOTE' code and 'general ledger adjustment' description give no specific category signal.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFizLuAs4Bk8Va3Je4VW",
     "input_tokens": 3821,
     "output_tokens": 2409,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable"
+    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable",
+    "_llm_batch_ref": "batch-003"
   },
   {
     "deduction_id": "DED-2026-00757",
@@ -600,13 +600,13 @@
     "llm_confidence": 0.6,
     "llm_reasoning": "Generic 'DED' code and 'general ledger adjustment' description with unknown remitter give no specific signal.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFizLuAs4Bk8Va3Je4VW",
     "input_tokens": 3821,
     "output_tokens": 2409,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable"
+    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable",
+    "_llm_batch_ref": "batch-003"
   },
   {
     "deduction_id": "DED-2026-00491",
@@ -629,13 +629,13 @@
     "llm_confidence": 0.55,
     "llm_reasoning": "Generic 'REF' code and vague 'adjustment applied at settlement' description give no specific bucket signal.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFizLuAs4Bk8Va3Je4VW",
     "input_tokens": 3821,
     "output_tokens": 2409,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable"
+    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable",
+    "_llm_batch_ref": "batch-003"
   },
   {
     "deduction_id": "DED-2026-00759",
@@ -658,13 +658,13 @@
     "llm_confidence": 0.55,
     "llm_reasoning": "Generic 'DED' code and 'refer to portal' description give no specific bucket signal.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFizLuAs4Bk8Va3Je4VW",
     "input_tokens": 3821,
     "output_tokens": 2409,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable"
+    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable",
+    "_llm_batch_ref": "batch-003"
   },
   {
     "deduction_id": "DED-2026-00765",
@@ -687,13 +687,13 @@
     "llm_confidence": 0.55,
     "llm_reasoning": "Generic 'account adjustment - see remittance advice' with no specific signal in reference code (REF-766) pointing to any category.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFj1YxVTuML6YpJhSUrB",
     "input_tokens": 3806,
     "output_tokens": 2533,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable"
+    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable",
+    "_llm_batch_ref": "batch-004"
   },
   {
     "deduction_id": "DED-2026-00465",
@@ -716,13 +716,13 @@
     "llm_confidence": 0.55,
     "llm_reasoning": "Generic 'Adjustment applied at settlement' with NOTE reference code, no clear category signal.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFj1YxVTuML6YpJhSUrB",
     "input_tokens": 3806,
     "output_tokens": 2533,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable"
+    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable",
+    "_llm_batch_ref": "batch-004"
   },
   {
     "deduction_id": "DED-2026-00777",
@@ -745,13 +745,13 @@
     "llm_confidence": 0.6,
     "llm_reasoning": "Generic 'Miscellaneous deduction - refer to portal' with DED reference code, unknown remitter, no specific bucket signal.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFj1YxVTuML6YpJhSUrB",
     "input_tokens": 3806,
     "output_tokens": 2533,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable"
+    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable",
+    "_llm_batch_ref": "batch-004"
   },
   {
     "deduction_id": "DED-2026-00767",
@@ -774,13 +774,13 @@
     "llm_confidence": 0.55,
     "llm_reasoning": "Generic 'Account adjustment - see remittance advice' with NOTE reference code, no specific category indicators.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFj1YxVTuML6YpJhSUrB",
     "input_tokens": 3806,
     "output_tokens": 2533,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable"
+    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable",
+    "_llm_batch_ref": "batch-004"
   },
   {
     "deduction_id": "DED-2026-00793",
@@ -803,13 +803,13 @@
     "llm_confidence": 0.55,
     "llm_reasoning": "Generic 'General ledger adjustment' with SETTLEMENT reference code, no specific category signal.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFj1YxVTuML6YpJhSUrB",
     "input_tokens": 3806,
     "output_tokens": 2533,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable"
+    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable",
+    "_llm_batch_ref": "batch-004"
   },
   {
     "deduction_id": "DED-2026-00343",
@@ -832,13 +832,13 @@
     "llm_confidence": 0.55,
     "llm_reasoning": "Generic 'Miscellaneous deduction - see note' with DED reference code, no specific bucket signal.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFj1YxVTuML6YpJhSUrB",
     "input_tokens": 3806,
     "output_tokens": 2533,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable"
+    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable",
+    "_llm_batch_ref": "batch-004"
   },
   {
     "deduction_id": "DED-2026-00437",
@@ -861,13 +861,13 @@
     "llm_confidence": 0.55,
     "llm_reasoning": "Generic 'Account adjustment - refer to statement' with NOTE reference code, no specific category indicators.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFj1YxVTuML6YpJhSUrB",
     "input_tokens": 3806,
     "output_tokens": 2533,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable"
+    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable",
+    "_llm_batch_ref": "batch-004"
   },
   {
     "deduction_id": "DED-2026-00771",
@@ -890,13 +890,13 @@
     "llm_confidence": 0.55,
     "llm_reasoning": "Generic 'Balance adjustment - no further detail' with SETTLEMENT reference code, no clear bucket signal.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFj1YxVTuML6YpJhSUrB",
     "input_tokens": 3806,
     "output_tokens": 2533,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable"
+    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable",
+    "_llm_batch_ref": "batch-004"
   },
   {
     "deduction_id": "DED-2026-00779",
@@ -919,13 +919,13 @@
     "llm_confidence": 0.55,
     "llm_reasoning": "Generic 'General ledger adjustment' with DED reference code, no specific category signal.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFj1YxVTuML6YpJhSUrB",
     "input_tokens": 3806,
     "output_tokens": 2533,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable"
+    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable",
+    "_llm_batch_ref": "batch-004"
   },
   {
     "deduction_id": "DED-2026-00753",
@@ -948,13 +948,13 @@
     "llm_confidence": 0.55,
     "llm_reasoning": "Generic reference code REF-754 and vague description 'Miscellaneous deduction - refer to portal' give no clear signal to any specific bucket.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFj2n9Gk65DCD6MVV51k",
     "input_tokens": 2007,
     "output_tokens": 1019,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable"
+    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable",
+    "_llm_batch_ref": "batch-005"
   },
   {
     "deduction_id": "DED-2026-00775",
@@ -977,12 +977,12 @@
     "llm_confidence": 0.6,
     "llm_reasoning": "Unknown remitter, generic reference code DED-776, and vague description 'Account adjustment - see remittance advice' provide no specific classification signal.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFj2n9Gk65DCD6MVV51k",
     "input_tokens": 2007,
     "output_tokens": 1019,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": true,
-    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable"
+    "_evidence_note": "No plausible accrual found in any bucket with a matching vendor - confirmed unresolvable",
+    "_llm_batch_ref": "batch-005"
   }
 ]

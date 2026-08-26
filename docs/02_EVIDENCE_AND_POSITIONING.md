@@ -8,26 +8,24 @@ This note keeps three questions separate:
 2. Does this repository demonstrate a useful response?
 3. Has CopyWise proved that buyers will pay for this particular response?
 
-The evidence supports the first, can demonstrate the second after a passing V2
-run, and does not yet prove the third.
+The evidence supports the first, demonstrates the second on the published
+synthetic fixture, and does not yet prove the third.
 
 ## Conversation evidence
 
-One prospect conversation directly described high-volume retailer debit notes,
-manual Excel work, rekeying between SAP and a retailer portal, and promotional
-allowances that were difficult to classify. That is the direct evidence for the
-deduction use case.
-
-Across the wider eight-call corpus, the repeated themes were:
+Internal discovery conversations included direct descriptions of retailer debit
+notes, manual spreadsheet work, rekeying between an ERP and retailer portals,
+and promotional allowances that were difficult to classify. The recurring
+themes were:
 
 - finance work remains fragmented at the last mile;
 - credible automation handles clean cases and makes exceptions visible;
 - human review matters where evidence or authority is insufficient; and
 - prospects respond better to a concrete outcome than to generic AI capability.
 
-Limitations: only one conversation described retailer deductions in detail. No
-call quantified annual volume, error cost, recovery, budget or willingness to pay
-for this build.
+Limitations: the evidence is qualitative and the detailed call material remains
+private. It did not establish annual volume, error cost, recovery, budget or
+willingness to pay for this build.
 
 ## Current external corroboration
 
@@ -57,9 +55,9 @@ software IP. It can support content, employment evidence and a consulting
 conversation. A real client solution would complement the client's ERP or
 recovery platform.
 
-## Claims allowed after V2 passes
+## Claims supported by the demonstration
 
-- The synthetic V2 run passed the published gates, with the exact metrics shown.
+- The synthetic run passed the published gates, with the exact metrics shown.
 - Every accepted synthetic classification consumed sufficient configured
   programme balance.
 - Conflicting or insufficient synthetic evidence stopped for review.

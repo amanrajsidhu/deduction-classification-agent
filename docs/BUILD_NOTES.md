@@ -1,7 +1,7 @@
-# Build notes: the useful part was finding where V1 lied to us
+# Build notes: what the first evaluation revealed
 
 This project began as a technically plausible deduction-classification demo. Its
-second version is more valuable because the evaluation found that two of its
+current implementation is more valuable because the evaluation found that two of its
 strongest trust claims were not supported by its own evidence.
 
 ## Why deductions
@@ -14,7 +14,7 @@ The design therefore keeps deterministic matching first and spends AI calls only
 on exceptions. It is deliberately a complement to ERPs and recovery platforms,
 not an attempt to recreate them.
 
-## What V1 did well
+## What the original build did well
 
 - Global best-first, one-to-one deterministic matching.
 - Integer-pence comparisons rather than fragile floating-point thresholds.
@@ -24,9 +24,9 @@ not an attempt to recreate them.
 - Per-branch exports and a human-review outcome.
 - Token usage deduplicated by API response ID.
 
-These remain the foundation of V2.
+These remain the foundation of the current workbench.
 
-## What the independent recomputation found
+## What the recomputation found
 
 ### 1. Recall had been called accuracy
 
@@ -65,11 +65,11 @@ The report loader converted an absent branch file into an empty list. The
 committed data-quality output was missing, yet the workbook published zero
 data-quality issues without marking the run incomplete.
 
-## V2 repair
+## Current repair
 
 ### One counterparty identity
 
-V2 adds explicit canonical identities for the five synthetic channels. Amazon,
+The current build adds explicit canonical identities for the five synthetic channels. Amazon,
 `AMZN` and `Mktp` variants resolve to the same identity. The fixture generator
 and workflow carry the same `2.0.0` ruleset marker, and tests lock the expected
 aliases.
@@ -81,7 +81,7 @@ alias or an AI proposal.
 
 ### Separate transaction matches from programme evidence
 
-V2's fixture contains:
+The current fixture contains:
 
 - dedicated transaction accruals for the 150 exact-match cases; and
 - programme-level accrual balances for classifiable deduction populations,
@@ -172,12 +172,11 @@ The local suite and CI check:
   identifiers and remain inactive/unavailable over MCP; and
 - the workflow contains a final complete five-branch export stage.
 
-## Verified V2 run — 25 August 2026
+## Verified synthetic run — 25 August 2026
 
-The local n8n workflow `Deduction Resolution Workbench V2` completed successfully
-on the full 250-line synthetic fixture. Live workflow and execution identifiers
-are deliberately omitted from the public repository. The final manifest
-reconciled every input ID exactly once:
+The supported workbench completed the full 250-line synthetic fixture. Live
+workflow and execution identifiers are deliberately omitted from the public
+repository. The final manifest reconciled every input ID exactly once:
 
 - 150 auto-matched;
 - 75 classified with a sufficient allocated programme balance;
@@ -203,40 +202,29 @@ Fixture byte reproducibility is verified under the CI-pinned Python 3.12 runtime
 The committed V1 evidence is a frozen regression baseline; the current generator
 produces V2 and does not recreate V1.
 
-The run used the dedicated persisted Docker `/files` mount rather than n8n's
-protected settings directory. The workflow remains inactive and used only
-synthetic inputs.
+The workflow export remains inactive and uses only portable `/files` paths. The
+operator is responsible for mapping those paths to an appropriate local Docker
+volume before a manual synthetic run.
 
-## Publication audit patch — 26 August 2026
+## Publication hardening — 26 August 2026
 
-An independent publication-readiness review returned **Publish After Minor
-Changes**. The resulting patch was applied and reverified before any new public
-release:
+The public release boundary was tightened after the verified run:
 
-- removed an internal execution reference from the README;
-- disclosed that the 75 accepted classifications used configured aliases, with
-  zero accepted AI proposals and 25 AI abstentions;
-- retained human authority over accounting actions in every terminal output;
-- aligned the embedded JavaScript vendor-alias logic with the Python reference
-  implementation and added a parity regression test;
-- clarified that recall and automation coverage are monitoring indicators, not
-  safety gates; and
-- improved the workbook's route explanations, status labels, decision cards and
-  long-text layout.
+- the evaluator now recomputes bucket, raw counterparty, raw date-window and
+  intended synthetic support eligibility before treating an allocation as valid;
+- source and routed deduction identifiers must be present, string-valued and
+  unique before a manifest can be complete;
+- provider response identifiers were replaced with local batch references while
+  preserving aggregate usage accounting;
+- public-boundary tests reject credentials, live workflow identifiers and
+  provider response identifiers;
+- the README now leads with the user, problem, outcome and authority boundary;
+  and
+- the original workflow is labelled as historical regression evidence, not a
+  supported import.
 
-The full 27-test suite passed under Python 3.12. A fresh isolated execution of
-the local n8n workflow reproduced the sealed-key result: 250 of 250 rows routed
-exactly once, zero unsafe terminal misroutes and **Ready for Demo**. The live
-workflow now matches the publishable export structurally, remains inactive and
-is unavailable over MCP. No production data was used.
-
-The first hosted Ubuntu check then exposed a cross-platform reproducibility
-defect: Python's CSV writer had emitted CRLF by default, while Windows Git had
-silently normalised the committed fixture to LF. The generator now specifies LF
-explicitly, repository attributes lock the generated fixture and workflow line
-endings, and a regression test rejects CRLF fixture output. The exact
-regeneration check passes in an official Python 3.12 Linux container. GitHub
-Actions dependencies were also advanced to their Node 24-based major versions.
+The raw internal build log, local operator context and private reasoning remain
+outside Git. This document is the deliberately curated public engineering story.
 
 ## What is not claimed
 

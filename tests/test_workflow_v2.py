@@ -55,6 +55,9 @@ class WorkflowV2Tests(unittest.TestCase):
         self.assertIn("accrual_id values must be present and unique", code)
         self.assertIn("/^[+-]?", code)
         self.assertNotIn("parseFloat", code)
+        self.assertNotIn("response.id", code)
+        self.assertNotIn("_llm_call_id", code)
+        self.assertIn("_llm_batch_ref", code)
 
     def _execute_normaliser(self, node_name, rows):
         node = shutil.which("node")
@@ -191,6 +194,36 @@ try {
             settlements.write_text("deduction_id\nD1\nD2\n", encoding="utf-8")
             (outputs / "auto_matched.json").write_text('[{"deduction_id":"D1"}]', encoding="utf-8")
             with self.assertRaises(ValueError):
+                finalize(outputs, settlements)
+
+    def test_finalize_rejects_duplicate_or_blank_source_ids(self):
+        for source_rows in (
+            "deduction_id\nD1\nD1\n",
+            "deduction_id\nD1\n \n",
+        ):
+            with self.subTest(source_rows=source_rows), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                outputs = root / "outputs"
+                outputs.mkdir()
+                settlements = root / "settlements.csv"
+                settlements.write_text(source_rows, encoding="utf-8")
+                (outputs / "auto_matched.json").write_text(
+                    '[{"deduction_id":"D1"}]', encoding="utf-8"
+                )
+                with self.assertRaisesRegex(ValueError, "present and unique"):
+                    finalize(outputs, settlements)
+
+    def test_finalize_rejects_blank_output_ids(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            outputs = root / "outputs"
+            outputs.mkdir()
+            settlements = root / "settlements.csv"
+            settlements.write_text("deduction_id\nD1\n", encoding="utf-8")
+            (outputs / "auto_matched.json").write_text(
+                '[{"deduction_id":null}]', encoding="utf-8"
+            )
+            with self.assertRaisesRegex(ValueError, "blank or non-string"):
                 finalize(outputs, settlements)
 
 

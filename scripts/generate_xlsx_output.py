@@ -137,10 +137,14 @@ def load_source_accruals(path: Path) -> tuple[list[dict[str, Any]], list[str]]:
             rows = list(csv.DictReader(handle))
     except OSError as exc:
         return [], [f"invalid:{path.name}:{exc}"]
-    required = {"accrual_id", "amount", "evidence_scope"}
+    required = {
+        "accrual_id", "accrual_date", "vendor_name", "bucket", "amount",
+        "evidence_scope",
+    }
     if not rows or not required.issubset(rows[0]):
         return rows, [
-            f"invalid:{path.name}:required columns are accrual_id, amount and evidence_scope"
+            f"invalid:{path.name}:required columns are "
+            "accrual_id, accrual_date, vendor_name, bucket, amount and evidence_scope"
         ]
     ids = [str(row.get("accrual_id") or "").strip() for row in rows]
     counts = Counter(ids)
@@ -169,10 +173,10 @@ def load_source_accruals(path: Path) -> tuple[list[dict[str, Any]], list[str]]:
 def dedupe_token_totals(records: list[dict[str, Any]]) -> dict[str, int]:
     calls = {}
     for record in records:
-        call_id = record.get("_llm_call_id")
-        if not call_id or call_id in calls:
+        batch_ref = record.get("_llm_batch_ref")
+        if not batch_ref or batch_ref in calls:
             continue
-        calls[call_id] = {
+        calls[batch_ref] = {
             key: int(record.get(key) or 0)
             for key in (
                 "input_tokens", "output_tokens", "cache_creation_input_tokens",
@@ -232,7 +236,6 @@ def compute_metrics(
         and answer_entries.get(str(row.get("deduction_id")), {}).get("true_bucket") == row.get("llm_bucket")
         for row in class_rows
     )
-    evidence_complete = sum(has_reconciling_allocation(row) for row in class_rows)
     unres_true = sum(
         answer_entries.get(str(row.get("deduction_id")), {}).get("seed_category") == "unresolvable"
         for row in unres_rows
@@ -273,6 +276,9 @@ def compute_metrics(
     transitions_by_id = defaultdict(list)
     unknown_evidence_ids = set()
     invalid_evidence_allocation_ids = set()
+    invalid_evidence_semantic_ids = set()
+    candidate_source_bound_evidence_ids = set()
+    deductions_by_evidence_id = defaultdict(set)
     matched_source_counts = Counter()
     invalid_transaction_match_ids = set()
     for row in auto_rows:
@@ -310,14 +316,38 @@ def compute_metrics(
         and not reused_transaction_match_ids
     )
     for row in class_rows:
+        deduction_id = str(row.get("deduction_id") or "").strip()
         accrual_id = str(row.get("_evidence_accrual_id") or "").strip()
         if not accrual_id or accrual_id not in source_by_id:
             unknown_evidence_ids.add(accrual_id or "<blank>")
             continue
-        if source_by_id[accrual_id].get("evidence_scope") != "programme_pool":
+        source = source_by_id[accrual_id]
+        deductions_by_evidence_id[accrual_id].add(deduction_id)
+        if source.get("evidence_scope") != "programme_pool":
             invalid_evidence_allocation_ids.add(accrual_id)
             continue
+        truth = answer_entries.get(deduction_id, {})
+        expected_support = str(truth.get("supporting_accrual_id") or "").strip()
+        try:
+            semantic_evidence_valid = (
+                truth.get("seed_category") == "classifiable"
+                and expected_support == accrual_id
+                and source.get("bucket") == row.get("llm_bucket")
+                and vendor_score(
+                    row.get("vendor_name"),
+                    source.get("vendor_name"),
+                ) >= 60
+                and days_between(
+                    row.get("transaction_date"),
+                    source.get("accrual_date"),
+                ) <= 45
+            )
+        except (TypeError, ValueError, OverflowError):
+            semantic_evidence_valid = False
+        if not semantic_evidence_valid:
+            invalid_evidence_semantic_ids.add(deduction_id or "<blank>")
         deduction_cents = round(record_value(row) * 100)
+        allocation_valid = True
         try:
             allocated = float(row.get("_allocated_amount"))
             before = float(row.get("_evidence_balance_before"))
@@ -329,6 +359,7 @@ def compute_metrics(
             after_cents = round(after * 100)
         except (TypeError, ValueError):
             invalid_evidence_allocation_ids.add(accrual_id)
+            allocation_valid = False
             continue
         if (
             allocated_cents <= 0
@@ -337,6 +368,9 @@ def compute_metrics(
             or before_cents - after_cents != allocated_cents
         ):
             invalid_evidence_allocation_ids.add(accrual_id)
+            allocation_valid = False
+        if semantic_evidence_valid and allocation_valid:
+            candidate_source_bound_evidence_ids.add(deduction_id)
         allocations_by_id[accrual_id] += allocated_cents
         transitions_by_id[accrual_id].append((before_cents, after_cents, allocated_cents))
     overallocated_accrual_ids = []
@@ -355,21 +389,31 @@ def compute_metrics(
             transition = candidates[0]
             remaining.remove(transition)
             current = transition[1]
+    invalid_source_ids = set(invalid_evidence_allocation_ids) | set(overallocated_accrual_ids)
+    valid_source_bound_evidence_ids = candidate_source_bound_evidence_ids - {
+        deduction_id
+        for accrual_id in invalid_source_ids
+        for deduction_id in deductions_by_evidence_id.get(accrual_id, set())
+    }
+    evidence_complete = len(valid_source_bound_evidence_ids)
     source_allocation_integrity = (
         source_accruals is not None
         and not source_accrual_problems
         and not unknown_evidence_ids
         and not invalid_evidence_allocation_ids
+        and not invalid_evidence_semantic_ids
         and not overallocated_accrual_ids
+        and len(valid_source_bound_evidence_ids) == len(class_rows)
     )
 
     outcome_counts = {outcome: len(rows) for outcome, rows in outputs.items()}
     outcome_values = {outcome: round(sum(record_value(r) for r in rows), 2)
                       for outcome, rows in outputs.items()}
     total_value = round(sum(outcome_values.values()), 2)
-    allocated_classified_value = round(
-        sum(record_value(row) for row in class_rows if has_reconciling_allocation(row)), 2
-    )
+    allocated_classified_value = round(sum(
+        record_value(row) for row in class_rows
+        if str(row.get("deduction_id") or "") in valid_source_bound_evidence_ids
+    ), 2)
     resolved_value = round(outcome_values["auto_matched"] + allocated_classified_value, 2)
     terminal_set = set(terminal_ids)
     terminal_value = round(sum(record_value(row) for _, row in routed
@@ -413,6 +457,8 @@ def compute_metrics(
         "source_accrual_problems": sorted(set(source_accrual_problems)),
         "unknown_evidence_ids": sorted(unknown_evidence_ids),
         "invalid_evidence_allocation_ids": sorted(invalid_evidence_allocation_ids),
+        "invalid_evidence_semantic_ids": sorted(invalid_evidence_semantic_ids),
+        "valid_source_bound_evidence_ids": sorted(valid_source_bound_evidence_ids),
         "overallocated_accrual_ids": sorted(overallocated_accrual_ids),
         "unresolvable_precision": rate(unres_true, len(unres_rows)),
         "unresolvable_recall": rate(unres_true, seeded_unres),
@@ -532,7 +578,8 @@ EXCEPTION_COLUMNS = [("_display_priority", "Priority")] + BASE_COLUMNS + [
 ]
 
 
-def write_records_tab(ws, records, columns, outcome) -> None:
+def write_records_tab(ws, records, columns, outcome, valid_evidence_ids=None) -> None:
+    valid_evidence_ids = set(valid_evidence_ids or [])
     write_header(ws, [label for _, label in columns])
     if not records:
         empty_messages = {
@@ -551,18 +598,22 @@ def write_records_tab(ws, records, columns, outcome) -> None:
         ws.row_dimensions[2].height = 28
         return
     for row_index, record in enumerate(sorted(records, key=record_value, reverse=True), 2):
+        source_bound_evidence_valid = (
+            outcome != "classified_verified"
+            or str(record.get("deduction_id") or "") in valid_evidence_ids
+        )
         enriched = {
             **record,
             "_display_priority": priority_for(record, outcome),
             "_display_owner": record.get("owner") or "Finance analyst",
             "_display_status": record.get("status") or (
-                "Evidence gap" if outcome == "classified_verified" and not has_reconciling_allocation(record)
+                "Evidence gap" if not source_bound_evidence_valid
                 else "Matched — deterministic" if outcome == "auto_matched"
                 else "Accepted — evidence allocated" if outcome == "classified_verified" else "Open"
             ),
             "_display_next_action": record.get("next_action") or (
                 next_action_for("evidence_gap")
-                if outcome == "classified_verified" and not has_reconciling_allocation(record)
+                if not source_bound_evidence_valid
                 else next_action_for(outcome)
             ),
         }
@@ -577,7 +628,7 @@ def write_records_tab(ws, records, columns, outcome) -> None:
 
 def build_summary(ws, metrics, outputs) -> None:
     ws.sheet_view.showGridLines = False
-    ws["A1"] = "Deduction Resolution Workbench — V2"
+    ws["A1"] = "Deduction Resolution Workbench"
     ws["A1"].font = Font(size=20, bold=True, color=NAVY)
     ws.row_dimensions[1].height = 32
     ws["A2"] = "Synthetic demonstration only — no real client data; Ready for Demo is not production approval."
@@ -692,12 +743,13 @@ def build_summary(ws, metrics, outputs) -> None:
         ws.column_dimensions[column].width = width
 
 
-def build_priority_worklist(ws, outputs) -> None:
+def build_priority_worklist(ws, outputs, valid_evidence_ids=None) -> None:
+    valid_evidence_ids = set(valid_evidence_ids or [])
     rows = [(outcome, record) for outcome in ("needs_review", "unresolvable", "data_quality_issue")
             for record in outputs[outcome]]
     rows.extend(
         ("evidence_gap", record) for record in outputs["classified_verified"]
-        if not has_reconciling_allocation(record)
+        if str(record.get("deduction_id") or "") not in valid_evidence_ids
     )
     rows.sort(key=lambda item: (priority_for(item[1], item[0]), -record_value(item[1])))
     write_header(ws, ["Priority", "Outcome", "Deduction ID", "Date", "Counterparty", "Value",
@@ -774,9 +826,15 @@ def build_workbook(outputs, metrics, destination: Path) -> None:
     start = wb.active
     start.title = "Start_Here"
     build_summary(start, metrics, outputs)
-    build_priority_worklist(wb.create_sheet("Priority_Worklist"), outputs)
+    valid_evidence_ids = metrics.get("valid_source_bound_evidence_ids", [])
+    build_priority_worklist(
+        wb.create_sheet("Priority_Worklist"), outputs, valid_evidence_ids
+    )
     write_records_tab(wb.create_sheet("Auto_Matched"), outputs["auto_matched"], AUTO_COLUMNS, "auto_matched")
-    write_records_tab(wb.create_sheet("Classified_Evidence"), outputs["classified_verified"], CLASSIFIED_COLUMNS, "classified_verified")
+    write_records_tab(
+        wb.create_sheet("Classified_Evidence"), outputs["classified_verified"],
+        CLASSIFIED_COLUMNS, "classified_verified", valid_evidence_ids,
+    )
     write_records_tab(wb.create_sheet("Needs_Review"), outputs["needs_review"], EXCEPTION_COLUMNS, "needs_review")
     write_records_tab(wb.create_sheet("Unresolvable"), outputs["unresolvable"], EXCEPTION_COLUMNS, "unresolvable")
     write_records_tab(wb.create_sheet("Data_Quality"), outputs["data_quality_issue"], EXCEPTION_COLUMNS, "data_quality_issue")

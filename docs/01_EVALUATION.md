@@ -16,10 +16,11 @@ run recomputable; it does not make the result representative of production.
   all lines accepted as Classified with evidence.
 - **Classifiable automation coverage:** correctly accepted classifications / all
   seeded-classifiable lines.
-- **Source-ledger allocation integrity:** every accepted classification names one
-  unique programme-balance source, its allocation equals the deduction value,
-  its before/after transitions form one chain from the source opening balance,
-  and aggregate consumption does not exceed that balance.
+- **Source-ledger allocation integrity:** every accepted classification names
+  the intended synthetic programme-balance source; the source has the same
+  eligible bucket and counterparty, falls within the 45-day window, and supports
+  the deduction value; its before/after transitions form one chain from the
+  opening balance; and aggregate consumption does not exceed that balance.
 - **Unresolvable precision:** genuinely unresolvable lines / all lines labelled
   Unresolvable.
 - **Unresolvable recall:** genuinely unresolvable lines found / all genuinely

@@ -20,13 +20,13 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "Reference code CHB and description 'Aggregated chargeback' clearly indicate chargeback.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFix5Myb3G3hErLuY5Ba",
     "input_tokens": 3806,
     "output_tokens": 2199,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": false,
-    "_evidence_note": "No supporting accrual found in claimed bucket Chargeback/Other within tolerance"
+    "_evidence_note": "No supporting accrual found in claimed bucket Chargeback/Other within tolerance",
+    "_llm_batch_ref": "batch-001"
   },
   {
     "deduction_id": "DED-2026-00749",
@@ -49,13 +49,13 @@
     "llm_confidence": 0.8,
     "llm_reasoning": "Reference code CHB indicates chargeback despite generic description.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFix5Myb3G3hErLuY5Ba",
     "input_tokens": 3806,
     "output_tokens": 2199,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": false,
-    "_evidence_note": "No supporting accrual found in claimed bucket Chargeback/Other within tolerance"
+    "_evidence_note": "No supporting accrual found in claimed bucket Chargeback/Other within tolerance",
+    "_llm_batch_ref": "batch-001"
   },
   {
     "deduction_id": "DED-2026-00745",
@@ -78,13 +78,13 @@
     "llm_confidence": 0.6,
     "llm_reasoning": "MISC-ADJ reference and 'other adjustment - multiple references' description fits general chargeback/other category.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFiy9mQwsekwCrgJxjb1",
     "input_tokens": 3883,
     "output_tokens": 2460,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": false,
-    "_evidence_note": "No supporting accrual found in claimed bucket Chargeback/Other within tolerance"
+    "_evidence_note": "No supporting accrual found in claimed bucket Chargeback/Other within tolerance",
+    "_llm_batch_ref": "batch-002"
   },
   {
     "deduction_id": "DED-2026-00737",
@@ -107,13 +107,13 @@
     "llm_confidence": 0.6,
     "llm_reasoning": "MISC-ADJ reference code and 'Miscellaneous marketplace deduction' fits general chargeback/other category.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFiy9mQwsekwCrgJxjb1",
     "input_tokens": 3883,
     "output_tokens": 2460,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": false,
-    "_evidence_note": "No supporting accrual found in claimed bucket Chargeback/Other within tolerance"
+    "_evidence_note": "No supporting accrual found in claimed bucket Chargeback/Other within tolerance",
+    "_llm_batch_ref": "batch-002"
   },
   {
     "deduction_id": "DED-2026-00747",
@@ -136,13 +136,13 @@
     "llm_confidence": 0.6,
     "llm_reasoning": "OTHER-DEDUCT reference code and 'Miscellaneous marketplace deduction' fits general chargeback/other category.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFiy9mQwsekwCrgJxjb1",
     "input_tokens": 3883,
     "output_tokens": 2460,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": false,
-    "_evidence_note": "No supporting accrual found in claimed bucket Chargeback/Other within tolerance"
+    "_evidence_note": "No supporting accrual found in claimed bucket Chargeback/Other within tolerance",
+    "_llm_batch_ref": "batch-002"
   },
   {
     "deduction_id": "DED-2026-00651",
@@ -165,13 +165,13 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "MISSING-UNITS code and 'units short on receipt' description indicate a shortage claim.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFizLuAs4Bk8Va3Je4VW",
     "input_tokens": 3821,
     "output_tokens": 2409,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": false,
-    "_evidence_note": "No supporting accrual found in claimed bucket Shortage Claim within tolerance"
+    "_evidence_note": "No supporting accrual found in claimed bucket Shortage Claim within tolerance",
+    "_llm_batch_ref": "batch-003"
   },
   {
     "deduction_id": "DED-2026-00735",
@@ -194,13 +194,13 @@
     "llm_confidence": 0.55,
     "llm_reasoning": "MISC-ADJ code and 'other adjustment - multiple references' description align with a general chargeback/other classification.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFizLuAs4Bk8Va3Je4VW",
     "input_tokens": 3821,
     "output_tokens": 2409,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": false,
-    "_evidence_note": "No supporting accrual found in claimed bucket Chargeback/Other within tolerance"
+    "_evidence_note": "No supporting accrual found in claimed bucket Chargeback/Other within tolerance",
+    "_llm_batch_ref": "batch-003"
   },
   {
     "deduction_id": "DED-2026-00731",
@@ -223,13 +223,13 @@
     "llm_confidence": 0.7,
     "llm_reasoning": "CHB reference code strongly suggests a chargeback classification despite generic description.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFizLuAs4Bk8Va3Je4VW",
     "input_tokens": 3821,
     "output_tokens": 2409,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": false,
-    "_evidence_note": "No supporting accrual found in claimed bucket Chargeback/Other within tolerance"
+    "_evidence_note": "No supporting accrual found in claimed bucket Chargeback/Other within tolerance",
+    "_llm_batch_ref": "batch-003"
   },
   {
     "deduction_id": "DED-2026-00655",
@@ -252,13 +252,13 @@
     "llm_confidence": 0.92,
     "llm_reasoning": "Reference code SHORT and description 'Inventory receipt shortfall claim' clearly indicate a shortage claim.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFj1YxVTuML6YpJhSUrB",
     "input_tokens": 3806,
     "output_tokens": 2533,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": false,
-    "_evidence_note": "No supporting accrual found in claimed bucket Shortage Claim within tolerance"
+    "_evidence_note": "No supporting accrual found in claimed bucket Shortage Claim within tolerance",
+    "_llm_batch_ref": "batch-004"
   },
   {
     "deduction_id": "DED-2026-00699",
@@ -281,12 +281,12 @@
     "llm_confidence": 0.9,
     "llm_reasoning": "Reference code DMG-CLAIM and description 'Inbound damage adjustment' clearly indicate damaged goods.",
     "_classification_error": null,
-    "_llm_call_id": "msg_011CdFj1YxVTuML6YpJhSUrB",
     "input_tokens": 3806,
     "output_tokens": 2533,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
     "_evidence_agrees": false,
-    "_evidence_note": "No supporting accrual found in claimed bucket Damaged Goods within tolerance"
+    "_evidence_note": "No supporting accrual found in claimed bucket Damaged Goods within tolerance",
+    "_llm_batch_ref": "batch-004"
   }
 ]
