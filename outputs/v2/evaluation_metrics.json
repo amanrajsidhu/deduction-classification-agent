@@ -1,0 +1,88 @@
+{
+  "generated_at_utc": "2026-08-26T09:31:59.128621+00:00",
+  "expected_lines": 250,
+  "routed_records": 250,
+  "unique_routed_lines": 250,
+  "file_problems": [],
+  "duplicate_ids": [],
+  "unknown_ids": [],
+  "omitted_ids": [],
+  "outcome_counts": {
+    "auto_matched": 150,
+    "classified_verified": 75,
+    "needs_review": 0,
+    "unresolvable": 25,
+    "data_quality_issue": 0
+  },
+  "outcome_values_gbp": {
+    "auto_matched": 87737.48,
+    "classified_verified": 42555.61,
+    "needs_review": 0,
+    "unresolvable": 3460.1,
+    "data_quality_issue": 0
+  },
+  "total_value_gbp": 133753.19,
+  "resolved_value_gbp": 130293.09,
+  "allocated_classified_value_gbp": 42555.61,
+  "v1_plausibility_only_value_gbp": 0.0,
+  "human_work_value_gbp": 3460.1,
+  "resolved_value_rate": 0.974130710452588,
+  "auto_match_precision": 1.0,
+  "auto_match_recall": 1.0,
+  "auto_match_pair_correctness": 1.0,
+  "classification_precision": 1.0,
+  "accepted_classification_method_counts": {
+    "configured_alias": 75
+  },
+  "unresolvable_method_counts": {
+    "ai_proposal": 25
+  },
+  "classifiable_automation_coverage": 1.0,
+  "evidence_allocation_coverage": 1.0,
+  "transaction_match_integrity": true,
+  "invalid_transaction_match_ids": [],
+  "reused_transaction_match_ids": [],
+  "source_allocation_integrity": true,
+  "source_accrual_problems": [],
+  "unknown_evidence_ids": [],
+  "invalid_evidence_allocation_ids": [],
+  "overallocated_accrual_ids": [],
+  "unresolvable_precision": 1.0,
+  "unresolvable_recall": 1.0,
+  "terminal_misroute_count": 0,
+  "terminal_misroute_ids": [],
+  "terminal_misroute_value_gbp": 0,
+  "value_weighted_terminal_misroute_rate": 0.0,
+  "confusion_matrix": {
+    "auto_matched": {
+      "auto_matched": 150,
+      "classified_verified": 0,
+      "needs_review": 0,
+      "unresolvable": 0,
+      "data_quality_issue": 0
+    },
+    "classifiable": {
+      "auto_matched": 0,
+      "classified_verified": 75,
+      "needs_review": 0,
+      "unresolvable": 0,
+      "data_quality_issue": 0
+    },
+    "unresolvable": {
+      "auto_matched": 0,
+      "classified_verified": 0,
+      "needs_review": 0,
+      "unresolvable": 25,
+      "data_quality_issue": 0
+    }
+  },
+  "token_totals": {
+    "calls": 4,
+    "input_tokens": 15995,
+    "output_tokens": 8440,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+  },
+  "overall_status": "Ready for Demo",
+  "overall_status_reason": "The complete synthetic run passed every published safety and quality gate."
+}

@@ -16,8 +16,21 @@ docs/deduction_classification_build_brief.md
 # Python
 __pycache__/
 *.pyc
+*.inspect.ndjson
 .venv/
 venv/
+
+# Secrets and machine-local operator context
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+credentials/
+CLAUDE.md
 
 # OS cruft
 .DS_Store

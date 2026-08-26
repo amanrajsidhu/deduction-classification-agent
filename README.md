@@ -1,126 +1,229 @@
-# Deduction and exception classification agent
+# Deduction Resolution Workbench
 
-An n8n workflow that takes a settlement file full of cryptic deductions, resolves the clean lines deterministically, uses Claude to classify the leftovers into a company's own accrual buckets, and checks every AI answer against the ledger before trusting it.
+A public, synthetic demonstration of a controlled finance-automation pattern:
+rules resolve clean retailer deductions, AI proposes categories for the
+remainder, ledger balances constrain what can be accepted, and uncertain lines
+stop for a person.
 
-This is a demo build on synthetic data. It exists to prove the concept and produce accuracy numbers that can be independently verified, not to be a drop-in production system. The line between the two is spelled out in [Demo vs. production](#demo-vs-production).
+> **Current status:** V2 has been run end to end in the local n8n instance on
+> the 250-line synthetic fixture. The complete run passed the independent
+> evaluator as **Ready for Demo**. This is synthetic technical
+> evidence, not production accuracy or approval for real client data.
 
----
+## The 12-year-old explanation
 
-## The problem
+A retailer sometimes pays a supplier less than the invoice and attaches a
+confusing note explaining why. A finance analyst then has to work out which
+deductions were expected, which accounting bucket they belong in, and which
+ones need more information.
 
-A company that sells physical products through channels it doesn't control (marketplaces like Amazon or Walmart, big-box retail programs, its own storefront's payment stack, third-party processors) gets paid in settlements. The money that arrives is rarely the money that was invoiced. Each settlement comes in net of deductions: amounts withheld for promotions, shortage claims, price disputes, damaged goods, chargebacks.
+This workbench sorts the clear cases, proposes an answer for the harder cases,
+checks that the relevant accrual balance can support that answer, and puts
+anything unsafe into a human worklist—starting with the largest amounts.
 
-The deduction line itself usually explains very little. In this dataset, which is modelled on that reality, the single most common description is literally `Miscellaneous deduction - see note`. Reference codes are opaque. The same counterparty shows up under half a dozen names (`Amazon EU SARL`, `AMZN Mktp UK`, `AMAZON.COM LLC`). Some remitters are just `Unknown Remitter`.
+## Who it helps
 
-Finance teams already accrue for expected deductions in their own buckets, and accounting systems already auto-match the clean cases. The pain is the remainder: lines that match nothing, described too vaguely to bucket without a person digging through statements and portals. At volume, that person falls behind, and unexplained deductions accumulate as unreconciled balance.
+- **Daily user:** deductions or accounts-receivable analyst.
+- **Executive reader:** Financial Controller or Finance Director.
+- **Best-fit context:** a consumer-products finance team processing recurring
+  retailer or marketplace settlement deductions.
 
-This build targets that remainder. Not the matching layer, which is a solved problem, but the classification of what's left after matching.
+The analyst gets a ranked worklist. The finance leader gets a value-led summary
+showing what was resolved, what remains exposed and why.
 
-## What it does
+## The problem it addresses
 
-Given a settlement/deductions file and an accruals ledger, the workflow:
+Retailer deduction lines are frequently cryptic. Counterparty names vary,
+reference codes are opaque and the supporting information may sit across an ERP,
+a retailer portal and spreadsheets. Clean matches are not the hard part. The
+problem is the residue that has to be classified, evidenced and investigated.
 
-1. Normalises every line: vendor names, dates, amounts, plus a stable hash key per line.
-2. Matches deterministically. Clean amount/date/vendor matches are resolved without any LLM involvement.
-3. Sends the unmatched lines to Claude in batches, to be classified into one of six buckets.
-4. Verifies each classification against the ledger. If no supporting accrual exists for the claimed bucket, the line goes to a human instead of being trusted.
-5. Routes every line to one of five outcomes and exports a six-tab Excel report.
+This repository demonstrates that residue-handling pattern. It complements
+deduction-recovery products and ERPs; it does not claim to replace them.
 
+## How V2 works
+
+1. **Validate and normalise.** Dates, amounts and counterparty names are parsed.
+   Known aliases such as `AMZN Mktp UK` and `Amazon` share one canonical identity.
+2. **Match deterministically.** Exact-value, near-date, same-counterparty pairs
+   are assigned globally and one-to-one. These lines never reach AI.
+3. **Apply controlled aliases, then constrain the AI proposal.** Approved
+   reference aliases take priority. When no alias exists, Claude proposes one
+   configured bucket or abstains as `Unresolvable`.
+4. **Allocate ledger evidence once across the full run.** An accepted proposal
+   must have a same-counterparty programme accrual in the proposed bucket with
+   enough available balance. The allocation reduces that balance, preventing
+   one accrual from being reused indefinitely.
+5. **Fail closed.** Conflicts, exhausted balances, malformed model output and an
+   `Unresolvable` proposal with an exact-amount near-date ledger candidate stop
+   for human review.
+6. **Report money and next actions.** The workbook begins with value resolved,
+   value requiring a person, unsafe-routing exposure and the first item to
+   investigate.
+
+The system proposes. A person retains responsibility for journals, write-offs,
+disputes, approvals and every decision of record.
+
+## What the V1 audit found
+
+V1 looked stronger than it was. The new evaluator recomputes the canonical
+250-line run as follows:
+
+| Outcome | Lines | Value |
+|---|---:|---:|
+| Auto-matched | 141 | £84,525.13 |
+| Classified using V1's bucket-plausibility check | 65 | £47,461.98 |
+| Needs review | 10 | £1,733.51 |
+| Labelled unresolvable | 34 | £6,325.43 |
+| **Total** | **250** | **£140,046.05** |
+
+The important correction is not hidden:
+
+- all 25 truly unresolvable lines were found: **100% recall**;
+- only 25 of the 34 lines labelled unresolvable were truly unresolvable:
+  **73.5% precision**;
+- nine matchable Amazon lines worth **£3,212.35** were accepted into the wrong
+  terminal outcome; and
+- the 65 accepted classifications reused a small set of leftover accruals under
+  a permissive bucket-level check. That demonstrated plausibility, not allocated
+  evidence.
+
+The preserved V1 evidence therefore says **Needs Repair**, not Excellent. See
+[`docs/01_EVALUATION.md`](docs/01_EVALUATION.md) for every denominator and status
+gate, and [`docs/02_EVIDENCE_AND_POSITIONING.md`](docs/02_EVIDENCE_AND_POSITIONING.md)
+for the conversation, market and competitor evidence with its limitations.
+
+## What V2 changes
+
+- One alias rule set across fixture generation and workflow matching.
+- A separate programme-balance population for classifiable deductions.
+- Available-balance allocation across the complete run, after all AI batches.
+- Exact-amount near-date conflicts forced to human review.
+- Required branch files and exact ID coverage before a run can be complete.
+- Full confusion matrix, precision, recall, coverage and value-weighted errors.
+- Finance-first workbook with a priority worklist, owner, status and next action.
+- Reproducible fixtures, adversarial regression/control tests and continuous integration.
+
+## Verified V2 result
+
+The 25 August 2026 full synthetic run produced:
+
+| Outcome | Lines | Value |
+|---|---:|---:|
+| Auto-matched deterministically | 150 | £87,737.48 |
+| Classified with allocated evidence | 75 | £42,555.61 |
+| Needs review | 0 | £0.00 |
+| Unresolvable from the supplied data | 25 | £3,460.10 |
+| Data-quality issue | 0 | £0.00 |
+| **Total** | **250** | **£133,753.19** |
+
+Every seeded line was routed exactly once. Pair correctness, accepted
+classification precision, evidence-allocation coverage, unresolvable precision
+and unresolvable recall were all 100% on this controlled fixture, with zero
+unsafe terminal misroutes. The evaluator's conclusion is **Ready for Demo**.
+Those figures describe this synthetic answer key only.
+
+The classification result needs one important qualification: all 75 accepted
+classifications came from deterministic, configured reference aliases. No AI
+proposal was accepted as a classification in this fixture. The AI's accepted
+contribution was to abstain on 25 deliberately vague lines, which the conflict
+check then confirmed as unresolvable from the supplied data. The 100%
+classification-precision result therefore measures all accepted classifications;
+it must not be presented as 100% AI accuracy.
+
+Auto-match recall and classifiable automation coverage are reported as monitoring
+indicators, not **Ready for Demo** gates. A safe stop can reduce coverage without
+creating an unsafe terminal result.
+
+## Repository map
+
+```text
+fixtures/v2/                  reproducible V2 synthetic inputs and sealed key
+outputs/                      preserved V1 baseline evidence
+outputs/v2/                   verified V2 branches, manifest, metrics and workbook
+scripts/deduction_rules.py    canonical Python control rules used by tests
+scripts/generate_dataset.py   deterministic V2 fixture generator
+scripts/finalize_run.py       proves exact coverage before creating empty branches
+scripts/generate_xlsx_output.py strict evaluator and workbook builder
+scripts/upgrade_workflow_v2.py deterministic V1-to-V2 workflow builder
+tests/                        evaluation, fixture, allocation and workflow tests
+workflows/...V1...json        preserved baseline workflow
+workflows/DEDUCTION_RESOLUTION_WORKBENCH_V2.json  V2 workflow
+docs/                         contract, evaluation, dataset and security boundary
 ```
-                                                 auto-matched          (deterministic, no LLM)
- CSVs -> normalise -> deterministic match -> --- classified+verified   (LLM agreed with ledger)
-                                                 needs review          (LLM and ledger disagreed)
-                                                 unresolvable          (genuinely no signal)
-                                                 data quality issue    (unparseable input)
+
+## Verify locally
+
+```bash
+python -m pip install -r requirements.txt
+python scripts/generate_dataset.py
+python scripts/upgrade_workflow_v2.py
+python -m unittest discover -s tests -v
+python scripts/generate_xlsx_output.py \
+  --outputs-dir outputs/v2 \
+  --answer-key fixtures/v2/answer_key.json.gz \
+  --accrual-csv fixtures/v2/invoice_accruals.csv \
+  --xlsx outputs/v2/deduction_resolution_workbench_v2.xlsx \
+  --metrics-json outputs/v2/evaluation_metrics.json
 ```
 
-The design principle: the LLM never gets the last word. A deterministic evidence check sits behind it, so a confident but wrong classification gets caught instead of silently exported.
+These commands require no AI key. They prove fixture reproducibility, alias
+behaviour, allocation safety, workflow structure and source-ledger-bound V2
+evaluation. They do not execute n8n or call Anthropic.
 
-## Results
+Continuous integration pins Python 3.12. The byte-for-byte fixture reproducibility
+claim applies to that pinned runtime.
 
-The dataset is synthetic and seeded with a known ground truth (a sealed answer key), which is what makes the accuracy numbers checkable rather than claimed. On the canonical run of 250 deduction lines:
+## Re-run V2 in n8n
 
-| Outcome | Count | Share |
-|---|---|---|
-| Auto-matched (no LLM) | 141 | 56.4% |
-| Classified and verified | 65 | 26.0% |
-| Unresolvable (correctly flagged) | 34 | 13.6% |
-| Needs review | 10 | 4.0% |
-| Data quality issues | 0 | 0.0% |
+The local workflow is `Deduction Resolution Workbench V2` and remains inactive.
+The public export contains no live workflow, instance or credential identifiers;
+select the intended n8n credential after import. Its dedicated Docker file volume is
+mounted at `/files`; no input or output is stored inside n8n's protected settings
+directory.
 
-Scored against the sealed answer key:
+1. Copy the two fixture CSVs into
+   `/files/deduction-workbench/v2/input/`.
+2. Confirm the existing Anthropic credential is attached and run the workflow
+   manually.
+3. Copy the five JSON branch exports into `outputs/v2/`.
+4. Prove routing coverage and materialise any genuinely empty branch:
 
-- 100% classification accuracy (65 of 65 verified lines matched the true bucket)
-- 100% unresolvable-flagging accuracy (all 25 genuinely unresolvable lines were flagged, not guessed)
-- 100% auto-match pair correctness, meaning zero false matches across all 141 auto-matched lines
-- 94% auto-match recall (141 of 150 seeded matchable lines; the other 9 carry a vendor-name variant that deliberately fails the match threshold and gets handled by the classifier instead)
-- 5 Claude API calls in total, roughly 17.3k input and 10.6k output tokens. Deterministic filtering means most lines never reach the LLM at all.
-
-Counts on the borderline cases shift slightly between runs, since the LLM is not bit-for-bit deterministic. The deterministic stages don't move: the auto-match count and the zero-false-match result are stable.
-
-## How it works
-
-Six stages inside the workflow:
-
-1. **Intake.** Reads the two CSVs.
-2. **Normalise and key.** Lowercases and strips vendor names, parses dates through a strict priority order (ISO, unambiguous day/month formats, Excel serials; genuinely ambiguous dates get flagged rather than guessed), and computes an FNV-1a key per line.
-3. **Deterministic match.** Ranks all valid settlement-to-accrual pairs globally and assigns best first, each accrual consumable once. Amounts are compared in integer pence to avoid floating-point tolerance bugs. Thresholds: amount within £0.01, date within 1 day, vendor score of at least 60.
-4. **Classify.** Unmatched lines go to Claude in batches, using forced tool-use with a strict schema so the response arrives as parsed JSON rather than free text that has to be scraped. A malformed or failed batch degrades to "needs review" instead of crashing the run.
-5. **Verify against evidence.** The check that makes the AI usable: does a supporting accrual exist for the claimed bucket, within amount and date tolerance? An "unresolvable" call from the model can only be overridden if the ledger holds a plausible accrual with a matching vendor. Agreement passes; disagreement goes to a human.
-6. **Route and export.** Five outcome branches, each written to JSON, then compiled into the six-tab XLSX.
-
-The bugs found while building this, and how they were fixed, are written up in [`docs/BUILD_NOTES.md`](docs/BUILD_NOTES.md). That file is the substance of the project; the short version is that three of the five interesting failures only appeared when real data ran at real scale.
-
-## Demo vs. production
-
-Two parts of this repo are demo scaffolding and would not exist in a client deployment:
-
-**The sealed answer key** (`outputs/answer_key.json.gz`). It exists only to grade the demo. It is fully synthetic, generated deterministically by `scripts/generate_dataset.py` with a fixed seed, and the workflow itself never reads it. It gets used once, afterwards, by a separate script that compares the workflow's output against ground truth. Real client data has no answer key, so in production this concept disappears entirely.
-
-**The Python scoring script** (`scripts/generate_xlsx_output.py`). It runs outside the automation and does two jobs: grading against the answer key, and building the Excel report. In production, the grading half disappears for the reason above, and the report-building half moves inside the n8n workflow as a final step, so the report is produced automatically with no external script.
-
-Everything else (the pipeline, the deterministic matcher, the batched classification, the evidence verification) is the real mechanism, demonstrated on synthetic data.
-
-## Repo structure
-
-```
-.
-├── README.md
-├── workflows/
-│   └── ...DEDUCTION_CLASSIFICATION...json   # the n8n workflow (import this)
-├── scripts/
-│   ├── generate_dataset.py                  # builds the synthetic dataset + sealed answer key
-│   └── generate_xlsx_output.py              # scores results + builds the six-tab XLSX (demo-side)
-├── outputs/
-│   ├── settlement_deductions.csv            # input: the deductions
-│   ├── invoice_accruals.csv                 # input: the accruals ledger
-│   ├── answer_key.json.gz                   # sealed ground truth (synthetic)
-│   ├── auto_matched.json, ...               # workflow output, one file per branch
-│   └── deduction_classification_output.xlsx # the final six-tab report
-└── docs/
-    └── BUILD_NOTES.md                       # the engineering story
-```
-
-## Running it yourself
-
-1. Regenerate the dataset if you want to (the committed files are identical, the generator is seeded):
    ```bash
-   python scripts/generate_dataset.py
+   python scripts/finalize_run.py
    ```
-2. Import the workflow JSON from `workflows/` into an n8n instance, point the file nodes at the two CSVs, and attach an Anthropic credential. Running it produces the per-branch JSON output files.
-3. Score the output and build the report:
+
+5. Evaluate V2 without overwriting the V1 baseline:
+
    ```bash
-   python scripts/generate_xlsx_output.py
+   python scripts/generate_xlsx_output.py \
+     --outputs-dir outputs/v2 \
+     --answer-key fixtures/v2/answer_key.json.gz \
+     --accrual-csv fixtures/v2/invoice_accruals.csv \
+     --xlsx outputs/v2/deduction_resolution_workbench_v2.xlsx \
+     --metrics-json outputs/v2/evaluation_metrics.json
    ```
-   This reads the workflow's JSON output plus the answer key and writes `outputs/deduction_classification_output.xlsx`.
 
-## Stack
+A result may be called **Ready for Demo** only if the complete run has zero
+unsafe terminal misroutes and passes every published precision and evidence gate.
 
-- n8n for orchestration, self-hosted locally in Docker during development
-- Claude (Anthropic API) for exception classification, via forced tool-use
-- Python with openpyxl for dataset generation and scoring
-- The workflow itself was built agentically: Claude Code driving n8n's MCP server under human direction, on top of internal build conventions. The process is described at the end of [`docs/BUILD_NOTES.md`](docs/BUILD_NOTES.md).
+## Data and security boundary
 
----
+Everything committed here is synthetic. Do not send, request or upload real
+settlement exports, ledgers, invoices, customer details or portal credentials to
+the public demo. Real-data work requires a separately authorised client
+environment and agreed access, retention and deletion controls. See
+[`docs/SECURITY_AND_DATA_BOUNDARY.md`](docs/SECURITY_AND_DATA_BOUNDARY.md).
 
-*Built as a proof-of-work demo. All data in this repo is synthetic. No real company, customer, or transaction data appears anywhere.*
+## Non-goals
+
+- No automatic journal posting, write-off, dispute or approval.
+- No retailer-portal or ERP integration in the public repository.
+- No hosted SaaS and no production-accuracy claim.
+- No claim to replace enterprise deduction platforms.
+- No automated LinkedIn or outreach activity.
+
+The value of this repository is the visible reasoning: a useful finance workflow,
+measurable controls, honest failure disclosure and a repair that can be rerun.
+The ways this could still fail are recorded in
+[`docs/03_RISK_REGISTER.md`](docs/03_RISK_REGISTER.md).

@@ -1,0 +1,1028 @@
+{
+  "name": "Deduction Resolution Workbench V2",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "7262467a-2ece-4039-8bba-4bb3b2aa2425",
+      "name": "Start",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        336
+      ]
+    },
+    {
+      "parameters": {
+        "fileSelector": "/files/deduction-workbench/v2/input/settlement_deductions.csv",
+        "options": {}
+      },
+      "id": "ff9181fb-7fc7-49a9-98cd-5a5ea810802c",
+      "name": "Read Settlement CSV",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        464,
+        256
+      ]
+    },
+    {
+      "parameters": {
+        "options": {
+          "headerRow": true,
+          "readAsString": true
+        }
+      },
+      "id": "07d8b7d3-39b2-42c2-9def-19fdea685ac3",
+      "name": "Extract Settlement Lines",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        688,
+        256
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const RULESET_VERSION = '2.0.0';\nconst ID_FIELD = 'deduction_id';\nconst DATE_FIELD = 'transaction_date';\nconst STOP_ON_IDENTIFIER_ERROR = false;\nconst REQUIRE_POSITIVE_AMOUNT = false;\nfunction normaliseVendor(name) {\n  return String(name || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').replace(/\\s+/g, ' ').trim();\n}\nfunction canonicalVendor(name) {\n  const normal = normaliseVendor(name); const tokens = new Set(normal.split(' ').filter(Boolean));\n  if (tokens.has('amazon') || tokens.has('amzn') || tokens.has('mktp')) return 'amazon';\n  if (tokens.has('walmart')) return 'walmart';\n  if (tokens.has('target')) return 'target';\n  if (tokens.has('costco')) return 'costco';\n  if (tokens.has('shopify')) return 'shopify direct';\n  return normal;\n}\nfunction validUtcDate(year, month, day) {\n  if (![year, month, day].every(Number.isInteger)) return null;\n  const d = new Date(Date.UTC(year, month - 1, day));\n  if (!Number.isFinite(d.getTime())) return null;\n  if (d.getUTCFullYear() !== year || d.getUTCMonth() !== month - 1 || d.getUTCDate() !== day) return null;\n  return d.toISOString().slice(0, 10);\n}\nfunction parseDateValue(raw) {\n  const str = String(raw || '').trim();\n  if (/^\\d{5}$/.test(str)) { const serial = Number(str); const d = new Date(Date.UTC(1899, 11, 30) + serial * 86400000); if (Number.isFinite(d.getTime())) return { iso: d.toISOString().slice(0, 10), method: 'excel_serial', matchable: true, error: null }; }\n  let m = str.match(/^(\\d{4})[-\\/](\\d{1,2})[-\\/](\\d{1,2})$/);\n  if (m) { const iso = validUtcDate(Number(m[1]), Number(m[2]), Number(m[3])); return iso ? { iso, method: 'iso', matchable: true, error: null } : { iso: null, method: 'invalid_calendar_date', matchable: false, error: 'invalid_calendar_date' }; }\n  m = str.match(/^(\\d{1,2})\\/(\\d{1,2})\\/(\\d{4})$/);\n  if (m) { const a = Number(m[1]), b = Number(m[2]), year = Number(m[3]); let iso = null, method = null; if (a > 12 && b <= 12) { iso = validUtcDate(year, b, a); method = 'slash_unambiguous_dmy'; } else if (b > 12 && a <= 12) { iso = validUtcDate(year, a, b); method = 'slash_unambiguous_mdy'; } else if (a <= 12 && b <= 12) return { iso: null, method: 'ambiguous_slash_date', matchable: false, error: 'ambiguous_slash_date' }; return iso ? { iso, method, matchable: true, error: null } : { iso: null, method: 'invalid_calendar_date', matchable: false, error: 'invalid_calendar_date' }; }\n  return { iso: null, method: 'unparseable', matchable: false, error: 'unparseable_date' };\n}\nfunction parseAmountValue(raw) {\n  const str = String(raw ?? '').trim();\n  if (!/^[+-]?(?:\\d+(?:\\.\\d{1,2})?|\\.\\d{1,2})$/.test(str)) return { value: null, error: 'invalid_amount' };\n  const value = Number(str), cents = Math.round(Math.abs(value) * 100);\n  if (!Number.isFinite(value) || !Number.isSafeInteger(cents) || cents <= 0 || (REQUIRE_POSITIVE_AMOUNT && value <= 0)) return { value: null, error: 'invalid_amount' };\n  return { value, error: null };\n}\nfunction fnv1a(str) { let hash = 2166136261; for (let i = 0; i < str.length; i++) { hash ^= str.charCodeAt(i); hash = Math.imul(hash, 16777619); } return (hash >>> 0).toString(16); }\nconst sourceItems = $input.all();\nconst idCounts = new Map();\nfor (const item of sourceItems) { const id = String(item.json[ID_FIELD] ?? '').trim(); if (id) idCounts.set(id, (idCounts.get(id) || 0) + 1); }\nconst identifierProblems = sourceItems.filter(item => { const id = String(item.json[ID_FIELD] ?? '').trim(); return !id || idCounts.get(id) !== 1; });\nif (STOP_ON_IDENTIFIER_ERROR && identifierProblems.length) throw new Error('Input stopped: every ' + ID_FIELD + ' must be present and unique.');\nreturn sourceItems.map(item => {\n  const j = item.json, identifier = String(j[ID_FIELD] ?? '').trim(), identifierValid = !!identifier && idCounts.get(identifier) === 1;\n  const dateInfo = parseDateValue(j[DATE_FIELD]), amountInfo = parseAmountValue(j.amount), rawVendor = normaliseVendor(j.vendor_name), vendor = canonicalVendor(j.vendor_name);\n  const valid = identifierValid && dateInfo.matchable && amountInfo.error === null && !!vendor;\n  const error = !identifierValid ? 'missing_or_duplicate_' + ID_FIELD : (dateInfo.error || amountInfo.error || (!vendor ? 'invalid_vendor' : null));\n  return { json: { ...j, [ID_FIELD]: identifier || j[ID_FIELD], amount: amountInfo.value, _raw_normalised_vendor: rawVendor, _normalised_vendor: vendor, _normalised_date: dateInfo.iso, _date_parse_method: dateInfo.method, matchable: valid, error: valid ? null : error, _match_key: valid ? fnv1a(dateInfo.iso + '|' + amountInfo.value.toFixed(2) + '|' + vendor) : null, _ruleset_version: RULESET_VERSION } };\n});"
+      },
+      "id": "b647eeed-9237-4e56-8b15-d445003bae2e",
+      "name": "Code (Settlement: normalise + key)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        912,
+        256
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "aac3988a-77e4-472c-b076-3d0192a66d35",
+      "name": "Merge Settlement and Accrual",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1136,
+        336
+      ]
+    },
+    {
+      "parameters": {
+        "fileSelector": "/files/deduction-workbench/v2/input/invoice_accruals.csv",
+        "options": {}
+      },
+      "id": "7ef8a545-1714-4488-8395-4c9da9d1402e",
+      "name": "Read Accrual CSV",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        464,
+        448
+      ]
+    },
+    {
+      "parameters": {
+        "options": {
+          "headerRow": true,
+          "readAsString": true
+        }
+      },
+      "id": "4803ae91-b5d4-436a-869b-38872cfda3a9",
+      "name": "Extract Accrual Lines",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        688,
+        448
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const RULESET_VERSION = '2.0.0';\nconst ID_FIELD = 'accrual_id';\nconst DATE_FIELD = 'accrual_date';\nconst STOP_ON_IDENTIFIER_ERROR = true;\nconst REQUIRE_POSITIVE_AMOUNT = true;\nfunction normaliseVendor(name) {\n  return String(name || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').replace(/\\s+/g, ' ').trim();\n}\nfunction canonicalVendor(name) {\n  const normal = normaliseVendor(name); const tokens = new Set(normal.split(' ').filter(Boolean));\n  if (tokens.has('amazon') || tokens.has('amzn') || tokens.has('mktp')) return 'amazon';\n  if (tokens.has('walmart')) return 'walmart';\n  if (tokens.has('target')) return 'target';\n  if (tokens.has('costco')) return 'costco';\n  if (tokens.has('shopify')) return 'shopify direct';\n  return normal;\n}\nfunction validUtcDate(year, month, day) {\n  if (![year, month, day].every(Number.isInteger)) return null;\n  const d = new Date(Date.UTC(year, month - 1, day));\n  if (!Number.isFinite(d.getTime())) return null;\n  if (d.getUTCFullYear() !== year || d.getUTCMonth() !== month - 1 || d.getUTCDate() !== day) return null;\n  return d.toISOString().slice(0, 10);\n}\nfunction parseDateValue(raw) {\n  const str = String(raw || '').trim();\n  if (/^\\d{5}$/.test(str)) { const serial = Number(str); const d = new Date(Date.UTC(1899, 11, 30) + serial * 86400000); if (Number.isFinite(d.getTime())) return { iso: d.toISOString().slice(0, 10), method: 'excel_serial', matchable: true, error: null }; }\n  let m = str.match(/^(\\d{4})[-\\/](\\d{1,2})[-\\/](\\d{1,2})$/);\n  if (m) { const iso = validUtcDate(Number(m[1]), Number(m[2]), Number(m[3])); return iso ? { iso, method: 'iso', matchable: true, error: null } : { iso: null, method: 'invalid_calendar_date', matchable: false, error: 'invalid_calendar_date' }; }\n  m = str.match(/^(\\d{1,2})\\/(\\d{1,2})\\/(\\d{4})$/);\n  if (m) { const a = Number(m[1]), b = Number(m[2]), year = Number(m[3]); let iso = null, method = null; if (a > 12 && b <= 12) { iso = validUtcDate(year, b, a); method = 'slash_unambiguous_dmy'; } else if (b > 12 && a <= 12) { iso = validUtcDate(year, a, b); method = 'slash_unambiguous_mdy'; } else if (a <= 12 && b <= 12) return { iso: null, method: 'ambiguous_slash_date', matchable: false, error: 'ambiguous_slash_date' }; return iso ? { iso, method, matchable: true, error: null } : { iso: null, method: 'invalid_calendar_date', matchable: false, error: 'invalid_calendar_date' }; }\n  return { iso: null, method: 'unparseable', matchable: false, error: 'unparseable_date' };\n}\nfunction parseAmountValue(raw) {\n  const str = String(raw ?? '').trim();\n  if (!/^[+-]?(?:\\d+(?:\\.\\d{1,2})?|\\.\\d{1,2})$/.test(str)) return { value: null, error: 'invalid_amount' };\n  const value = Number(str), cents = Math.round(Math.abs(value) * 100);\n  if (!Number.isFinite(value) || !Number.isSafeInteger(cents) || cents <= 0 || (REQUIRE_POSITIVE_AMOUNT && value <= 0)) return { value: null, error: 'invalid_amount' };\n  return { value, error: null };\n}\nfunction fnv1a(str) { let hash = 2166136261; for (let i = 0; i < str.length; i++) { hash ^= str.charCodeAt(i); hash = Math.imul(hash, 16777619); } return (hash >>> 0).toString(16); }\nconst sourceItems = $input.all();\nconst idCounts = new Map();\nfor (const item of sourceItems) { const id = String(item.json[ID_FIELD] ?? '').trim(); if (id) idCounts.set(id, (idCounts.get(id) || 0) + 1); }\nconst identifierProblems = sourceItems.filter(item => { const id = String(item.json[ID_FIELD] ?? '').trim(); return !id || idCounts.get(id) !== 1; });\nif (STOP_ON_IDENTIFIER_ERROR && identifierProblems.length) throw new Error('Input stopped: every ' + ID_FIELD + ' must be present and unique.');\nreturn sourceItems.map(item => {\n  const j = item.json, identifier = String(j[ID_FIELD] ?? '').trim(), identifierValid = !!identifier && idCounts.get(identifier) === 1;\n  const dateInfo = parseDateValue(j[DATE_FIELD]), amountInfo = parseAmountValue(j.amount), rawVendor = normaliseVendor(j.vendor_name), vendor = canonicalVendor(j.vendor_name);\n  const valid = identifierValid && dateInfo.matchable && amountInfo.error === null && !!vendor;\n  const error = !identifierValid ? 'missing_or_duplicate_' + ID_FIELD : (dateInfo.error || amountInfo.error || (!vendor ? 'invalid_vendor' : null));\n  return { json: { ...j, [ID_FIELD]: identifier || j[ID_FIELD], amount: amountInfo.value, _raw_normalised_vendor: rawVendor, _normalised_vendor: vendor, _normalised_date: dateInfo.iso, _date_parse_method: dateInfo.method, matchable: valid, error: valid ? null : error, _match_key: valid ? fnv1a(dateInfo.iso + '|' + amountInfo.value.toFixed(2) + '|' + vendor) : null, _ruleset_version: RULESET_VERSION } };\n});"
+      },
+      "id": "c8c4a887-9a8f-414c-837d-d2086cebb9c3",
+      "name": "Code (Accrual: normalise + key)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        912,
+        448
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const RULESET_VERSION = '2.0.0';\nfunction vendorScore(a, b) { if (!a || !b) return 0; if (a === b) return 100; if (a.includes(b) || b.includes(a)) return 90; const aa = a.split(' ').filter(Boolean), bb = b.split(' ').filter(Boolean), setB = new Set(bb); const overlap = aa.filter(t => setB.has(t) && t.length >= 3); if (!overlap.length) return 0; return overlap.length >= Math.min(aa.length, bb.length) ? 70 : 60; }\nfunction daysBetween(a, b) { const left = Date.parse(String(a || '') + 'T00:00:00Z'), right = Date.parse(String(b || '') + 'T00:00:00Z'); if (!Number.isFinite(left) || !Number.isFinite(right)) return null; return Math.round(Math.abs(left - right) / 86400000); }\nfunction cents(n) { return Math.round(Math.abs(Number(n)) * 100); }\nconst all = $input.all();\nconst settlements = all.filter(i => i.json.deduction_id !== undefined).map(i => ({ ...i.json }));\nconst accruals = all.filter(i => i.json.accrual_id !== undefined).map(i => ({ ...i.json, _consumed: false }));\nconst candidates = [];\nfor (const s of settlements) {\n  if (!s.matchable) continue;\n  for (const a of accruals) {\n    if (!a.matchable || a.evidence_scope !== 'transaction_match') continue;\n    const amountDeltaCents = Math.abs(cents(s.amount) - cents(a.amount)); if (amountDeltaCents > 1) continue;\n    const dateDelta = daysBetween(s._normalised_date, a._normalised_date); if (!Number.isFinite(dateDelta) || dateDelta > 1) continue;\n    const vScore = vendorScore(s._normalised_vendor, a._normalised_vendor); if (vScore < 60) continue;\n    candidates.push({ deduction_id: s.deduction_id, accrual_id: a.accrual_id, vScore, dateDelta, amountDeltaCents });\n  }\n}\ncandidates.sort((a, b) => b.vScore - a.vScore || a.dateDelta - b.dateDelta || a.amountDeltaCents - b.amountDeltaCents || a.deduction_id.localeCompare(b.deduction_id) || a.accrual_id.localeCompare(b.accrual_id));\nconst settlementById = new Map(settlements.map(s => [s.deduction_id, s])); const accrualById = new Map(accruals.map(a => [a.accrual_id, a])); const used = new Set();\nfor (const c of candidates) { const a = accrualById.get(c.accrual_id); if (used.has(c.deduction_id) || a._consumed) continue; a._consumed = true; used.add(c.deduction_id); settlementById.get(c.deduction_id)._match_result = { matched_accrual_id: a.accrual_id, matched_bucket: a.bucket, vendor_score: c.vScore, date_delta_days: c.dateDelta, match_reason: 'Amount within \u00a30.01, date within ' + c.dateDelta + ' day(s), canonical vendor score ' + c.vScore + '; ruleset ' + RULESET_VERSION }; }\nconst results = [];\nfor (const s of settlements) { if (!s.matchable) results.push({ json: { ...s, _record_type: 'settlement', _route: 'data_quality_issue', matched: false } }); else if (s._match_result) { const match = s._match_result; delete s._match_result; results.push({ json: { ...s, _record_type: 'settlement', _route: 'auto_matched', matched: true, ...match } }); } else results.push({ json: { ...s, _record_type: 'settlement', _route: 'needs_classification', matched: false } }); }\nfor (const a of accruals) results.push({ json: { ...a, _record_type: 'accrual' } });\nreturn results;"
+      },
+      "id": "fea73d63-b2ca-421d-b1d8-928517911a5a",
+      "name": "Code (Deterministic Match: one-to-one)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1360,
+        336
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 1
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json._route }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "rightValue": "auto_matched"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 1
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json._route }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "rightValue": "needs_classification"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 1
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json._route }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "rightValue": "data_quality_issue"
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra",
+          "renameFallbackOutput": "Accrual Pool"
+        }
+      },
+      "id": "ebfdec08-4014-4a1f-bc0b-9f4f8072ffb5",
+      "name": "Route by Match Result",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        1584,
+        304
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": []
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "8127ede4-701b-40e3-adf1-bd5b908aafae",
+      "name": "Auto Matched Lines",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1808,
+        -64
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 1
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json._route }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "rightValue": "classified_verified"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 1
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json._route }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "rightValue": "needs_review"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 1
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json._route }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "rightValue": "unresolvable"
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "none"
+        }
+      },
+      "id": "d7458f95-42e4-42d2-8a66-6841454a0f16",
+      "name": "Route Classification Results",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        2256,
+        448
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": []
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "5098dc50-b6da-4c88-aa41-6a5ced12c39d",
+      "name": "Classified Verified Lines",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2480,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": []
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "fbd44d56-1ca1-4065-a85b-c45e123484d7",
+      "name": "Needs Review Lines",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2480,
+        512
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": []
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "19d1abee-410d-416c-8150-a93bd0fba38b",
+      "name": "Unresolvable Lines",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2480,
+        704
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst originalItems = items.map(i => i.json);\nconst batchLines = originalItems.map(j => ({\n  deduction_id: j.deduction_id,\n  transaction_date: j.transaction_date,\n  vendor_name: j.vendor_name,\n  amount: j.amount,\n  reference_code: j.reference_code,\n  description: j.description\n}));\n\nconst systemPrompt = \"You are a deduction classification assistant. You will be given a batch of marketplace settlement deduction lines that could not be automatically matched to an accrual record on amount, date, and vendor alone.\\n\\nFor each line, classify it into exactly ONE of these six categories, using the reference code, description, vendor, amount, and date as evidence:\\n- Promotional Accrual\\n- Shortage Claim\\n- Price Dispute\\n- Damaged Goods\\n- Chargeback/Other\\n- Unresolvable (use ONLY when there is genuinely no signal pointing to a specific bucket in the reference code or description - do not guess just to avoid this option)\\n\\nThe finance team's configured reference aliases are authoritative for this demo: PROMO, MKTG-REBATE and TRADE-PROMO = Promotional Accrual; SHORT, QTY-SHORT and MISSING-UNITS = Shortage Claim; PRC-DISP, PRICE-ADJ and PPD = Price Dispute; DMG-CLAIM, DAMAGED-RMA and WHSE-DMG = Damaged Goods; CHB, MISC-ADJ and OTHER-DEDUCT = Chargeback/Other. These are disclosed configuration, not an AI inference.\\n\\nCall the submit_classifications tool exactly once with your results. Return exactly one classification per input line, in the same order as given. Do not skip any line.\";\n\nconst tool = {\n  name: 'submit_classifications',\n  description: 'Submit classification results for this batch of deduction lines.',\n  input_schema: {\n    type: 'object',\n    properties: {\n      classifications: {\n        type: 'array',\n        items: {\n          type: 'object',\n          properties: {\n            deduction_id: { type: 'string' },\n            bucket: { type: 'string', enum: ['Promotional Accrual','Shortage Claim','Price Dispute','Damaged Goods','Chargeback/Other','Unresolvable'] },\n            confidence: { type: 'number' },\n            reasoning: { type: 'string' }\n          },\n          required: ['deduction_id', 'bucket', 'confidence', 'reasoning']\n        }\n      }\n    },\n    required: ['classifications']\n  }\n};\n\nreturn [{\n  json: {\n    _original_items: originalItems,\n    request_body: {\n      model: 'claude-sonnet-5',\n      max_tokens: 16384,\n      system: systemPrompt,\n      tools: [tool],\n      tool_choice: { type: 'tool', name: 'submit_classifications' },\n      messages: [{ role: 'user', content: JSON.stringify(batchLines, null, 2) }]\n    }\n  }\n}];"
+      },
+      "id": "d54fd525-89cf-46d8-aff5-d71aa37c952a",
+      "name": "Code (Build Classification Prompt)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2256,
+        128
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "anthropicApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.request_body }}",
+        "options": {}
+      },
+      "id": "53be991f-8691-44ae-b683-02c32b99d519",
+      "name": "Classify Batch via Claude",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        2480,
+        128
+      ],
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 3000,
+      "credentials": {
+        "anthropicApi": {
+          "id": "REPLACE_WITH_N8N_CREDENTIAL_ID",
+          "name": "Select credential after import"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst originalItems = $('Code (Build Classification Prompt)').first().json._original_items || [];\nconst results = [];\nconst validBuckets = new Set(['Promotional Accrual','Shortage Claim','Price Dispute','Damaged Goods','Chargeback/Other','Unresolvable']);\nfunction configuredBucket(referenceCode) {\n  const ref = String(referenceCode || '').trim().toUpperCase();\n  const aliases = [\n    [/^(PROMO-|MKTG-REBATE-|TRADE-PROMO-)/, 'Promotional Accrual'],\n    [/^(SHORT-|QTY-SHORT-|MISSING-UNITS-)/, 'Shortage Claim'],\n    [/^(PRC-DISP-|PRICE-ADJ-|PPD-)/, 'Price Dispute'],\n    [/^(DMG-CLAIM-|DAMAGED-RMA-|WHSE-DMG-)/, 'Damaged Goods'],\n    [/^(CHB-|MISC-ADJ-|OTHER-DEDUCT-)/, 'Chargeback/Other']\n  ];\n  const match = aliases.find(([pattern]) => pattern.test(ref));\n  return match ? match[1] : null;\n}\n\nfor (const item of items) {\n  const response = item.json;\n  const callId = response.id || null;\n  let usage = { input_tokens: null, output_tokens: null, cache_creation_input_tokens: 0, cache_read_input_tokens: 0 };\n  let parsed = null;\n  let parseError = null;\n\n  try {\n    usage = {\n      input_tokens: (response.usage && response.usage.input_tokens != null) ? response.usage.input_tokens : null,\n      output_tokens: (response.usage && response.usage.output_tokens != null) ? response.usage.output_tokens : null,\n      cache_creation_input_tokens: (response.usage && response.usage.cache_creation_input_tokens != null) ? response.usage.cache_creation_input_tokens : 0,\n      cache_read_input_tokens: (response.usage && response.usage.cache_read_input_tokens != null) ? response.usage.cache_read_input_tokens : 0\n    };\n\n    if (response.stop_reason && response.stop_reason !== 'end_turn' && response.stop_reason !== 'tool_use') {\n      throw new Error('unexpected stop_reason: ' + response.stop_reason);\n    }\n\n    const toolBlock = (response.content || []).find(function(c) { return c.type === 'tool_use' && c.name === 'submit_classifications'; });\n    if (toolBlock && toolBlock.input && Array.isArray(toolBlock.input.classifications)) {\n      parsed = toolBlock.input.classifications;\n    } else {\n      const textBlock = (response.content || []).find(function(c) { return c.type === 'text'; });\n      let rawText = (textBlock && textBlock.text) || '';\n      rawText = rawText.trim();\n      if (rawText.startsWith('```')) {\n        rawText = rawText.replace(/^```(?:json)?\\s*/i, '').replace(/```\\s*$/, '');\n      }\n      parsed = JSON.parse(rawText);\n    }\n    if (!Array.isArray(parsed)) throw new Error('response is not a JSON array');\n  } catch (e) {\n    parseError = e.message;\n  }\n\n  if (parseError) {\n    for (const orig of originalItems) {\n      results.push({ json: { ...orig, _record_type: 'settlement', _route: 'needs_review', _classification_error: parseError, _llm_call_id: callId, input_tokens: usage.input_tokens, output_tokens: usage.output_tokens, cache_creation_input_tokens: usage.cache_creation_input_tokens, cache_read_input_tokens: usage.cache_read_input_tokens } });\n    }\n    continue;\n  }\n\n  const byId = new Map(parsed.map(p => [p.deduction_id, p]));\n  for (const orig of originalItems) {\n    const p = byId.get(orig.deduction_id);\n    const aliasBucket = configuredBucket(orig.reference_code);\n    const proposed = aliasBucket ? { bucket: aliasBucket, confidence: 1, reasoning: 'Configured reference alias: ' + orig.reference_code } : p;\n    if (!proposed || !validBuckets.has(proposed.bucket)) {\n      results.push({ json: { ...orig, _record_type: 'settlement', _route: 'needs_review', _classification_error: 'missing or invalid bucket for this line', _llm_call_id: callId, input_tokens: usage.input_tokens, output_tokens: usage.output_tokens, cache_creation_input_tokens: usage.cache_creation_input_tokens, cache_read_input_tokens: usage.cache_read_input_tokens } });\n    } else {\n      results.push({ json: { ...orig, _record_type: 'settlement', _route: 'pending_verification', llm_bucket: proposed.bucket, llm_confidence: proposed.confidence, llm_reasoning: proposed.reasoning, _classification_method: aliasBucket ? 'configured_alias' : 'ai_proposal', _classification_error: null, _llm_call_id: callId, input_tokens: usage.input_tokens, output_tokens: usage.output_tokens, cache_creation_input_tokens: usage.cache_creation_input_tokens, cache_read_input_tokens: usage.cache_read_input_tokens } });\n    }\n  }\n}\nreturn results;"
+      },
+      "id": "d654e2b0-093a-465a-9d55-1bb39218573f",
+      "name": "Code (Parse Classification Response)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2704,
+        128
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const RULESET_VERSION = '2.0.0';\nfunction vendorScore(a, b) { if (!a || !b) return 0; if (a === b) return 100; if (a.includes(b) || b.includes(a)) return 90; const aa = a.split(' ').filter(Boolean), bb = b.split(' ').filter(Boolean), setB = new Set(bb); const overlap = aa.filter(t => setB.has(t) && t.length >= 3); if (!overlap.length) return 0; return overlap.length >= Math.min(aa.length, bb.length) ? 70 : 60; }\nfunction daysBetween(a, b) { const left = Date.parse(String(a || '') + 'T00:00:00Z'), right = Date.parse(String(b || '') + 'T00:00:00Z'); if (!Number.isFinite(left) || !Number.isFinite(right)) return null; return Math.round(Math.abs(left - right) / 86400000); }\nfunction cents(n) { return Math.round(Math.abs(Number(n)) * 100); }\nconst allAccruals = $('Code (Deterministic Match: one-to-one)').all().map(i => i.json).filter(j => j._record_type === 'accrual' && j.matchable);\nconst accrualIds = allAccruals.map(a => String(a.accrual_id || '').trim()); if (accrualIds.some(id => !id) || new Set(accrualIds).size !== accrualIds.length) throw new Error('Evidence allocation stopped: accrual_id values must be present and unique.');\nconst pools = allAccruals.filter(a => a.evidence_scope === 'programme_pool' && !a._consumed).map(a => ({ ...a, _available_cents: cents(a.amount) }));\nconst input = $input.all().map(i => i.json); const ordered = [...input].sort((a, b) => cents(b.amount) - cents(a.amount) || String(a.deduction_id).localeCompare(String(b.deduction_id))); const routed = new Map();\nfor (const j of ordered) {\n  if (j._route === 'needs_review') { routed.set(j.deduction_id, j); continue; }\n  const amount = cents(j.amount);\n  if (j.llm_bucket === 'Unresolvable') {\n    const exact = allAccruals.find(a => { const delta = daysBetween(j._normalised_date, a._normalised_date); return cents(a.amount) === amount && Number.isFinite(delta) && delta <= 1 && vendorScore(j._normalised_vendor, a._normalised_vendor) >= 60; });\n    if (exact) routed.set(j.deduction_id, { ...j, _route: 'needs_review', _evidence_agrees: false, _evidence_note: 'AI proposed Unresolvable, but same-vendor exact-amount near-date candidate ' + exact.accrual_id + ' exists; human review required.' });\n    else routed.set(j.deduction_id, { ...j, _route: 'unresolvable', _evidence_agrees: true, _evidence_note: 'No same-vendor exact-amount near-date candidate exists in the supplied ledger.' });\n    continue;\n  }\n  const candidates = pools.filter(a => { const delta = daysBetween(j._normalised_date, a._normalised_date); return a.bucket === j.llm_bucket && a._available_cents >= amount && vendorScore(j._normalised_vendor, a._normalised_vendor) >= 60 && Number.isFinite(delta) && delta <= 45; }).sort((a, b) => vendorScore(j._normalised_vendor, b._normalised_vendor) - vendorScore(j._normalised_vendor, a._normalised_vendor) || daysBetween(j._normalised_date, a._normalised_date) - daysBetween(j._normalised_date, b._normalised_date) || a.accrual_id.localeCompare(b.accrual_id));\n  if (!candidates.length) { routed.set(j.deduction_id, { ...j, _route: 'needs_review', _evidence_agrees: false, _evidence_note: 'No same-vendor programme balance can support the proposed bucket and amount.' }); continue; }\n  const evidence = candidates[0], before = evidence._available_cents; evidence._available_cents -= amount;\n  routed.set(j.deduction_id, { ...j, _route: 'classified_verified', _evidence_agrees: true, _evidence_accrual_id: evidence.accrual_id, _allocated_amount: amount / 100, _evidence_balance_before: before / 100, _evidence_balance_after: evidence._available_cents / 100, _evidence_note: 'Allocated \u00a3' + (amount / 100).toFixed(2) + ' against programme balance ' + evidence.accrual_id + '; \u00a3' + (evidence._available_cents / 100).toFixed(2) + ' remains; ruleset ' + RULESET_VERSION + '.' });\n}\nreturn input.map(j => ({ json: routed.get(j.deduction_id) }));"
+      },
+      "id": "81b60238-260c-4b63-a34d-563eedaaa9a4",
+      "name": "Code (Verify Classification Against Evidence)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2928,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "batchSize": 25,
+        "options": {}
+      },
+      "id": "1cc6a1e3-e7d5-4e3d-bc5e-59c29adc401f",
+      "name": "Loop Over Unmatched Lines",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        2032,
+        352
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": []
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "87915015-b6ed-4aed-a497-45ba37225ca0",
+      "name": "Data Quality Issues",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1808,
+        1024
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "toJson",
+        "options": {
+          "format": true,
+          "fileName": "auto_matched.json"
+        }
+      },
+      "id": "4b1cf07e-930f-4f38-a9e2-adfa6bee4a8c",
+      "name": "Convert Auto Matched to JSON",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        2032,
+        -64
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "/files/deduction-workbench/v2/output/auto_matched.json",
+        "options": {}
+      },
+      "id": "3ca87c75-b878-4b51-a773-54cb5219c809",
+      "name": "Write Auto Matched JSON",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        2256,
+        -64
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "toJson",
+        "options": {
+          "format": true,
+          "fileName": "data_quality_issues.json"
+        }
+      },
+      "id": "2fcadb3f-75e1-463a-868a-2d1511e127af",
+      "name": "Convert Data Quality Issues to JSON",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        2032,
+        1024
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "/files/deduction-workbench/v2/output/data_quality_issues.json",
+        "options": {}
+      },
+      "id": "03d2128b-73a6-4c4c-9c22-ea78465a054e",
+      "name": "Write Data Quality Issues JSON",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        2256,
+        1024
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "toJson",
+        "options": {
+          "format": true,
+          "fileName": "classified_verified.json"
+        }
+      },
+      "id": "1eada9a4-f4b5-4933-b26d-214a078daa9e",
+      "name": "Convert Classified Verified to JSON",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        2704,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "/files/deduction-workbench/v2/output/classified_verified.json",
+        "options": {}
+      },
+      "id": "c9795999-47f8-4c27-b271-143c1de69296",
+      "name": "Write Classified Verified JSON",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        2928,
+        368
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "toJson",
+        "options": {
+          "format": true,
+          "fileName": "needs_review.json"
+        }
+      },
+      "id": "c0eb4004-7696-4700-8ec1-5575fd6d4405",
+      "name": "Convert Needs Review to JSON",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        2704,
+        512
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "/files/deduction-workbench/v2/output/needs_review.json",
+        "options": {}
+      },
+      "id": "90808867-5fc6-4b9d-a1b4-a4c52f8c2c0d",
+      "name": "Write Needs Review JSON",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        2928,
+        560
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "toJson",
+        "options": {
+          "format": true,
+          "fileName": "unresolvable.json"
+        }
+      },
+      "id": "6db2a2fb-cbec-4210-85fd-d8bbca3c1c6b",
+      "name": "Convert Unresolvable to JSON",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        2704,
+        704
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "/files/deduction-workbench/v2/output/unresolvable.json",
+        "options": {}
+      },
+      "id": "19ad3103-de6d-4abc-94cc-e2e4885e8bbd",
+      "name": "Write Unresolvable JSON",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        2928,
+        752
+      ]
+    },
+    {
+      "parameters": {
+        "content": "V2: configured aliases, canonical vendors, deterministic matching, AI proposals, one full-run balance allocation, fail-closed routing, complete five-file export",
+        "height": 80,
+        "width": 352
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1152,
+        48
+      ],
+      "typeVersion": 1,
+      "id": "71d47210-0905-4ed3-8b5d-9e4f91997d5a",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "jsCode": "const deterministic = $('Code (Deterministic Match: one-to-one)').all().map(i => i.json);\nconst verified = $input.all().map(i => i.json);\nconst branches = {\n  'auto_matched.json': deterministic.filter(j => j._record_type === 'settlement' && j._route === 'auto_matched'),\n  'data_quality_issues.json': deterministic.filter(j => j._record_type === 'settlement' && j._route === 'data_quality_issue'),\n  'classified_verified.json': verified.filter(j => j._route === 'classified_verified'),\n  'needs_review.json': verified.filter(j => j._route === 'needs_review'),\n  'unresolvable.json': verified.filter(j => j._route === 'unresolvable')\n};\nreturn Object.entries(branches).map(([fileName, rows]) => ({\n  json: { fileName, record_count: rows.length },\n  binary: {\n    data: {\n      data: Buffer.from(JSON.stringify(rows, null, 2) + '\\n', 'utf8').toString('base64'),\n      mimeType: 'application/json',\n      fileName\n    }\n  }\n}));"
+      },
+      "id": "5bb417c8-d38b-4c8d-a9d7-e078f9e82c29",
+      "name": "Code (Build Complete Branch Exports)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3152,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "=/files/deduction-workbench/v2/output/{{ $binary.data.fileName }}",
+        "options": {}
+      },
+      "id": "901e62d7-19fe-45b0-b73a-aa22ed5af839",
+      "name": "Write Complete Branch Exports",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        3376,
+        160
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Read Settlement CSV",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Read Accrual CSV",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Settlement CSV": {
+      "main": [
+        [
+          {
+            "node": "Extract Settlement Lines",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Settlement Lines": {
+      "main": [
+        [
+          {
+            "node": "Code (Settlement: normalise + key)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code (Settlement: normalise + key)": {
+      "main": [
+        [
+          {
+            "node": "Merge Settlement and Accrual",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Settlement and Accrual": {
+      "main": [
+        [
+          {
+            "node": "Code (Deterministic Match: one-to-one)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Accrual CSV": {
+      "main": [
+        [
+          {
+            "node": "Extract Accrual Lines",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Accrual Lines": {
+      "main": [
+        [
+          {
+            "node": "Code (Accrual: normalise + key)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code (Accrual: normalise + key)": {
+      "main": [
+        [
+          {
+            "node": "Merge Settlement and Accrual",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Code (Deterministic Match: one-to-one)": {
+      "main": [
+        [
+          {
+            "node": "Route by Match Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route by Match Result": {
+      "main": [
+        [
+          {
+            "node": "Auto Matched Lines",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Unmatched Lines",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Data Quality Issues",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route Classification Results": {
+      "main": [
+        [
+          {
+            "node": "Classified Verified Lines",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Needs Review Lines",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Unresolvable Lines",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code (Build Classification Prompt)": {
+      "main": [
+        [
+          {
+            "node": "Classify Batch via Claude",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Classify Batch via Claude": {
+      "main": [
+        [
+          {
+            "node": "Code (Parse Classification Response)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code (Parse Classification Response)": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Unmatched Lines",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code (Verify Classification Against Evidence)": {
+      "main": [
+        [
+          {
+            "node": "Route Classification Results",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code (Build Complete Branch Exports)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Unmatched Lines": {
+      "main": [
+        [
+          {
+            "node": "Code (Verify Classification Against Evidence)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code (Build Classification Prompt)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Auto Matched Lines": {
+      "main": [
+        [
+          {
+            "node": "Convert Auto Matched to JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert Auto Matched to JSON": {
+      "main": [
+        [
+          {
+            "node": "Write Auto Matched JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data Quality Issues": {
+      "main": [
+        [
+          {
+            "node": "Convert Data Quality Issues to JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert Data Quality Issues to JSON": {
+      "main": [
+        [
+          {
+            "node": "Write Data Quality Issues JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Classified Verified Lines": {
+      "main": [
+        [
+          {
+            "node": "Convert Classified Verified to JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert Classified Verified to JSON": {
+      "main": [
+        [
+          {
+            "node": "Write Classified Verified JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Needs Review Lines": {
+      "main": [
+        [
+          {
+            "node": "Convert Needs Review to JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert Needs Review to JSON": {
+      "main": [
+        [
+          {
+            "node": "Write Needs Review JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Unresolvable Lines": {
+      "main": [
+        [
+          {
+            "node": "Convert Unresolvable to JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert Unresolvable to JSON": {
+      "main": [
+        [
+          {
+            "node": "Write Unresolvable JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code (Build Complete Branch Exports)": {
+      "main": [
+        [
+          {
+            "node": "Write Complete Branch Exports",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "meta": {
+    "aiBuilderAssisted": true,
+    "builderVariant": "mcp"
+  },
+  "nodeGroups": [],
+  "tags": []
+}

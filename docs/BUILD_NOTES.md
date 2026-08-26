@@ -1,68 +1,237 @@
-# Build notes
+# Build notes: the useful part was finding where V1 lied to us
 
-The engineering story behind this build: the decisions that mattered and the bugs that were real. These are things that actually broke during development and how they got fixed, not a tidied-up retrospective. If you're evaluating the work, read this file.
+This project began as a technically plausible deduction-classification demo. Its
+second version is more valuable because the evaluation found that two of its
+strongest trust claims were not supported by its own evidence.
 
-## Why classification, not matching
+## Why deductions
 
-The first instinct on a problem like this is to build a reconciliation tool. That was rejected early. Matching clean transactions is a solved problem; accounting systems already do it well. The unsolved part is everything that fails to match: exception lines that need judgement to bucket correctly. So the build puts a deterministic matcher up front to clear the easy majority, and spends LLM calls only on the remainder.
+Clean transaction matching is not the interesting part. Finance teams struggle
+with the residue: cryptic deduction lines that require classification, supporting
+documents and a decision about what a person should investigate next.
 
-This also keeps cost and latency down. On the demo run, 141 of 250 lines never reach the model.
+The design therefore keeps deterministic matching first and spends AI calls only
+on exceptions. It is deliberately a complement to ERPs and recovery platforms,
+not an attempt to recreate them.
 
-## The dataset is seeded on purpose
+## What V1 did well
 
-A demo that classifies data it also authored proves nothing. So the synthetic dataset is generated with a sealed answer key and a deliberate three-way split:
+- Global best-first, one-to-one deterministic matching.
+- Integer-pence comparisons rather than fragile floating-point thresholds.
+- Forced structured model output with schema validation.
+- Malformed model output degraded to human review rather than disappearing.
+- Synthetic data with a sealed answer key.
+- Per-branch exports and a human-review outcome.
+- Token usage deduplicated by API response ID.
 
-- roughly 60% cleanly matchable, resolving without the LLM
-- roughly 30% classifiable from line evidence, which is the LLM's actual job
-- roughly 10% genuinely unresolvable, where the correct answer is "cannot be determined from this data alone"
+These remain the foundation of V2.
 
-The last class is the one that matters. It's easy to build a system that always guesses a bucket and looks confident doing it. The harder bar is flagging the unresolvable lines as unresolvable instead of guessing, so the workflow is scored on that explicitly.
+## What the independent recomputation found
 
-## Deterministic matching: two real bugs
+### 1. Recall had been called accuracy
 
-The matcher looked simple and wasn't.
+V1 found every one of the 25 genuinely unresolvable lines. That is 100% recall.
+But it labelled 34 lines unresolvable, and nine of those were actually seeded as
+matchable. Precision was therefore 25/34, or 73.5%.
 
-**Order-dependent greedy matching.** The first version walked settlement rows in file order and let each one grab its best available accrual. On tie-scores, an earlier row could take an accrual that a later row had a stronger claim to. Fixed by ranking all valid candidate pairs globally and assigning best to worst, with each accrual consumable only once.
+Those nine lines were all `AMZN Mktp UK` against `Amazon`. The fixture generator
+and workflow used different similarity ideas, so the generator considered the
+pairs valid while the workflow gave them zero token overlap. The same mismatch
+then prevented the safety path from rescuing them.
 
-**Floating-point tolerance.** The amount tolerance was £0.01. In floating point, `2502.19 - 2502.18` evaluates to `0.010000000000218...`, which is just over the cutoff, so legitimate matches silently failed. Fixed by comparing integer pence via `Math.round(n * 100)`.
+The nine unsafe terminal routes were worth £3,212.35.
 
-After both fixes: 141 of 150 seeded matchable lines matched, with zero false matches. The 9 that fall through carry a vendor-name variant that deliberately fails the vendor-score threshold, and the classification stage handles them correctly downstream.
+### 2. The ledger check was plausibility, not evidence
 
-## Getting reliable structured output from the LLM
+The normal V1 check asked only whether any unused accrual existed in the proposed
+bucket within 45 days and within a 0.25x–4x amount band. It did not require the
+same vendor and did not consume or allocate balance.
 
-The classification step asks Claude for one bucket per line. The first implementation requested a JSON array as plain text and parsed it. Four separate things went wrong with that, each found by running real data rather than by code review:
+Consequently, 65 accepted classifications drew repeatedly on a very small pool
+of leftover accruals. The fixture had not seeded supporting evidence for those
+75 classifiable lines at all. The check could show that a bucket contained
+something vaguely plausible; it could not show that the deduction was supported.
 
-1. A deprecated parameter. `temperature: 0` was rejected outright by the model and had to be removed.
-2. A silently dropped field. The HTTP node replaces the item payload with the raw API response, so downstream code reading the original line data got `undefined` and produced zero output items with no error. Fixed by referencing the upstream node directly.
-3. Response shape isn't fixed. The model sometimes prepends a reasoning block before the text block, so reading `content[0]` broke intermittently. Fixed by locating the text block by type.
-4. The worst one only appeared at full scale. One entire 25-line batch came back wrapped in a Markdown code fence despite explicit instructions to return raw JSON. `JSON.parse` doesn't strip fences, so all 25 lines failed to parse and landed in "needs review", not because they were ambiguous but because of a formatting quirk. This never occurred in the 4-line test batches used during development. It took a real 25-line batch to trigger it.
+### 3. The status ignored the broken parts
 
-The fix for the fourth bug was not to strip fences. It was to stop parsing text entirely. The classifier was reworked to use the API's forced tool-use: a tool with a strict input schema, forced via `tool_choice`, so the response arrives as parsed JSON and there is no free text to malform. That closes the whole class of formatting failures rather than patching one instance of it. A fence-stripping text fallback and an explicit stop-reason check were kept as a safety net.
+The old workbook based its overall label only on accepted-classification
+accuracy. If no classifications were accepted, it substituted 100% and could
+still report Excellent. The status ignored routing precision, omitted lines,
+missing files and false-unresolvable outcomes.
 
-## Making the AI trustworthy: the evidence check
+### 4. A missing file became a clean zero
 
-A confidence score from a language model is not evidence. So every classification passes through a deterministic verification stage before it counts: is there a supporting accrual in the ledger for the claimed bucket, within amount and date tolerance? If yes, the line is verified. If the model and the ledger disagree, the line goes to a human. Nothing gets exported on the model's word alone.
+The report loader converted an absent branch file into an empty list. The
+committed data-quality output was missing, yet the workbook published zero
+data-quality issues without marking the run incomplete.
 
-This stage had its own tuning bug. The unresolvable-override path, where the evidence check overrules a model's "unresolvable" verdict because it found a plausible accrual, initially searched every bucket within a wide window. Against a full ledger it almost always found something, so genuinely unresolvable lines kept getting bumped to "needs review" even when the model had called them correctly. The fix was to require a vendor match on that override path specifically. The genuinely unresolvable lines carry counterparty names that match nothing in the ledger, so they now confirm as unresolvable, while the normal bucket-verification path was left untouched so it wouldn't break the intended vendor-variant fall-throughs. After the change, all 25 seeded unresolvable lines were correctly confirmed.
+## V2 repair
 
-## Counting tokens honestly
+### One counterparty identity
 
-The API reports token usage per call, but the workflow attaches that usage to every line in the call's batch. Summing naively across lines would multiply the real figure by the batch size. Each line is therefore tagged with the API response ID, and the scoring script deduplicates by that ID before summing. Any token or cost figure quoted from this project is the deduplicated one.
+V2 adds explicit canonical identities for the five synthetic channels. Amazon,
+`AMZN` and `Mktp` variants resolve to the same identity. The fixture generator
+and workflow carry the same `2.0.0` ruleset marker, and tests lock the expected
+aliases.
 
-## Operational safety during development
+Configured reference aliases are also deterministic. For example,
+`OTHER-DEDUCT-*` maps to `Chargeback/Other` before the model proposal can affect
+the accepted bucket. The output records whether a bucket came from a configured
+alias or an AI proposal.
 
-The classification branch carried a hard cap limiting it to a handful of lines throughout development, so a full paid run could not be triggered by accident. The cap was removed and the batch size raised to production scale only for the final runs. The API call has retry with backoff, and a batch that still fails lands in "needs review" rather than sinking the whole execution.
+### Separate transaction matches from programme evidence
 
-## How this was built
+V2's fixture contains:
 
-The build itself was agentic. Claude Code drove a locally hosted n8n instance (Docker, exposed through a tunnel) via n8n's MCP server, creating and updating the workflow programmatically rather than click-by-click on the canvas. Direction, scope, and the quality bar sat with a human: what to build, what to cut, when a number was trustworthy enough to publish, when a run was allowed to spend real API money. The agent did the construction, testing, and debugging inside those constraints. Every bug in this document was found by executing real runs and inspecting the output, not by assuming the code was right.
+- dedicated transaction accruals for the 150 exact-match cases; and
+- programme-level accrual balances for classifiable deduction populations,
+  grouped by counterparty and bucket with documented headroom.
 
-It also didn't start from a blank page. The build ran on internal conventions that predate this project: a standing conventions file covering how workflows are structured, named, and exported, plus reusable build skills for n8n work. Where this build exposed gaps in those conventions, they were updated as part of the work, which is the point of keeping them.
+The answer key identifies the intended supporting programme balance, making the
+control path testable instead of coincidental.
 
-A running build log was kept throughout, as standard protocol for our builds: every decision, bug, and dead end recorded as it happened. That log stays internal because it contains business context that doesn't belong in a public repo. This document is distilled from it.
+### Allocate once across the whole run
 
-## What would change for a real deployment
+The n8n loop still sends exceptions to the model in batches, but evidence is no
+longer checked inside each batch. Parsed results return to the loop; only when all
+batches have finished does the evidence node receive the complete population.
 
-Two parts of this repo are testing scaffolding. The answer key, and the grading it enables, exist only because the data is synthetic; real data has no ground truth to score against. The Python script that does the grading also builds the Excel report, and in production that report step would move inside the workflow itself, with the grading half gone.
+It then sorts deterministically, finds a same-counterparty programme balance in
+the proposed bucket, confirms sufficient available value and decrements that
+balance. The output records allocated amount, balance before and balance after.
+An exhausted balance cannot be reused.
 
-Beyond that, a real deployment needs: a live trigger instead of a manual one, the accruals pulled from the client's accounting system instead of a static file, buckets mapped to the client's actual accrual structure, and a proper vendor alias table instead of heuristic name matching. The pipeline and its control logic carry over as-is. The edges get wired into real systems.
+### Fail closed
+
+- Impossible calendar dates, malformed numeric strings, zero values and missing
+  or duplicate IDs cannot enter matching. Invalid settlement rows become Data
+  Quality; invalid accrual identity stops the ledger run.
+- Insufficient balance or no same-counterparty programme evidence: Needs Review.
+- Malformed or missing model classification: Needs Review.
+- Model proposes Unresolvable while a same-counterparty exact-amount near-date
+  ledger candidate exists: Needs Review.
+- No same-counterparty exact-amount near-date candidate: Unresolvable from
+  supplied data, with an explicit limitation rather than a claim of accounting
+  truth.
+
+### Make incompleteness visible
+
+Every branch file is required. `finalize_run.py` may create an explicit empty
+array only after it proves that every input deduction ID already appears exactly
+once across the existing branch exports. Missing or duplicate coverage stops the
+process.
+
+The live workflow now also writes all five branch files at the end of every run,
+including explicit empty arrays. This prevents a non-empty file from a previous
+run being mistaken for a current result.
+
+### Lead with finance outcomes
+
+The workbook starts with:
+
+- total deduction value;
+- value resolved without manual work;
+- value requiring a person;
+- value in unsafe terminal routes;
+- the first line to investigate; and
+- a ranked worklist with owner, status and next action.
+
+The full confusion matrix and metric denominators remain visible on the
+Evaluation tab.
+
+Record-derived workbook text is written as inert text, so a source or model
+string beginning with a spreadsheet formula marker cannot execute as a formula.
+The evaluator also loads the authoritative accrual CSV, requires unique source
+IDs, and proves that every accepted classification consumes one valid programme
+balance chain without exceeding its opening value.
+
+## Tests that now gate the build
+
+The local suite and CI check:
+
+- the V1 evaluator reproduces 73.5% unresolvable precision and nine terminal
+  misroutes;
+- a missing file cannot become a zero;
+- zero accepted classifications cannot receive a positive status;
+- the V2 fixture is byte-for-byte reproducible;
+- alias variants share the intended identity;
+- classifiable lines do not accidentally meet deterministic match conditions;
+- a complete 75-line allocation never drives a programme balance negative;
+- duplicate or blank accrual identities stop allocation;
+- impossible dates and malformed amounts fail in the embedded n8n JavaScript;
+- aggregate allocations reconcile to one unique source-ledger balance;
+- every deterministic match references one known transaction accrual exactly
+  once, even when the pair-correctness percentage would otherwise round above
+  its threshold;
+- source/model formula-like strings remain inert in both detailed tabs and the
+  priority worklist;
+- the workflow allocates only after all model batches finish;
+- the permissive V1 amount multiplier is absent; and
+- empty branch materialisation is refused until routing coverage is exact;
+- public workflow exports contain no live instance, workflow or credential
+  identifiers and remain inactive/unavailable over MCP; and
+- the workflow contains a final complete five-branch export stage.
+
+## Verified V2 run — 25 August 2026
+
+The local n8n workflow `Deduction Resolution Workbench V2` completed successfully
+on the full 250-line synthetic fixture. Live workflow and execution identifiers
+are deliberately omitted from the public repository. The final manifest
+reconciled every input ID exactly once:
+
+- 150 auto-matched;
+- 75 classified with a sufficient allocated programme balance;
+- 0 needs review;
+- 25 unresolvable from the supplied data; and
+- 0 data-quality issues.
+
+The sealed-key evaluator returned **Ready for Demo**: 100% pair correctness,
+100% accepted classification precision, 100% allocation coverage, 100%
+source-ledger allocation integrity, 100% unresolvable precision, 100%
+unresolvable recall and zero unsafe terminal misroutes. These are fixture-specific
+results, not production accuracy.
+
+All 75 accepted classifications in this run came from configured reference
+aliases, not AI proposals. The AI's accepted contribution was 25 abstentions that
+the deterministic conflict check confirmed as unresolvable from the supplied
+data. Classification precision measures every accepted classification and must
+not be presented as AI accuracy. Auto-match recall and classifiable automation
+coverage are disclosed monitoring indicators rather than readiness gates, because
+a safe stop can reduce coverage without creating an unsafe terminal route.
+
+Fixture byte reproducibility is verified under the CI-pinned Python 3.12 runtime.
+The committed V1 evidence is a frozen regression baseline; the current generator
+produces V2 and does not recreate V1.
+
+The run used the dedicated persisted Docker `/files` mount rather than n8n's
+protected settings directory. The workflow remains inactive and used only
+synthetic inputs.
+
+## Publication audit patch — 26 August 2026
+
+An independent publication-readiness review returned **Publish After Minor
+Changes**. The resulting patch was applied and reverified before any new public
+release:
+
+- removed an internal execution reference from the README;
+- disclosed that the 75 accepted classifications used configured aliases, with
+  zero accepted AI proposals and 25 AI abstentions;
+- retained human authority over accounting actions in every terminal output;
+- aligned the embedded JavaScript vendor-alias logic with the Python reference
+  implementation and added a parity regression test;
+- clarified that recall and automation coverage are monitoring indicators, not
+  safety gates; and
+- improved the workbook's route explanations, status labels, decision cards and
+  long-text layout.
+
+The full 27-test suite passed under Python 3.12. A fresh isolated execution of
+the local n8n workflow reproduced the sealed-key result: 250 of 250 rows routed
+exactly once, zero unsafe terminal misroutes and **Ready for Demo**. The live
+workflow now matches the publishable export structurally, remains inactive and
+is unavailable over MCP. No production data was used.
+
+## What is not claimed
+
+The repository does not claim production
+accuracy, time saved, recovered revenue or willingness to pay. Those outcomes
+require an authorised real engagement and separately designed measurement.

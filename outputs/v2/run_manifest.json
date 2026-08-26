@@ -1,0 +1,14 @@
+{
+  "status": "complete",
+  "ruleset_version": "2.0.0",
+  "generated_at_utc": "2026-08-26T09:31:57.666041+00:00",
+  "input_lines": 250,
+  "branch_counts": {
+    "auto_matched.json": 150,
+    "classified_verified.json": 75,
+    "needs_review.json": 0,
+    "unresolvable.json": 25,
+    "data_quality_issues.json": 0
+  },
+  "materialised_empty_branches": []
+}

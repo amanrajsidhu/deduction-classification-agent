@@ -1,0 +1,175 @@
+accrual_id,accrual_date,accrual_period,vendor_name,bucket,amount,currency,reference_code,description,evidence_scope
+ACR-2026-00105,2026-06-30,2026-06,Shopify Direct,Shortage Claim,60.21,GBP,SAP-TXN-0106,Shortage Claim - transaction accrual,transaction_match
+ACR-2026-00179,2026-06-09,2026-06,Costco,Price Dispute,289.06,GBP,SAP-TXN-0180,Price Dispute - transaction accrual,transaction_match
+ACR-2026-00025,2026-06-13,2026-06,Amazon,Promotional Accrual,761.13,GBP,SAP-TXN-0026,Promotional Accrual - transaction accrual,transaction_match
+ACR-2026-00201,2026-06-08,2026-06,Shopify Direct,Damaged Goods,327.35,GBP,SAP-TXN-0202,Damaged Goods - transaction accrual,transaction_match
+ACR-2026-00765,2026-06-15,2026-06,Shopify Direct,Damaged Goods,945.67,GBP,SAP-POOL-0766,Damaged Goods - programme evidence balance,programme_pool
+ACR-2026-00005,2026-06-22,2026-06,Amazon,Promotional Accrual,2499.8,GBP,SAP-TXN-0006,Promotional Accrual - transaction accrual,transaction_match
+ACR-2026-00009,2026-06-01,2026-06,Amazon,Promotional Accrual,752.98,GBP,SAP-TXN-0010,Promotional Accrual - transaction accrual,transaction_match
+ACR-2026-00215,2026-06-01,2026-06,Amazon,Damaged Goods,266.43,GBP,SAP-TXN-0216,Damaged Goods - transaction accrual,transaction_match
+ACR-2026-00069,2026-06-24,2026-06,Walmart,Shortage Claim,262.09,GBP,SAP-TXN-0070,Shortage Claim - transaction accrual,transaction_match
+ACR-2026-00079,2026-06-26,2026-06,Walmart,Shortage Claim,304.97,GBP,SAP-TXN-0080,Shortage Claim - transaction accrual,transaction_match
+ACR-2026-00099,2026-06-27,2026-06,Target,Shortage Claim,290.02,GBP,SAP-TXN-0100,Shortage Claim - transaction accrual,transaction_match
+ACR-2026-00119,2026-06-18,2026-06,Costco,Shortage Claim,119.45,GBP,SAP-TXN-0120,Shortage Claim - transaction accrual,transaction_match
+ACR-2026-00003,2026-06-08,2026-06,Walmart,Promotional Accrual,876.75,GBP,SAP-TXN-0004,Promotional Accrual - transaction accrual,transaction_match
+ACR-2026-00001,2026-06-01,2026-06,Amazon,Promotional Accrual,2502.19,GBP,SAP-TXN-0002,Promotional Accrual - transaction accrual,transaction_match
+ACR-2026-00125,2026-06-23,2026-06,Walmart,Price Dispute,113.84,GBP,SAP-TXN-0126,Price Dispute - transaction accrual,transaction_match
+ACR-2026-00227,2026-06-20,2026-06,Target,Damaged Goods,531.85,GBP,SAP-TXN-0228,Damaged Goods - transaction accrual,transaction_match
+ACR-2026-00753,2026-06-15,2026-06,Costco,Chargeback/Other,1631.58,GBP,SAP-POOL-0754,Chargeback/Other - programme evidence balance,programme_pool
+ACR-2026-00255,2026-06-29,2026-06,Amazon,Chargeback/Other,681.83,GBP,SAP-TXN-0256,Chargeback/Other - transaction accrual,transaction_match
+ACR-2026-00299,2026-06-29,2026-06,Amazon,Chargeback/Other,951.44,GBP,SAP-TXN-0300,Chargeback/Other - transaction accrual,transaction_match
+ACR-2026-00191,2026-06-19,2026-06,Amazon,Damaged Goods,275.78,GBP,SAP-TXN-0192,Damaged Goods - transaction accrual,transaction_match
+ACR-2026-00285,2026-06-08,2026-06,Costco,Chargeback/Other,207.59,GBP,SAP-TXN-0286,Chargeback/Other - transaction accrual,transaction_match
+ACR-2026-00109,2026-06-29,2026-06,Target,Shortage Claim,414.72,GBP,SAP-TXN-0110,Shortage Claim - transaction accrual,transaction_match
+ACR-2026-00101,2026-06-07,2026-06,Shopify Direct,Shortage Claim,115.02,GBP,SAP-TXN-0102,Shortage Claim - transaction accrual,transaction_match
+ACR-2026-00095,2026-06-17,2026-06,Target,Shortage Claim,334.31,GBP,SAP-TXN-0096,Shortage Claim - transaction accrual,transaction_match
+ACR-2026-00225,2026-06-27,2026-06,Costco,Damaged Goods,309.33,GBP,SAP-TXN-0226,Damaged Goods - transaction accrual,transaction_match
+ACR-2026-00171,2026-06-30,2026-06,Amazon,Price Dispute,239.77,GBP,SAP-TXN-0172,Price Dispute - transaction accrual,transaction_match
+ACR-2026-00143,2026-06-07,2026-06,Costco,Price Dispute,178.68,GBP,SAP-TXN-0144,Price Dispute - transaction accrual,transaction_match
+ACR-2026-00759,2026-06-15,2026-06,Walmart,Chargeback/Other,751.42,GBP,SAP-POOL-0760,Chargeback/Other - programme evidence balance,programme_pool
+ACR-2026-00289,2026-06-08,2026-06,Walmart,Chargeback/Other,37.84,GBP,SAP-TXN-0290,Chargeback/Other - transaction accrual,transaction_match
+ACR-2026-00055,2026-06-08,2026-06,Shopify Direct,Promotional Accrual,2348.46,GBP,SAP-TXN-0056,Promotional Accrual - transaction accrual,transaction_match
+ACR-2026-00783,2026-06-15,2026-06,Shopify Direct,Promotional Accrual,3263.46,GBP,SAP-POOL-0784,Promotional Accrual - programme evidence balance,programme_pool
+ACR-2026-00797,2026-06-15,2026-06,Walmart,Shortage Claim,1019.83,GBP,SAP-POOL-0798,Shortage Claim - programme evidence balance,programme_pool
+ACR-2026-00049,2026-06-20,2026-06,Amazon,Promotional Accrual,2214.44,GBP,SAP-TXN-0050,Promotional Accrual - transaction accrual,transaction_match
+ACR-2026-00273,2026-06-28,2026-06,Walmart,Chargeback/Other,171.81,GBP,SAP-TXN-0274,Chargeback/Other - transaction accrual,transaction_match
+ACR-2026-00237,2026-06-05,2026-06,Shopify Direct,Damaged Goods,172.54,GBP,SAP-TXN-0238,Damaged Goods - transaction accrual,transaction_match
+ACR-2026-00233,2026-06-29,2026-06,Amazon,Damaged Goods,102.82,GBP,SAP-TXN-0234,Damaged Goods - transaction accrual,transaction_match
+ACR-2026-00773,2026-06-15,2026-06,Costco,Price Dispute,725.4,GBP,SAP-POOL-0774,Price Dispute - programme evidence balance,programme_pool
+ACR-2026-00085,2026-06-28,2026-06,Shopify Direct,Shortage Claim,399.28,GBP,SAP-TXN-0086,Shortage Claim - transaction accrual,transaction_match
+ACR-2026-00235,2026-06-29,2026-06,Amazon,Damaged Goods,89.05,GBP,SAP-TXN-0236,Damaged Goods - transaction accrual,transaction_match
+ACR-2026-00035,2026-06-29,2026-06,Shopify Direct,Promotional Accrual,2826.61,GBP,SAP-TXN-0036,Promotional Accrual - transaction accrual,transaction_match
+ACR-2026-00271,2026-06-24,2026-06,Shopify Direct,Chargeback/Other,164.14,GBP,SAP-TXN-0272,Chargeback/Other - transaction accrual,transaction_match
+ACR-2026-00267,2026-06-22,2026-06,Walmart,Chargeback/Other,114.2,GBP,SAP-TXN-0268,Chargeback/Other - transaction accrual,transaction_match
+ACR-2026-00251,2026-06-24,2026-06,Walmart,Chargeback/Other,441.37,GBP,SAP-TXN-0252,Chargeback/Other - transaction accrual,transaction_match
+ACR-2026-00785,2026-06-15,2026-06,Target,Promotional Accrual,7944.84,GBP,SAP-POOL-0786,Promotional Accrual - programme evidence balance,programme_pool
+ACR-2026-00761,2026-06-15,2026-06,Amazon,Damaged Goods,820.45,GBP,SAP-POOL-0762,Damaged Goods - programme evidence balance,programme_pool
+ACR-2026-00763,2026-06-15,2026-06,Costco,Damaged Goods,446.39,GBP,SAP-POOL-0764,Damaged Goods - programme evidence balance,programme_pool
+ACR-2026-00257,2026-06-18,2026-06,Walmart,Chargeback/Other,49.77,GBP,SAP-TXN-0258,Chargeback/Other - transaction accrual,transaction_match
+ACR-2026-00047,2026-06-22,2026-06,Walmart,Promotional Accrual,1220.84,GBP,SAP-TXN-0048,Promotional Accrual - transaction accrual,transaction_match
+ACR-2026-00097,2026-06-30,2026-06,Shopify Direct,Shortage Claim,98.31,GBP,SAP-TXN-0098,Shortage Claim - transaction accrual,transaction_match
+ACR-2026-00017,2026-06-09,2026-06,Shopify Direct,Promotional Accrual,2685.46,GBP,SAP-TXN-0018,Promotional Accrual - transaction accrual,transaction_match
+ACR-2026-00219,2026-06-17,2026-06,Walmart,Damaged Goods,168.93,GBP,SAP-TXN-0220,Damaged Goods - transaction accrual,transaction_match
+ACR-2026-00295,2026-06-13,2026-06,Shopify Direct,Chargeback/Other,670.73,GBP,SAP-TXN-0296,Chargeback/Other - transaction accrual,transaction_match
+ACR-2026-00775,2026-06-15,2026-06,Shopify Direct,Price Dispute,329.75,GBP,SAP-POOL-0776,Price Dispute - programme evidence balance,programme_pool
+ACR-2026-00199,2026-06-13,2026-06,Walmart,Damaged Goods,95.54,GBP,SAP-TXN-0200,Damaged Goods - transaction accrual,transaction_match
+ACR-2026-00091,2026-06-10,2026-06,Amazon,Shortage Claim,216.52,GBP,SAP-TXN-0092,Shortage Claim - transaction accrual,transaction_match
+ACR-2026-00111,2026-06-08,2026-06,Target,Shortage Claim,80.85,GBP,SAP-TXN-0112,Shortage Claim - transaction accrual,transaction_match
+ACR-2026-00131,2026-06-11,2026-06,Amazon,Price Dispute,30.99,GBP,SAP-TXN-0132,Price Dispute - transaction accrual,transaction_match
+ACR-2026-00135,2026-06-03,2026-06,Amazon,Price Dispute,226.73,GBP,SAP-TXN-0136,Price Dispute - transaction accrual,transaction_match
+ACR-2026-00193,2026-06-06,2026-06,Shopify Direct,Damaged Goods,63.72,GBP,SAP-TXN-0194,Damaged Goods - transaction accrual,transaction_match
+ACR-2026-00187,2026-06-19,2026-06,Amazon,Damaged Goods,406.55,GBP,SAP-TXN-0188,Damaged Goods - transaction accrual,transaction_match
+ACR-2026-00027,2026-06-20,2026-06,Target,Promotional Accrual,1214.21,GBP,SAP-TXN-0028,Promotional Accrual - transaction accrual,transaction_match
+ACR-2026-00059,2026-06-13,2026-06,Target,Promotional Accrual,1222.9,GBP,SAP-TXN-0060,Promotional Accrual - transaction accrual,transaction_match
+ACR-2026-00061,2026-06-30,2026-06,Walmart,Shortage Claim,399.45,GBP,SAP-TXN-0062,Shortage Claim - transaction accrual,transaction_match
+ACR-2026-00205,2026-06-19,2026-06,Shopify Direct,Damaged Goods,299.01,GBP,SAP-TXN-0206,Damaged Goods - transaction accrual,transaction_match
+ACR-2026-00113,2026-06-03,2026-06,Shopify Direct,Shortage Claim,90.84,GBP,SAP-TXN-0114,Shortage Claim - transaction accrual,transaction_match
+ACR-2026-00241,2026-06-22,2026-06,Walmart,Chargeback/Other,627.04,GBP,SAP-TXN-0242,Chargeback/Other - transaction accrual,transaction_match
+ACR-2026-00015,2026-06-14,2026-06,Shopify Direct,Promotional Accrual,1095.19,GBP,SAP-TXN-0016,Promotional Accrual - transaction accrual,transaction_match
+ACR-2026-00019,2026-06-25,2026-06,Amazon,Promotional Accrual,2675.71,GBP,SAP-TXN-0020,Promotional Accrual - transaction accrual,transaction_match
+ACR-2026-00117,2026-06-25,2026-06,Shopify Direct,Shortage Claim,105.27,GBP,SAP-TXN-0118,Shortage Claim - transaction accrual,transaction_match
+ACR-2026-00183,2026-06-22,2026-06,Shopify Direct,Damaged Goods,397.8,GBP,SAP-TXN-0184,Damaged Goods - transaction accrual,transaction_match
+ACR-2026-00769,2026-06-15,2026-06,Walmart,Damaged Goods,110.67,GBP,SAP-POOL-0770,Damaged Goods - programme evidence balance,programme_pool
+ACR-2026-00771,2026-06-15,2026-06,Amazon,Price Dispute,810.54,GBP,SAP-POOL-0772,Price Dispute - programme evidence balance,programme_pool
+ACR-2026-00123,2026-06-30,2026-06,Walmart,Price Dispute,178.7,GBP,SAP-TXN-0124,Price Dispute - transaction accrual,transaction_match
+ACR-2026-00207,2026-06-07,2026-06,Target,Damaged Goods,373.21,GBP,SAP-TXN-0208,Damaged Goods - transaction accrual,transaction_match
+ACR-2026-00075,2026-06-17,2026-06,Walmart,Shortage Claim,237.67,GBP,SAP-TXN-0076,Shortage Claim - transaction accrual,transaction_match
+ACR-2026-00139,2026-06-28,2026-06,Amazon,Price Dispute,119.17,GBP,SAP-TXN-0140,Price Dispute - transaction accrual,transaction_match
+ACR-2026-00127,2026-06-15,2026-06,Target,Price Dispute,281.39,GBP,SAP-TXN-0128,Price Dispute - transaction accrual,transaction_match
+ACR-2026-00173,2026-06-06,2026-06,Walmart,Price Dispute,140.83,GBP,SAP-TXN-0174,Price Dispute - transaction accrual,transaction_match
+ACR-2026-00107,2026-06-16,2026-06,Target,Shortage Claim,67.01,GBP,SAP-TXN-0108,Shortage Claim - transaction accrual,transaction_match
+ACR-2026-00167,2026-06-04,2026-06,Shopify Direct,Price Dispute,39.42,GBP,SAP-TXN-0168,Price Dispute - transaction accrual,transaction_match
+ACR-2026-00053,2026-06-13,2026-06,Costco,Promotional Accrual,1228.86,GBP,SAP-TXN-0054,Promotional Accrual - transaction accrual,transaction_match
+ACR-2026-00259,2026-06-19,2026-06,Target,Chargeback/Other,548.19,GBP,SAP-TXN-0260,Chargeback/Other - transaction accrual,transaction_match
+ACR-2026-00147,2026-06-26,2026-06,Costco,Price Dispute,141.01,GBP,SAP-TXN-0148,Price Dispute - transaction accrual,transaction_match
+ACR-2026-00197,2026-06-20,2026-06,Amazon,Damaged Goods,69.32,GBP,SAP-TXN-0198,Damaged Goods - transaction accrual,transaction_match
+ACR-2026-00175,2026-06-07,2026-06,Costco,Price Dispute,271.43,GBP,SAP-TXN-0176,Price Dispute - transaction accrual,transaction_match
+ACR-2026-00223,2026-06-12,2026-06,Walmart,Damaged Goods,178.92,GBP,SAP-TXN-0224,Damaged Goods - transaction accrual,transaction_match
+ACR-2026-00007,2026-06-03,2026-06,Shopify Direct,Promotional Accrual,2094.33,GBP,SAP-TXN-0008,Promotional Accrual - transaction accrual,transaction_match
+ACR-2026-00011,2026-06-17,2026-06,Walmart,Promotional Accrual,2125.45,GBP,SAP-TXN-0012,Promotional Accrual - transaction accrual,transaction_match
+ACR-2026-00145,2026-06-19,2026-06,Shopify Direct,Price Dispute,159.71,GBP,SAP-TXN-0146,Price Dispute - transaction accrual,transaction_match
+ACR-2026-00087,2026-06-22,2026-06,Amazon,Shortage Claim,378.52,GBP,SAP-TXN-0088,Shortage Claim - transaction accrual,transaction_match
+ACR-2026-00155,2026-06-02,2026-06,Amazon,Price Dispute,139.75,GBP,SAP-TXN-0156,Price Dispute - transaction accrual,transaction_match
+ACR-2026-00291,2026-06-13,2026-06,Walmart,Chargeback/Other,331.77,GBP,SAP-TXN-0292,Chargeback/Other - transaction accrual,transaction_match
+ACR-2026-00169,2026-06-27,2026-06,Shopify Direct,Price Dispute,29.21,GBP,SAP-TXN-0170,Price Dispute - transaction accrual,transaction_match
+ACR-2026-00195,2026-06-03,2026-06,Shopify Direct,Damaged Goods,464.93,GBP,SAP-TXN-0196,Damaged Goods - transaction accrual,transaction_match
+ACR-2026-00247,2026-06-02,2026-06,Target,Chargeback/Other,18.42,GBP,SAP-TXN-0248,Chargeback/Other - transaction accrual,transaction_match
+ACR-2026-00787,2026-06-15,2026-06,Walmart,Promotional Accrual,11594.73,GBP,SAP-POOL-0788,Promotional Accrual - programme evidence balance,programme_pool
+ACR-2026-00151,2026-06-14,2026-06,Target,Price Dispute,142.16,GBP,SAP-TXN-0152,Price Dispute - transaction accrual,transaction_match
+ACR-2026-00243,2026-06-17,2026-06,Target,Chargeback/Other,486.43,GBP,SAP-TXN-0244,Chargeback/Other - transaction accrual,transaction_match
+ACR-2026-00165,2026-06-15,2026-06,Amazon,Price Dispute,255.29,GBP,SAP-TXN-0166,Price Dispute - transaction accrual,transaction_match
+ACR-2026-00129,2026-06-04,2026-06,Costco,Price Dispute,95.65,GBP,SAP-TXN-0130,Price Dispute - transaction accrual,transaction_match
+ACR-2026-00023,2026-06-25,2026-06,Walmart,Promotional Accrual,1408.81,GBP,SAP-TXN-0024,Promotional Accrual - transaction accrual,transaction_match
+ACR-2026-00137,2026-06-08,2026-06,Amazon,Price Dispute,44.21,GBP,SAP-TXN-0138,Price Dispute - transaction accrual,transaction_match
+ACR-2026-00157,2026-06-26,2026-06,Target,Price Dispute,270.58,GBP,SAP-TXN-0158,Price Dispute - transaction accrual,transaction_match
+ACR-2026-00287,2026-06-12,2026-06,Costco,Chargeback/Other,309.51,GBP,SAP-TXN-0288,Chargeback/Other - transaction accrual,transaction_match
+ACR-2026-00161,2026-06-05,2026-06,Costco,Price Dispute,145.24,GBP,SAP-TXN-0162,Price Dispute - transaction accrual,transaction_match
+ACR-2026-00755,2026-06-15,2026-06,Shopify Direct,Chargeback/Other,2220.14,GBP,SAP-POOL-0756,Chargeback/Other - programme evidence balance,programme_pool
+ACR-2026-00767,2026-06-15,2026-06,Target,Damaged Goods,529.17,GBP,SAP-POOL-0768,Damaged Goods - programme evidence balance,programme_pool
+ACR-2026-00141,2026-06-08,2026-06,Shopify Direct,Price Dispute,104.37,GBP,SAP-TXN-0142,Price Dispute - transaction accrual,transaction_match
+ACR-2026-00275,2026-06-29,2026-06,Walmart,Chargeback/Other,412.86,GBP,SAP-TXN-0276,Chargeback/Other - transaction accrual,transaction_match
+ACR-2026-00051,2026-06-24,2026-06,Shopify Direct,Promotional Accrual,1160.99,GBP,SAP-TXN-0052,Promotional Accrual - transaction accrual,transaction_match
+ACR-2026-00263,2026-06-29,2026-06,Target,Chargeback/Other,915.43,GBP,SAP-TXN-0264,Chargeback/Other - transaction accrual,transaction_match
+ACR-2026-00021,2026-06-11,2026-06,Costco,Promotional Accrual,1250.25,GBP,SAP-TXN-0022,Promotional Accrual - transaction accrual,transaction_match
+ACR-2026-00217,2026-06-04,2026-06,Shopify Direct,Damaged Goods,72.0,GBP,SAP-TXN-0218,Damaged Goods - transaction accrual,transaction_match
+ACR-2026-00073,2026-06-13,2026-06,Shopify Direct,Shortage Claim,190.32,GBP,SAP-TXN-0074,Shortage Claim - transaction accrual,transaction_match
+ACR-2026-00229,2026-06-01,2026-06,Shopify Direct,Damaged Goods,372.27,GBP,SAP-TXN-0230,Damaged Goods - transaction accrual,transaction_match
+ACR-2026-00249,2026-06-21,2026-06,Walmart,Chargeback/Other,960.51,GBP,SAP-TXN-0250,Chargeback/Other - transaction accrual,transaction_match
+ACR-2026-00779,2026-06-15,2026-06,Amazon,Promotional Accrual,838.41,GBP,SAP-POOL-0780,Promotional Accrual - programme evidence balance,programme_pool
+ACR-2026-00057,2026-06-08,2026-06,Amazon,Promotional Accrual,2718.87,GBP,SAP-TXN-0058,Promotional Accrual - transaction accrual,transaction_match
+ACR-2026-00181,2026-06-10,2026-06,Costco,Damaged Goods,248.62,GBP,SAP-TXN-0182,Damaged Goods - transaction accrual,transaction_match
+ACR-2026-00083,2026-06-15,2026-06,Shopify Direct,Shortage Claim,250.48,GBP,SAP-TXN-0084,Shortage Claim - transaction accrual,transaction_match
+ACR-2026-00041,2026-06-03,2026-06,Target,Promotional Accrual,2809.36,GBP,SAP-TXN-0042,Promotional Accrual - transaction accrual,transaction_match
+ACR-2026-00043,2026-06-13,2026-06,Amazon,Promotional Accrual,1250.53,GBP,SAP-TXN-0044,Promotional Accrual - transaction accrual,transaction_match
+ACR-2026-00077,2026-06-28,2026-06,Amazon,Shortage Claim,99.47,GBP,SAP-TXN-0078,Shortage Claim - transaction accrual,transaction_match
+ACR-2026-00039,2026-06-22,2026-06,Amazon,Promotional Accrual,1115.33,GBP,SAP-TXN-0040,Promotional Accrual - transaction accrual,transaction_match
+ACR-2026-00133,2026-06-08,2026-06,Shopify Direct,Price Dispute,192.71,GBP,SAP-TXN-0134,Price Dispute - transaction accrual,transaction_match
+ACR-2026-00031,2026-06-30,2026-06,Amazon,Promotional Accrual,1522.04,GBP,SAP-TXN-0032,Promotional Accrual - transaction accrual,transaction_match
+ACR-2026-00213,2026-06-11,2026-06,Costco,Damaged Goods,504.15,GBP,SAP-TXN-0214,Damaged Goods - transaction accrual,transaction_match
+ACR-2026-00029,2026-06-24,2026-06,Amazon,Promotional Accrual,1740.45,GBP,SAP-TXN-0030,Promotional Accrual - transaction accrual,transaction_match
+ACR-2026-00221,2026-06-29,2026-06,Target,Damaged Goods,69.74,GBP,SAP-TXN-0222,Damaged Goods - transaction accrual,transaction_match
+ACR-2026-00297,2026-06-11,2026-06,Shopify Direct,Chargeback/Other,921.36,GBP,SAP-TXN-0298,Chargeback/Other - transaction accrual,transaction_match
+ACR-2026-00093,2026-06-01,2026-06,Costco,Shortage Claim,403.37,GBP,SAP-TXN-0094,Shortage Claim - transaction accrual,transaction_match
+ACR-2026-00789,2026-06-15,2026-06,Amazon,Shortage Claim,697.42,GBP,SAP-POOL-0790,Shortage Claim - programme evidence balance,programme_pool
+ACR-2026-00795,2026-06-15,2026-06,Target,Shortage Claim,804.88,GBP,SAP-POOL-0796,Shortage Claim - programme evidence balance,programme_pool
+ACR-2026-00265,2026-06-29,2026-06,Amazon,Chargeback/Other,360.29,GBP,SAP-TXN-0266,Chargeback/Other - transaction accrual,transaction_match
+ACR-2026-00751,2026-06-15,2026-06,Amazon,Chargeback/Other,1504.97,GBP,SAP-POOL-0752,Chargeback/Other - programme evidence balance,programme_pool
+ACR-2026-00231,2026-06-10,2026-06,Shopify Direct,Damaged Goods,505.54,GBP,SAP-TXN-0232,Damaged Goods - transaction accrual,transaction_match
+ACR-2026-00279,2026-06-26,2026-06,Costco,Chargeback/Other,661.46,GBP,SAP-TXN-0280,Chargeback/Other - transaction accrual,transaction_match
+ACR-2026-00163,2026-06-15,2026-06,Target,Price Dispute,96.19,GBP,SAP-TXN-0164,Price Dispute - transaction accrual,transaction_match
+ACR-2026-00065,2026-06-29,2026-06,Costco,Shortage Claim,389.24,GBP,SAP-TXN-0066,Shortage Claim - transaction accrual,transaction_match
+ACR-2026-00037,2026-06-07,2026-06,Shopify Direct,Promotional Accrual,2402.34,GBP,SAP-TXN-0038,Promotional Accrual - transaction accrual,transaction_match
+ACR-2026-00209,2026-06-08,2026-06,Target,Damaged Goods,169.14,GBP,SAP-TXN-0210,Damaged Goods - transaction accrual,transaction_match
+ACR-2026-00211,2026-06-22,2026-06,Walmart,Damaged Goods,360.98,GBP,SAP-TXN-0212,Damaged Goods - transaction accrual,transaction_match
+ACR-2026-00269,2026-06-29,2026-06,Shopify Direct,Chargeback/Other,859.1,GBP,SAP-TXN-0270,Chargeback/Other - transaction accrual,transaction_match
+ACR-2026-00245,2026-06-03,2026-06,Amazon,Chargeback/Other,627.08,GBP,SAP-TXN-0246,Chargeback/Other - transaction accrual,transaction_match
+ACR-2026-00203,2026-06-20,2026-06,Amazon,Damaged Goods,76.4,GBP,SAP-TXN-0204,Damaged Goods - transaction accrual,transaction_match
+ACR-2026-00159,2026-06-07,2026-06,Walmart,Price Dispute,79.21,GBP,SAP-TXN-0160,Price Dispute - transaction accrual,transaction_match
+ACR-2026-00793,2026-06-15,2026-06,Shopify Direct,Shortage Claim,987.91,GBP,SAP-POOL-0794,Shortage Claim - programme evidence balance,programme_pool
+ACR-2026-00045,2026-06-06,2026-06,Target,Promotional Accrual,1499.49,GBP,SAP-TXN-0046,Promotional Accrual - transaction accrual,transaction_match
+ACR-2026-00067,2026-06-05,2026-06,Costco,Shortage Claim,155.36,GBP,SAP-TXN-0068,Shortage Claim - transaction accrual,transaction_match
+ACR-2026-00757,2026-06-15,2026-06,Target,Chargeback/Other,1006.61,GBP,SAP-POOL-0758,Chargeback/Other - programme evidence balance,programme_pool
+ACR-2026-00239,2026-06-07,2026-06,Shopify Direct,Damaged Goods,397.39,GBP,SAP-TXN-0240,Damaged Goods - transaction accrual,transaction_match
+ACR-2026-00189,2026-06-24,2026-06,Amazon,Damaged Goods,193.37,GBP,SAP-TXN-0190,Damaged Goods - transaction accrual,transaction_match
+ACR-2026-00293,2026-06-25,2026-06,Amazon,Chargeback/Other,284.36,GBP,SAP-TXN-0294,Chargeback/Other - transaction accrual,transaction_match
+ACR-2026-00283,2026-06-13,2026-06,Amazon,Chargeback/Other,856.64,GBP,SAP-TXN-0284,Chargeback/Other - transaction accrual,transaction_match
+ACR-2026-00781,2026-06-15,2026-06,Costco,Promotional Accrual,6563.54,GBP,SAP-POOL-0782,Promotional Accrual - programme evidence balance,programme_pool
+ACR-2026-00013,2026-06-07,2026-06,Shopify Direct,Promotional Accrual,2433.25,GBP,SAP-TXN-0014,Promotional Accrual - transaction accrual,transaction_match
+ACR-2026-00253,2026-06-18,2026-06,Costco,Chargeback/Other,24.33,GBP,SAP-TXN-0254,Chargeback/Other - transaction accrual,transaction_match
+ACR-2026-00121,2026-06-28,2026-06,Shopify Direct,Price Dispute,197.88,GBP,SAP-TXN-0122,Price Dispute - transaction accrual,transaction_match
+ACR-2026-00071,2026-06-24,2026-06,Target,Shortage Claim,270.45,GBP,SAP-TXN-0072,Shortage Claim - transaction accrual,transaction_match
+ACR-2026-00103,2026-06-18,2026-06,Walmart,Shortage Claim,403.26,GBP,SAP-TXN-0104,Shortage Claim - transaction accrual,transaction_match
+ACR-2026-00063,2026-06-07,2026-06,Target,Shortage Claim,295.96,GBP,SAP-TXN-0064,Shortage Claim - transaction accrual,transaction_match
+ACR-2026-00115,2026-06-27,2026-06,Costco,Shortage Claim,84.92,GBP,SAP-TXN-0116,Shortage Claim - transaction accrual,transaction_match
+ACR-2026-00261,2026-06-05,2026-06,Costco,Chargeback/Other,55.36,GBP,SAP-TXN-0262,Chargeback/Other - transaction accrual,transaction_match
+ACR-2026-00185,2026-06-07,2026-06,Walmart,Damaged Goods,184.84,GBP,SAP-TXN-0186,Damaged Goods - transaction accrual,transaction_match
+ACR-2026-00089,2026-06-25,2026-06,Target,Shortage Claim,290.75,GBP,SAP-TXN-0090,Shortage Claim - transaction accrual,transaction_match
+ACR-2026-00777,2026-06-15,2026-06,Target,Price Dispute,953.89,GBP,SAP-POOL-0778,Price Dispute - programme evidence balance,programme_pool
+ACR-2026-00081,2026-06-03,2026-06,Shopify Direct,Shortage Claim,198.52,GBP,SAP-TXN-0082,Shortage Claim - transaction accrual,transaction_match
+ACR-2026-00153,2026-06-22,2026-06,Amazon,Price Dispute,211.23,GBP,SAP-TXN-0154,Price Dispute - transaction accrual,transaction_match
+ACR-2026-00149,2026-06-04,2026-06,Amazon,Price Dispute,212.81,GBP,SAP-TXN-0150,Price Dispute - transaction accrual,transaction_match
+ACR-2026-00277,2026-06-24,2026-06,Walmart,Chargeback/Other,907.13,GBP,SAP-TXN-0278,Chargeback/Other - transaction accrual,transaction_match
+ACR-2026-00281,2026-06-09,2026-06,Walmart,Chargeback/Other,168.63,GBP,SAP-TXN-0282,Chargeback/Other - transaction accrual,transaction_match
+ACR-2026-00033,2026-06-10,2026-06,Shopify Direct,Promotional Accrual,2739.39,GBP,SAP-TXN-0034,Promotional Accrual - transaction accrual,transaction_match
+ACR-2026-00177,2026-06-06,2026-06,Amazon,Price Dispute,133.01,GBP,SAP-TXN-0178,Price Dispute - transaction accrual,transaction_match
+ACR-2026-00791,2026-06-15,2026-06,Costco,Shortage Claim,309.54,GBP,SAP-POOL-0792,Shortage Claim - programme evidence balance,programme_pool

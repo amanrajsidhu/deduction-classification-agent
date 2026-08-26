@@ -188,7 +188,7 @@
       "maxTries": 3,
       "waitBetweenTries": 3000,
       "credentials": {
-        "anthropicApi": { "id": "ysFhwyWcnQK6QDA1", "name": "Anthropic account" }
+        "anthropicApi": { "id": "REPLACE_WITH_N8N_CREDENTIAL_ID", "name": "Select credential after import" }
       }
     },
     {
@@ -349,15 +349,12 @@
   "settings": {
     "executionOrder": "v1",
     "binaryMode": "separate",
-    "availableInMCP": true
+    "availableInMCP": false
   },
-  "versionId": "c942c50b-03a6-40cb-bd12-aa7523e74ae8",
   "meta": {
     "aiBuilderAssisted": true,
-    "builderVariant": "mcp",
-    "instanceId": "48dfc7a5183a40c733a245eb7c14bc5d90cd2a245dec4250fcbd7957c0030dee"
+    "builderVariant": "mcp"
   },
   "nodeGroups": [],
-  "id": "Wz05RWbstTOkI7fX",
   "tags": []
 }
