@@ -1,0 +1,2 @@
+fixtures/v2/*.csv text eol=lf
+workflows/DEDUCTION_RESOLUTION_WORKBENCH_V2.json text eol=lf

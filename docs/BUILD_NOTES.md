@@ -230,6 +230,14 @@ exactly once, zero unsafe terminal misroutes and **Ready for Demo**. The live
 workflow now matches the publishable export structurally, remains inactive and
 is unavailable over MCP. No production data was used.
 
+The first hosted Ubuntu check then exposed a cross-platform reproducibility
+defect: Python's CSV writer had emitted CRLF by default, while Windows Git had
+silently normalised the committed fixture to LF. The generator now specifies LF
+explicitly, repository attributes lock the generated fixture and workflow line
+endings, and a regression test rejects CRLF fixture output. The exact
+regeneration check passes in an official Python 3.12 Linux container. GitHub
+Actions dependencies were also advanced to their Node 24-based major versions.
+
 ## What is not claimed
 
 The repository does not claim production

@@ -41,6 +41,8 @@ class V2RuleTests(unittest.TestCase):
             paths_b = generate(Path(second))
             for key in paths_a:
                 self.assertEqual(paths_a[key].read_bytes(), paths_b[key].read_bytes(), key)
+            for key in ("settlements", "accruals"):
+                self.assertNotIn(b"\r\n", paths_a[key].read_bytes(), key)
 
     def test_v2_fixture_has_matchable_pairs_and_no_accidental_classifiable_match(self):
         with tempfile.TemporaryDirectory() as directory:
