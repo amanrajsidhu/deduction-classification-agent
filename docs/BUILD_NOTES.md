@@ -226,6 +226,31 @@ The public release boundary was tightened after the verified run:
 The raw internal build log, local operator context and private reasoning remain
 outside Git. This document is the deliberately curated public engineering story.
 
+## Local post-import verification — 26 August 2026
+
+The repository V2 definition was imported over the existing local workbench while
+preserving its existing credential connection. The workflow remained inactive,
+unpublished and unavailable through MCP. A manual run then used only the synthetic
+fixtures and rewrote all five output files.
+
+The post-import evaluator reproduced the supported result: 250 unique routed
+deductions, comprising 150 auto-matches, 75 evidence-backed classifications,
+0 review items, 25 unresolvable items and 0 data-quality issues. It found zero
+terminal misroutes and returned **Ready for Demo**. The eight-sheet validation
+workbook was also visually inspected, with no formula-error markers observed.
+
+All 31 automated tests passed locally. The evaluation-integrity workflow also
+passed on the verified `377a558` baseline after the earlier cross-platform fixture
+reproducibility fix. Inventory checks found one public repository and one current
+local V2 workflow. The preserved V1 and V2 artefacts are intentional before/after
+evidence, not duplicate deployments, and no Vercel project was imported or
+deployed.
+
+The local workflow export containing environment-specific references was not
+committed. No n8n encryption-key change was made; any local master-key migration
+remains a separate approval-gated maintenance task with backup, restore and
+credential-dependency requirements.
+
 ## What is not claimed
 
 The repository does not claim production
