@@ -1,0 +1,71 @@
+{
+  "schema_version": "development-feasibility-1",
+  "status": "AI-authored synthetic development examples; business expectations await Aman's review",
+  "not_a_holdout": true,
+  "proposal_origin": "Hand-authored simulated provider outputs. These are not model predictions or model-performance evidence.",
+  "common_row": {"transaction_date": "2026-10-01", "vendor_name": "Amazon", "amount": "120.00", "currency": "GBP", "description": "Settlement adjustment"},
+  "common_pool": {"accrual_date": "2026-10-01", "vendor_name": "Amazon", "amount": "500.00", "currency": "GBP", "evidence_scope": "programme_pool"},
+  "cases": [
+    {
+      "id": "DEV01",
+      "purpose": "Configured alias remains authoritative over a conflicting model proposal",
+      "rows": [{"deduction_id": "DEV01-D1", "reference_code": "PROMO-EXISTING"}],
+      "pools": [{"accrual_id": "DEV01-P1", "bucket": "Promotional Accrual"}, {"accrual_id": "DEV01-P2", "bucket": "Damaged Goods"}],
+      "context": [],
+      "variants": [{"name": "wrong_model_proposal", "buckets": ["Damaged Goods"], "expected_current_routes": ["classified_verified"], "expected_current_buckets": ["Promotional Accrual"]}],
+      "proposed_business_expectation": "Accept Promotional Accrual via the existing configured alias, allocating 120 from 500 and leaving 380."
+    },
+    {
+      "id": "DEV02",
+      "purpose": "An unfamiliar code can be resolved from a guide; a supporting balance alone cannot prove the category",
+      "rows": [{"deduction_id": "DEV02-D1", "reference_code": "ZX-17"}],
+      "pools": [{"accrual_id": "DEV02-P1", "bucket": "Promotional Accrual"}, {"accrual_id": "DEV02-P2", "bucket": "Damaged Goods"}],
+      "context": [{"source_id": "GUIDE-A-2026-10", "vendor_name": "Amazon", "valid_from": "2026-10-01", "reference_code": "ZX-17", "text": "ZX-17 denotes compensation for goods received damaged; use Damaged Goods."}],
+      "evaluation_expectation": {"deduction_id": "DEV02-D1", "seed_category": "classifiable", "true_bucket": "Damaged Goods", "supporting_accrual_id": "DEV02-P2"},
+      "variants": [
+        {"name": "correct_proposal", "buckets": ["Damaged Goods"], "expected_current_routes": ["classified_verified"], "expected_current_buckets": ["Damaged Goods"]},
+        {"name": "wrong_supported_proposal", "buckets": ["Promotional Accrual"], "expected_current_routes": ["classified_verified"], "expected_current_buckets": ["Promotional Accrual"], "demonstrated_limitation": "Current allocation accepts a wrong category when that category has sufficient eligible balance. The independent evaluator, not allocation alone, must detect the error."}
+      ],
+      "proposed_business_expectation": "With the guide, classify as Damaged Goods. Without it, the opaque reference does not justify either category. Exact guide mapping should also be available to a deterministic lookup comparator."
+    },
+    {
+      "id": "DEV03",
+      "purpose": "Genuinely missing classification information",
+      "rows": [{"deduction_id": "DEV03-D1", "reference_code": "ZZ-99"}],
+      "pools": [{"accrual_id": "DEV03-P1", "bucket": "Promotional Accrual"}, {"accrual_id": "DEV03-P2", "bucket": "Damaged Goods"}],
+      "context": [],
+      "variants": [{"name": "abstain", "buckets": ["Unresolvable"], "expected_current_routes": ["unresolvable"], "expected_current_buckets": ["Unresolvable"]}],
+      "proposed_business_expectation": "Abstain from a category. Available programme balances do not supply the missing meaning."
+    },
+    {
+      "id": "DEV04",
+      "purpose": "Contradictory guides require explicit human review rather than a claim of no evidence",
+      "rows": [{"deduction_id": "DEV04-D1", "reference_code": "ZX-17"}],
+      "pools": [{"accrual_id": "DEV04-P1", "bucket": "Promotional Accrual"}, {"accrual_id": "DEV04-P2", "bucket": "Damaged Goods"}],
+      "context": [
+        {"source_id": "GUIDE-A", "vendor_name": "Amazon", "valid_from": "2026-10-01", "reference_code": "ZX-17", "text": "Use Damaged Goods for ZX-17."},
+        {"source_id": "GUIDE-B", "vendor_name": "Amazon", "valid_from": "2026-10-01", "reference_code": "ZX-17", "text": "Use Promotional Accrual for ZX-17."}
+      ],
+      "variants": [{"name": "abstain_on_conflict", "buckets": ["Unresolvable"], "expected_current_routes": ["unresolvable"], "expected_current_buckets": ["Unresolvable"], "demonstrated_limitation": "The model schema has no explicit review disposition and allocation does not inspect guides. Abstaining on conflicting guides currently becomes unresolvable when no exact-amount near-date ledger candidate exists."}],
+      "proposed_business_expectation": "Needs Review because two equally applicable sources disagree. This expectation is proposed for a context extension, not a claim that current V2 already implements it."
+    },
+    {
+      "id": "DEV05",
+      "purpose": "Correct classification cannot override insufficient financial evidence",
+      "rows": [{"deduction_id": "DEV05-D1", "reference_code": "ZX-17"}],
+      "pools": [{"accrual_id": "DEV05-P1", "bucket": "Damaged Goods", "amount": "80.00"}],
+      "context": [{"source_id": "GUIDE-A", "reference_code": "ZX-17", "text": "Use Damaged Goods for ZX-17."}],
+      "variants": [{"name": "correct_but_underfunded", "buckets": ["Damaged Goods"], "expected_current_routes": ["needs_review"], "expected_current_buckets": ["Damaged Goods"]}],
+      "proposed_business_expectation": "Needs Review: 80 cannot support a deduction of 120."
+    },
+    {
+      "id": "DEV06",
+      "purpose": "Supporting balance is consumed once across the full population",
+      "rows": [{"deduction_id": "DEV06-D1", "reference_code": "ZX-17", "amount": "70.00"}, {"deduction_id": "DEV06-D2", "reference_code": "ZX-17", "amount": "60.00"}],
+      "pools": [{"accrual_id": "DEV06-P1", "bucket": "Damaged Goods", "amount": "100.00"}],
+      "context": [{"source_id": "GUIDE-A", "reference_code": "ZX-17", "text": "Use Damaged Goods for ZX-17."}],
+      "variants": [{"name": "shared_balance", "buckets": ["Damaged Goods", "Damaged Goods"], "expected_current_routes": ["classified_verified", "needs_review"], "expected_current_buckets": ["Damaged Goods", "Damaged Goods"]}],
+      "proposed_business_expectation": "The 70 line consumes balance first, leaving 30. The 60 line requires review. Never reset the pool for each batch."
+    }
+  ]
+}

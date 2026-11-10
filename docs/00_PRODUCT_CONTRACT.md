@@ -19,7 +19,7 @@ For each settlement cycle, turn a deductions CSV and an accrual-ledger CSV into
 one value-ranked worklist showing:
 
 1. what deterministic rules resolved;
-2. what AI classified and a ledger balance safely supported;
+2. what a configured category and eligible allocated balance jointly support;
 3. what requires a person;
 4. what cannot be resolved from the supplied data; and
 5. why every line was routed that way.
@@ -30,6 +30,14 @@ The workbench reduces manual sorting. It does **not** make an accounting
 decision. Rules match clean lines, AI proposes a bucket only for the remainder,
 and deterministic controls either allocate supporting evidence or stop the line
 for human review.
+
+Current category-acceptance policy: `configured-reference-only-v1`. Category authority
+and eligible balance are separate requirements. Recompute the configured category from
+the raw reference at the allocation boundary; it must agree with the proposed category.
+Unconfigured or contradictory category proposals require review before any allocation,
+including otherwise plausible or correct AI proposals. A model citation, confidence
+score or provenance flag is insufficient. Trusted guide ingestion and source precedence
+are separate future scope. Existing no-information abstention handling is unchanged.
 
 ## Inputs
 
@@ -60,6 +68,7 @@ A run may be labelled **Ready for Demo** only when:
 - there are zero unsafe terminal misroutes;
 - auto-match pair correctness is at least 99%;
 - accepted classification precision is at least 95%;
+- every accepted category has independently rechecked configured reference authority;
 - unresolvable precision and recall are each at least 95%; and
 - every accepted classification carries allocated evidence with sufficient
   available balance.

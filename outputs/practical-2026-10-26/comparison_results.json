@@ -1,0 +1,409 @@
+{
+  "scored_at_utc": "2026-10-26T14:26:39.716956+00:00",
+  "provider_calls": 0,
+  "provider_spend_gbp": 0,
+  "original_answers_unchanged": true,
+  "prediction_file_sha256": "cbf11dc872109da7a9a95496b64cf96efc6e93d7c4c489a161425240863c68c7",
+  "script_sha256": "e845ea2a2cdc8e0f807dbf057cbeaaf2358b8ad8f9828114073a4c63b8403925",
+  "results": [
+    {
+      "case_id": "P1",
+      "independent_expectation": {
+        "expected_decision": "classify",
+        "expected_bucket": "Shortage Claim",
+        "expected_source_ids": [
+          "GUIDE-A"
+        ],
+        "citation_support": [
+          false
+        ],
+        "simulated_model_decision_correct": false,
+        "desired_model_route": "needs_review",
+        "desired_lookup_route": "classified_verified",
+        "intended_support_id": "P1-A1",
+        "basis": "GUIDE-A explicitly supplies the category. The simulated sentence contradicts it. The wrong category should not be accepted simply because it has a pool."
+      },
+      "recorded_user_prediction": {
+        "recorded_at_utc": "2026-10-26T14:13:34Z",
+        "response": "1) RX-31 - Shortage Claim  2) Yes, it would - but does not support the simulated model's response 3) reviewed as does not match the guide 4) they won't as it currently created a mismatch."
+      },
+      "original_simulated_answer": {
+        "deduction_id": "P1-D1",
+        "bucket": "Price Dispute",
+        "confidence": 0.9,
+        "reasoning": "RX-31 means Price Dispute [GUIDE-A]."
+      },
+      "citation_claims": [
+        {
+          "source_id": "GUIDE-A",
+          "claim": "RX-31 means Price Dispute."
+        }
+      ],
+      "citation_support_from_fixed_manual_expectation": [
+        false
+      ],
+      "methods": {
+        "simulated_model": {
+          "decision": {
+            "decision": "classify",
+            "bucket": "Price Dispute"
+          },
+          "decision_matches_independent_expectation": false,
+          "desired_route": "needs_review",
+          "actual_route": "classified_verified",
+          "routing_matches_independent_expectation": false,
+          "review_requested_before_ledger": false,
+          "ledger_forced_review": false,
+          "actual_control_row": {
+            "transaction_date": "2026-10-01",
+            "vendor_name": "Amazon",
+            "amount": 90,
+            "currency": "GBP",
+            "description": "Settlement adjustment",
+            "deduction_id": "P1-D1",
+            "reference_code": "RX-31",
+            "_raw_normalised_vendor": "amazon",
+            "_normalised_vendor": "amazon",
+            "_normalised_date": "2026-10-01",
+            "_date_parse_method": "iso",
+            "matchable": true,
+            "error": null,
+            "_match_key": "517165c",
+            "_ruleset_version": "2.0.0",
+            "_record_type": "settlement",
+            "_route": "classified_verified",
+            "matched": false,
+            "llm_bucket": "Price Dispute",
+            "llm_confidence": 0.9,
+            "llm_reasoning": "RX-31 means Price Dispute [GUIDE-A].",
+            "_classification_method": "simulated_model",
+            "_classification_error": null,
+            "_llm_batch_ref": "batch:P1-D1:P1-D1:1",
+            "input_tokens": null,
+            "output_tokens": null,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "_evidence_agrees": true,
+            "_evidence_accrual_id": "P1-A2",
+            "_allocated_amount": 90,
+            "_evidence_balance_before": 500,
+            "_evidence_balance_after": 410,
+            "_evidence_note": "Allocated Â£90.00 against programme balance P1-A2; Â£410.00 remains; ruleset 2.0.0."
+          }
+        },
+        "guide_lookup": {
+          "decision": {
+            "decision": "classify",
+            "bucket": "Shortage Claim",
+            "source_ids": [
+              "GUIDE-A"
+            ]
+          },
+          "decision_matches_independent_expectation": true,
+          "desired_route": "classified_verified",
+          "actual_route": "classified_verified",
+          "routing_matches_independent_expectation": true,
+          "review_requested_before_ledger": false,
+          "ledger_forced_review": false,
+          "actual_control_row": {
+            "transaction_date": "2026-10-01",
+            "vendor_name": "Amazon",
+            "amount": 90,
+            "currency": "GBP",
+            "description": "Settlement adjustment",
+            "deduction_id": "P1-D1",
+            "reference_code": "RX-31",
+            "_raw_normalised_vendor": "amazon",
+            "_normalised_vendor": "amazon",
+            "_normalised_date": "2026-10-01",
+            "_date_parse_method": "iso",
+            "matchable": true,
+            "error": null,
+            "_match_key": "517165c",
+            "_ruleset_version": "2.0.0",
+            "_record_type": "settlement",
+            "_route": "classified_verified",
+            "matched": false,
+            "llm_bucket": "Shortage Claim",
+            "llm_confidence": 1,
+            "llm_reasoning": "Deterministic guide lookup; classify",
+            "_classification_method": "guide_lookup",
+            "_classification_error": null,
+            "_llm_batch_ref": "batch:P1-D1:P1-D1:1",
+            "input_tokens": null,
+            "output_tokens": null,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "_evidence_agrees": true,
+            "_evidence_accrual_id": "P1-A1",
+            "_allocated_amount": 90,
+            "_evidence_balance_before": 500,
+            "_evidence_balance_after": 410,
+            "_evidence_note": "Allocated Â£90.00 against programme balance P1-A1; Â£410.00 remains; ruleset 2.0.0."
+          }
+        }
+      }
+    },
+    {
+      "case_id": "P2",
+      "independent_expectation": {
+        "expected_decision": "abstain",
+        "expected_bucket": null,
+        "expected_source_ids": [],
+        "citation_support": [
+          true
+        ],
+        "simulated_model_decision_correct": true,
+        "desired_model_route": "unresolvable",
+        "desired_lookup_route": "unresolvable",
+        "intended_support_id": null,
+        "basis": "The only supplied guide explicitly covers RX-34 and contains no other definitions. No source defines RX-32. The citation truthfully describes that limited source; it does not supply a category for RX-32."
+      },
+      "recorded_user_prediction": {
+        "recorded_at_utc": "2026-10-26T14:26:09Z",
+        "response": "For P2, the lookup should return not applicable or unresolved, like it has in the example, because if we don't have anything in the guides or the correct guide isn't uploaded to represent what RX32 means, then it has nothing to go off. So I'd expect it to return an output that makes the recipient look it up. The citation in this example doesn't support the specific sentence because it doesn't relate to the claim, RX34, is price dispute, but the row is RX32. And the model's final decision is not justified, I would say actually, because unresolvable means it can't be fixed. I would say we need to upload the correct guide for RX32 to the model, or we can ask it to do a deeper research to find anything relevant to that query and use what it has. Unresolvable means there's nothing we can do about it. That's how I see it as. So not having the correct information is more of an accurate label, but just say needs further review would be, I think, a better label for that. If it's doing balance control, shouldn't catch any problem with getting reviewed, like it's not getting processed, is it?"
+      },
+      "original_simulated_answer": {
+        "deduction_id": "P2-D1",
+        "bucket": "Unresolvable",
+        "confidence": 0.4,
+        "reasoning": "GUIDE-B defines RX-34, with no definition for RX-32 [GUIDE-B]."
+      },
+      "citation_claims": [
+        {
+          "source_id": "GUIDE-B",
+          "claim": "GUIDE-B defines RX-34, with no definition for RX-32."
+        }
+      ],
+      "citation_support_from_fixed_manual_expectation": [
+        true
+      ],
+      "methods": {
+        "simulated_model": {
+          "decision": {
+            "decision": "abstain",
+            "bucket": null
+          },
+          "decision_matches_independent_expectation": true,
+          "desired_route": "unresolvable",
+          "actual_route": "unresolvable",
+          "routing_matches_independent_expectation": true,
+          "review_requested_before_ledger": false,
+          "ledger_forced_review": false,
+          "actual_control_row": {
+            "transaction_date": "2026-10-01",
+            "vendor_name": "Amazon",
+            "amount": 90,
+            "currency": "GBP",
+            "description": "Settlement adjustment",
+            "deduction_id": "P2-D1",
+            "reference_code": "RX-32",
+            "_raw_normalised_vendor": "amazon",
+            "_normalised_vendor": "amazon",
+            "_normalised_date": "2026-10-01",
+            "_date_parse_method": "iso",
+            "matchable": true,
+            "error": null,
+            "_match_key": "517165c",
+            "_ruleset_version": "2.0.0",
+            "_record_type": "settlement",
+            "_route": "unresolvable",
+            "matched": false,
+            "llm_bucket": "Unresolvable",
+            "llm_confidence": 0.4,
+            "llm_reasoning": "GUIDE-B defines RX-34, with no definition for RX-32 [GUIDE-B].",
+            "_classification_method": "simulated_model",
+            "_classification_error": null,
+            "_llm_batch_ref": "batch:P2-D1:P2-D1:1",
+            "input_tokens": null,
+            "output_tokens": null,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "_evidence_agrees": true,
+            "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger."
+          }
+        },
+        "guide_lookup": {
+          "decision": {
+            "decision": "abstain",
+            "bucket": null,
+            "source_ids": []
+          },
+          "decision_matches_independent_expectation": true,
+          "desired_route": "unresolvable",
+          "actual_route": "unresolvable",
+          "routing_matches_independent_expectation": true,
+          "review_requested_before_ledger": false,
+          "ledger_forced_review": false,
+          "actual_control_row": {
+            "transaction_date": "2026-10-01",
+            "vendor_name": "Amazon",
+            "amount": 90,
+            "currency": "GBP",
+            "description": "Settlement adjustment",
+            "deduction_id": "P2-D1",
+            "reference_code": "RX-32",
+            "_raw_normalised_vendor": "amazon",
+            "_normalised_vendor": "amazon",
+            "_normalised_date": "2026-10-01",
+            "_date_parse_method": "iso",
+            "matchable": true,
+            "error": null,
+            "_match_key": "517165c",
+            "_ruleset_version": "2.0.0",
+            "_record_type": "settlement",
+            "_route": "unresolvable",
+            "matched": false,
+            "llm_bucket": "Unresolvable",
+            "llm_confidence": 1,
+            "llm_reasoning": "Deterministic guide lookup; abstain",
+            "_classification_method": "guide_lookup",
+            "_classification_error": null,
+            "_llm_batch_ref": "batch:P2-D1:P2-D1:1",
+            "input_tokens": null,
+            "output_tokens": null,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "_evidence_agrees": true,
+            "_evidence_note": "No same-vendor exact-amount near-date candidate exists in the supplied ledger."
+          }
+        }
+      }
+    },
+    {
+      "case_id": "P3",
+      "independent_expectation": {
+        "expected_decision": "review",
+        "expected_bucket": null,
+        "expected_source_ids": [
+          "GUIDE-C",
+          "GUIDE-D"
+        ],
+        "citation_support": [
+          true
+        ],
+        "simulated_model_decision_correct": false,
+        "desired_model_route": "needs_review",
+        "desired_lookup_route": "needs_review",
+        "intended_support_id": null,
+        "basis": "The citation accurately reports GUIDE-C, but GUIDE-D has equal authority/date and contradicts its category. The shared policy requires review; a supported individual sentence does not justify the final decision."
+      },
+      "recorded_user_prediction": {
+        "recorded_at_utc": "2026-10-26T14:26:09Z",
+        "response": "And then for P3, that's actually incorrect because it's... Oh, okay, so we have two guides that are equally authoritative saying different things, but the model has chosen one guide over the other. Well, I think it would need to return the outputs for both, citing both, and then saying it needs to go to further review and load the relevant chunks from each guide and letting the user read them, understand them themselves, and then review the actual document citations to see if there's any further context around it. And then after we've reviewed that, anything we've learned from the user, that rule should then be implemented as an exception. So then this hopefully doesn't occur again, and that one guide has more authority in this specific exception scenario for RX35 than the other."
+      },
+      "original_simulated_answer": {
+        "deduction_id": "P3-D1",
+        "bucket": "Promotional Accrual",
+        "confidence": 0.9,
+        "reasoning": "GUIDE-C maps RX-35 to Promotional Accrual [GUIDE-C]."
+      },
+      "citation_claims": [
+        {
+          "source_id": "GUIDE-C",
+          "claim": "GUIDE-C maps RX-35 to Promotional Accrual."
+        }
+      ],
+      "citation_support_from_fixed_manual_expectation": [
+        true
+      ],
+      "methods": {
+        "simulated_model": {
+          "decision": {
+            "decision": "classify",
+            "bucket": "Promotional Accrual"
+          },
+          "decision_matches_independent_expectation": false,
+          "desired_route": "needs_review",
+          "actual_route": "classified_verified",
+          "routing_matches_independent_expectation": false,
+          "review_requested_before_ledger": false,
+          "ledger_forced_review": false,
+          "actual_control_row": {
+            "transaction_date": "2026-10-01",
+            "vendor_name": "Amazon",
+            "amount": 90,
+            "currency": "GBP",
+            "description": "Settlement adjustment",
+            "deduction_id": "P3-D1",
+            "reference_code": "RX-35",
+            "_raw_normalised_vendor": "amazon",
+            "_normalised_vendor": "amazon",
+            "_normalised_date": "2026-10-01",
+            "_date_parse_method": "iso",
+            "matchable": true,
+            "error": null,
+            "_match_key": "517165c",
+            "_ruleset_version": "2.0.0",
+            "_record_type": "settlement",
+            "_route": "classified_verified",
+            "matched": false,
+            "llm_bucket": "Promotional Accrual",
+            "llm_confidence": 0.9,
+            "llm_reasoning": "GUIDE-C maps RX-35 to Promotional Accrual [GUIDE-C].",
+            "_classification_method": "simulated_model",
+            "_classification_error": null,
+            "_llm_batch_ref": "batch:P3-D1:P3-D1:1",
+            "input_tokens": null,
+            "output_tokens": null,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "_evidence_agrees": true,
+            "_evidence_accrual_id": "P3-A1",
+            "_allocated_amount": 90,
+            "_evidence_balance_before": 500,
+            "_evidence_balance_after": 410,
+            "_evidence_note": "Allocated Â£90.00 against programme balance P3-A1; Â£410.00 remains; ruleset 2.0.0."
+          }
+        },
+        "guide_lookup": {
+          "decision": {
+            "decision": "review",
+            "bucket": null,
+            "source_ids": [
+              "GUIDE-C",
+              "GUIDE-D"
+            ]
+          },
+          "decision_matches_independent_expectation": true,
+          "desired_route": "needs_review",
+          "actual_route": "needs_review",
+          "routing_matches_independent_expectation": true,
+          "review_requested_before_ledger": true,
+          "ledger_forced_review": false,
+          "actual_control_row": {
+            "transaction_date": "2026-10-01",
+            "vendor_name": "Amazon",
+            "amount": 90,
+            "currency": "GBP",
+            "description": "Settlement adjustment",
+            "deduction_id": "P3-D1",
+            "reference_code": "RX-35",
+            "_raw_normalised_vendor": "amazon",
+            "_normalised_vendor": "amazon",
+            "_normalised_date": "2026-10-01",
+            "_date_parse_method": "iso",
+            "matchable": true,
+            "error": null,
+            "_match_key": "517165c",
+            "_ruleset_version": "2.0.0",
+            "_record_type": "settlement",
+            "_route": "needs_review",
+            "matched": false,
+            "_classification_method": "guide_lookup",
+            "_classification_error": "Comparator requested review before allocation"
+          }
+        }
+      }
+    }
+  ],
+  "limits": [
+    "Development exercise with AI-authored inputs, mappings, expectations and simulated answers",
+    "Lookup does not read the expected labels; both methods receive the same source facts",
+    "Review from the lookup is its own explicit disposition, passed through a shared offline adapter; it is not detection by the ledger control",
+    "The original provider tool schema lacks explicit review; no production export or control was changed",
+    "Citation-support labels are manually worked from source passages, not an automatic semantic verifier",
+    "No full-run readiness status or real-model performance claim is assessable from this exercise"
+  ],
+  "model_value_beyond_lookup": "Not demonstrated. Lookup suffices for these three explicit-guide development cases; simulated answers cannot measure real model performance."
+}

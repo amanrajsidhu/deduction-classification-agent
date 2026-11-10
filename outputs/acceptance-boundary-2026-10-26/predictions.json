@@ -1,0 +1,13 @@
+{
+  "provenance": "User explanations recorded verbatim after the proposed policy was described, before corrected case-level outcomes or feedback were revealed. Implementation/test execution had already begun; this is not a claim of prediction before execution.",
+  "predictions": {
+    "P1": {
+      "recorded_at_utc": "2026-10-26T17:07:35Z",
+      "response": "It should stop, not because of the reduction balance, which is under the eligible five hundred pound balance. It's because the RMS30 guide says shortage claim, but the simulated answer says price dispute. That's why it should stop, because the proposed category is not aligned. So I would say we should go based off what the guide says, if that's verified, and then the balance can then be consumed once it's been verified that the categorisation is correct, which would then be 90 pound deduction."
+    },
+    "P3": {
+      "recorded_at_utc": "2026-10-26T17:07:35Z",
+      "response": "Because we have two conflicting guides. The guides should be aligned to support each other and there should be exceptions as to when one takes authority over the other. If those exceptions haven't been met, then we should go into a review stage where we can then confirm which is the correct categorization. So the final route should be review, and we need to determine which guide has authority over RX35."
+    }
+  }
+}

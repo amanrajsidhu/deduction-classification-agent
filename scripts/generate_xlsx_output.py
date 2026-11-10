@@ -24,9 +24,9 @@ from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
 from openpyxl.utils import get_column_letter
 
 try:
-    from .deduction_rules import days_between, to_cents, vendor_score
+    from .deduction_rules import configured_bucket, days_between, to_cents, vendor_score
 except ImportError:  # Direct CLI execution from the scripts directory.
-    from deduction_rules import days_between, to_cents, vendor_score
+    from deduction_rules import configured_bucket, days_between, to_cents, vendor_score
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT_DIR = PROJECT_ROOT / "outputs"
@@ -219,6 +219,11 @@ def compute_metrics(
     auto_rows = outputs["auto_matched"]
     class_rows = outputs["classified_verified"]
     unres_rows = outputs["unresolvable"]
+    invalid_category_evidence_ids = {
+        str(row.get("deduction_id") or "") for row in class_rows
+        if configured_bucket(row.get("reference_code")) != row.get("llm_bucket")
+        or configured_bucket(row.get("reference_code")) is None
+    }
     seeded_auto = sum(e["seed_category"] == "auto_matched" for e in answer_entries.values())
     seeded_class = sum(e["seed_category"] == "classifiable" for e in answer_entries.values())
     seeded_unres = sum(e["seed_category"] == "unresolvable" for e in answer_entries.values())
@@ -414,7 +419,12 @@ def compute_metrics(
         record_value(row) for row in class_rows
         if str(row.get("deduction_id") or "") in valid_source_bound_evidence_ids
     ), 2)
-    resolved_value = round(outcome_values["auto_matched"] + allocated_classified_value, 2)
+    valid_accepted_evidence_ids = valid_source_bound_evidence_ids - invalid_category_evidence_ids
+    category_supported_classified_value = round(sum(
+        record_value(row) for row in class_rows
+        if str(row.get("deduction_id") or "") in valid_accepted_evidence_ids
+    ), 2)
+    resolved_value = round(outcome_values["auto_matched"] + category_supported_classified_value, 2)
     terminal_set = set(terminal_ids)
     terminal_value = round(sum(record_value(row) for _, row in routed
                                if str(row.get("deduction_id")) in terminal_set), 2)
@@ -439,6 +449,10 @@ def compute_metrics(
         "total_value_gbp": total_value,
         "resolved_value_gbp": resolved_value,
         "allocated_classified_value_gbp": allocated_classified_value,
+        "category_supported_classified_value_gbp": category_supported_classified_value,
+        "category_evidence_integrity": not invalid_category_evidence_ids if class_rows else None,
+        "invalid_category_evidence_ids": sorted(invalid_category_evidence_ids),
+        "valid_accepted_evidence_ids": sorted(valid_accepted_evidence_ids),
         "v1_plausibility_only_value_gbp": round(outcome_values["classified_verified"] - allocated_classified_value, 2),
         "human_work_value_gbp": round(total_value - resolved_value, 2),
         "resolved_value_rate": rate(round(resolved_value * 100), round(total_value * 100)),
@@ -486,6 +500,7 @@ def compute_metrics(
             (metrics["auto_match_pair_correctness"] or 0) >= 0.99,
             metrics["transaction_match_integrity"],
             (metrics["classification_precision"] or 0) >= 0.95,
+            metrics["category_evidence_integrity"] is True,
             (metrics["evidence_allocation_coverage"] or 0) >= 1.0,
             metrics["source_allocation_integrity"],
             (metrics["unresolvable_precision"] or 0) >= 0.95,
@@ -516,7 +531,7 @@ def next_action_for(outcome) -> str:
         "needs_review": "Confirm or correct the proposed bucket and supporting accrual.",
         "unresolvable": "Request remittance or portal evidence; do not post or write off automatically.",
         "data_quality_issue": "Correct the source field shown in the error column, then rerun.",
-        "evidence_gap": "Rerun through V2 balance allocation; do not treat the V1 bucket check as evidence.",
+        "evidence_gap": "Verify the configured category and source-bound balance allocation, then rerun.",
     }.get(outcome, "Review the evidence before taking any accounting action.")
 
 
@@ -667,7 +682,8 @@ def build_summary(ws, metrics, outputs) -> None:
                  for r in outputs[o]]
     open_work.extend(
         (priority_for(r, "evidence_gap"), record_value(r), "evidence_gap", r)
-        for r in outputs["classified_verified"] if not has_reconciling_allocation(r)
+        for r in outputs["classified_verified"]
+        if str(r.get("deduction_id") or "") not in set(metrics.get("valid_accepted_evidence_ids", []))
     )
     open_work.sort(key=lambda item: (item[0], -item[1]))
     if open_work:
@@ -704,6 +720,7 @@ def build_summary(ws, metrics, outputs) -> None:
         ("Auto-match pair correctness", metrics["auto_match_pair_correctness"], "Were deterministic pairs correct?"),
         ("Transaction-match source integrity", 1.0 if metrics["transaction_match_integrity"] else 0.0, "Does every auto-match use one known transaction accrual exactly once?"),
         ("Classification precision", metrics["classification_precision"], "Were accepted classifications correct, regardless of whether they came from a configured alias or an AI proposal?"),
+        ("Category authority", None if metrics["category_evidence_integrity"] is None else float(metrics["category_evidence_integrity"]), "Does the raw reference configuration support every accepted category, independently of balance?"),
         ("Unresolvable precision", metrics["unresolvable_precision"], "Of lines called unresolvable, how many truly were?"),
         ("Unresolvable recall", metrics["unresolvable_recall"], "Of truly unresolvable lines, how many were caught?"),
         ("Classifiable automation coverage", metrics["classifiable_automation_coverage"], "How much classifiable work was safely automated?"),
@@ -761,7 +778,7 @@ def build_priority_worklist(ws, outputs, valid_evidence_ids=None) -> None:
             ), record.get("deduction_id"),
             record.get("transaction_date"), record.get("vendor_name"), record_value(record),
             record.get("llm_bucket"), (
-                "The proposed bucket did not receive a reconciling balance allocation."
+                "Category authority or source-bound balance evidence was not verified."
                 if outcome == "evidence_gap" else
                 record.get("_evidence_note") or record.get("error") or record.get("_classification_error")
             ),
@@ -796,6 +813,7 @@ def build_evaluation_tab(ws, metrics) -> None:
         ("Pair correctness", metrics["auto_match_pair_correctness"], "Correct accrual pairs / all auto-matched pairs"),
         ("Transaction-match source integrity", 1.0 if metrics["transaction_match_integrity"] else 0.0, "Every auto-match references one known transaction accrual exactly once"),
         ("Classification precision", metrics["classification_precision"], "Correct accepted classifications / all accepted classifications"),
+        ("Category authority", None if metrics["category_evidence_integrity"] is None else float(metrics["category_evidence_integrity"]), "Every accepted category must agree with its configured reference, independently of eligible balance"),
         ("Accepted via configured aliases", metrics["accepted_classification_method_counts"].get("configured_alias", 0), "Deterministic configured classifications; count, not a percentage"),
         ("Accepted via AI proposals", metrics["accepted_classification_method_counts"].get("ai_proposal", 0), "AI-proposed classifications accepted after evidence controls; count, not a percentage"),
         ("AI abstentions routed as unresolvable", metrics["unresolvable_method_counts"].get("ai_proposal", 0), "AI proposals of Unresolvable accepted after the conflict check; count, not a percentage"),
@@ -826,7 +844,7 @@ def build_workbook(outputs, metrics, destination: Path) -> None:
     start = wb.active
     start.title = "Start_Here"
     build_summary(start, metrics, outputs)
-    valid_evidence_ids = metrics.get("valid_source_bound_evidence_ids", [])
+    valid_evidence_ids = metrics.get("valid_accepted_evidence_ids", [])
     build_priority_worklist(
         wb.create_sheet("Priority_Worklist"), outputs, valid_evidence_ids
     )

@@ -1,0 +1,17 @@
+{
+  "provenance": "User responses recorded verbatim before expected-answer feedback in this practical round",
+  "predictions": {
+    "P1": {
+      "recorded_at_utc": "2026-10-26T14:13:34Z",
+      "response": "1) RX-31 - Shortage Claim  2) Yes, it would - but does not support the simulated model's response 3) reviewed as does not match the guide 4) they won't as it currently created a mismatch."
+    },
+    "P2": {
+      "recorded_at_utc": "2026-10-26T14:26:09Z",
+      "response": "For P2, the lookup should return not applicable or unresolved, like it has in the example, because if we don't have anything in the guides or the correct guide isn't uploaded to represent what RX32 means, then it has nothing to go off. So I'd expect it to return an output that makes the recipient look it up. The citation in this example doesn't support the specific sentence because it doesn't relate to the claim, RX34, is price dispute, but the row is RX32. And the model's final decision is not justified, I would say actually, because unresolvable means it can't be fixed. I would say we need to upload the correct guide for RX32 to the model, or we can ask it to do a deeper research to find anything relevant to that query and use what it has. Unresolvable means there's nothing we can do about it. That's how I see it as. So not having the correct information is more of an accurate label, but just say needs further review would be, I think, a better label for that. If it's doing balance control, shouldn't catch any problem with getting reviewed, like it's not getting processed, is it?"
+    },
+    "P3": {
+      "recorded_at_utc": "2026-10-26T14:26:09Z",
+      "response": "And then for P3, that's actually incorrect because it's... Oh, okay, so we have two guides that are equally authoritative saying different things, but the model has chosen one guide over the other. Well, I think it would need to return the outputs for both, citing both, and then saying it needs to go to further review and load the relevant chunks from each guide and letting the user read them, understand them themselves, and then review the actual document citations to see if there's any further context around it. And then after we've reviewed that, anything we've learned from the user, that rule should then be implemented as an exception. So then this hopefully doesn't occur again, and that one guide has more authority in this specific exception scenario for RX35 than the other."
+    }
+  }
+}

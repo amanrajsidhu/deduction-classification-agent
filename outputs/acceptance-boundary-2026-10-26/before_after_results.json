@@ -1,0 +1,230 @@
+{
+  "verified_at_utc": "2026-10-26T17:11:55.735496+00:00",
+  "provider_calls": 0,
+  "provider_spend_gbp": 0,
+  "before_workflow_sha256": "afbe77057fb8b81e4087b0d7ec577036c308b682b48e2612932959fc5d3cafb5",
+  "after_workflow_sha256": "c9bd110815ab35b07c6099da6add517da2307f2888aa99638c076998db6df508",
+  "original_answers_sha256": "f1d3155232054cdd97ab32aaaa76d98c54f06df23002689127a134bfb06da3a4",
+  "prediction_sha256": "9e53cfada87b67ae0fac2c9ca28aed13bf2d6668e68a5c1c2db678fbd493a55d",
+  "results": [
+    {
+      "case_id": "P1",
+      "original_answer_unchanged": {
+        "deduction_id": "P1-D1",
+        "bucket": "Price Dispute",
+        "confidence": 0.9,
+        "reasoning": "RX-31 means Price Dispute [GUIDE-A]."
+      },
+      "model_decision_still_incorrect": true,
+      "citation_supported": [
+        false
+      ],
+      "reviewer_source_context": [
+        {
+          "source_id": "GUIDE-A",
+          "vendor_name": "Amazon",
+          "effective_from": "2026-10-01",
+          "authority": "approved",
+          "text": "RX-31 means Shortage Claim.",
+          "mappings": [
+            {
+              "reference_code": "RX-31",
+              "bucket": "Shortage Claim"
+            }
+          ]
+        }
+      ],
+      "before": {
+        "transaction_date": "2026-10-01",
+        "vendor_name": "Amazon",
+        "amount": 90,
+        "currency": "GBP",
+        "description": "Settlement adjustment",
+        "deduction_id": "P1-D1",
+        "reference_code": "RX-31",
+        "_raw_normalised_vendor": "amazon",
+        "_normalised_vendor": "amazon",
+        "_normalised_date": "2026-10-01",
+        "_date_parse_method": "iso",
+        "matchable": true,
+        "error": null,
+        "_match_key": "517165c",
+        "_ruleset_version": "2.0.0",
+        "_record_type": "settlement",
+        "_route": "classified_verified",
+        "matched": false,
+        "llm_bucket": "Price Dispute",
+        "llm_confidence": 0.9,
+        "llm_reasoning": "RX-31 means Price Dispute [GUIDE-A].",
+        "_classification_method": "simulated_model",
+        "_classification_error": null,
+        "_llm_batch_ref": "batch:P1-D1:P1-D1:1",
+        "input_tokens": null,
+        "output_tokens": null,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "_evidence_agrees": true,
+        "_evidence_accrual_id": "P1-A2",
+        "_allocated_amount": 90,
+        "_evidence_balance_before": 500,
+        "_evidence_balance_after": 410,
+        "_evidence_note": "Allocated \u00c2\u00a390.00 against programme balance P1-A2; \u00c2\u00a3410.00 remains; ruleset 2.0.0."
+      },
+      "after": {
+        "transaction_date": "2026-10-01",
+        "vendor_name": "Amazon",
+        "amount": 90,
+        "currency": "GBP",
+        "description": "Settlement adjustment",
+        "deduction_id": "P1-D1",
+        "reference_code": "RX-31",
+        "_raw_normalised_vendor": "amazon",
+        "_normalised_vendor": "amazon",
+        "_normalised_date": "2026-10-01",
+        "_date_parse_method": "iso",
+        "matchable": true,
+        "error": null,
+        "_match_key": "517165c",
+        "_ruleset_version": "2.0.0",
+        "_record_type": "settlement",
+        "_route": "needs_review",
+        "matched": false,
+        "llm_bucket": "Price Dispute",
+        "llm_confidence": 0.9,
+        "llm_reasoning": "RX-31 means Price Dispute [GUIDE-A].",
+        "_classification_method": "simulated_model",
+        "_classification_error": null,
+        "_llm_batch_ref": "batch:P1-D1:P1-D1:1",
+        "input_tokens": null,
+        "output_tokens": null,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "_evidence_agrees": false,
+        "_category_evidence_status": "needs_category_review",
+        "_evidence_note": "Category authority is missing or contradicts the proposed bucket; eligible balance alone cannot verify a category. Human review required."
+      },
+      "allocated_before_gbp": 90,
+      "allocated_after_gbp": 0,
+      "routing_corrected_without_correcting_model_answer": true
+    },
+    {
+      "case_id": "P3",
+      "original_answer_unchanged": {
+        "deduction_id": "P3-D1",
+        "bucket": "Promotional Accrual",
+        "confidence": 0.9,
+        "reasoning": "GUIDE-C maps RX-35 to Promotional Accrual [GUIDE-C]."
+      },
+      "model_decision_still_incorrect": true,
+      "citation_supported": [
+        true
+      ],
+      "reviewer_source_context": [
+        {
+          "source_id": "GUIDE-C",
+          "vendor_name": "Amazon",
+          "effective_from": "2026-10-01",
+          "authority": "approved",
+          "text": "RX-35 means Promotional Accrual.",
+          "mappings": [
+            {
+              "reference_code": "RX-35",
+              "bucket": "Promotional Accrual"
+            }
+          ]
+        },
+        {
+          "source_id": "GUIDE-D",
+          "vendor_name": "Amazon",
+          "effective_from": "2026-10-01",
+          "authority": "approved",
+          "text": "RX-35 means Price Dispute.",
+          "mappings": [
+            {
+              "reference_code": "RX-35",
+              "bucket": "Price Dispute"
+            }
+          ]
+        }
+      ],
+      "before": {
+        "transaction_date": "2026-10-01",
+        "vendor_name": "Amazon",
+        "amount": 90,
+        "currency": "GBP",
+        "description": "Settlement adjustment",
+        "deduction_id": "P3-D1",
+        "reference_code": "RX-35",
+        "_raw_normalised_vendor": "amazon",
+        "_normalised_vendor": "amazon",
+        "_normalised_date": "2026-10-01",
+        "_date_parse_method": "iso",
+        "matchable": true,
+        "error": null,
+        "_match_key": "517165c",
+        "_ruleset_version": "2.0.0",
+        "_record_type": "settlement",
+        "_route": "classified_verified",
+        "matched": false,
+        "llm_bucket": "Promotional Accrual",
+        "llm_confidence": 0.9,
+        "llm_reasoning": "GUIDE-C maps RX-35 to Promotional Accrual [GUIDE-C].",
+        "_classification_method": "simulated_model",
+        "_classification_error": null,
+        "_llm_batch_ref": "batch:P3-D1:P3-D1:1",
+        "input_tokens": null,
+        "output_tokens": null,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "_evidence_agrees": true,
+        "_evidence_accrual_id": "P3-A1",
+        "_allocated_amount": 90,
+        "_evidence_balance_before": 500,
+        "_evidence_balance_after": 410,
+        "_evidence_note": "Allocated \u00c2\u00a390.00 against programme balance P3-A1; \u00c2\u00a3410.00 remains; ruleset 2.0.0."
+      },
+      "after": {
+        "transaction_date": "2026-10-01",
+        "vendor_name": "Amazon",
+        "amount": 90,
+        "currency": "GBP",
+        "description": "Settlement adjustment",
+        "deduction_id": "P3-D1",
+        "reference_code": "RX-35",
+        "_raw_normalised_vendor": "amazon",
+        "_normalised_vendor": "amazon",
+        "_normalised_date": "2026-10-01",
+        "_date_parse_method": "iso",
+        "matchable": true,
+        "error": null,
+        "_match_key": "517165c",
+        "_ruleset_version": "2.0.0",
+        "_record_type": "settlement",
+        "_route": "needs_review",
+        "matched": false,
+        "llm_bucket": "Promotional Accrual",
+        "llm_confidence": 0.9,
+        "llm_reasoning": "GUIDE-C maps RX-35 to Promotional Accrual [GUIDE-C].",
+        "_classification_method": "simulated_model",
+        "_classification_error": null,
+        "_llm_batch_ref": "batch:P3-D1:P3-D1:1",
+        "input_tokens": null,
+        "output_tokens": null,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "_evidence_agrees": false,
+        "_category_evidence_status": "needs_category_review",
+        "_evidence_note": "Category authority is missing or contradicts the proposed bucket; eligible balance alone cannot verify a category. Human review required."
+      },
+      "allocated_before_gbp": 90,
+      "allocated_after_gbp": 0,
+      "routing_corrected_without_correcting_model_answer": true
+    }
+  ],
+  "limits": [
+    "Both answers are simulated; no model accuracy improvement is claimed",
+    "Workflow stops unconfigured categories conservatively; it does not ingest or semantically verify guide text",
+    "Reviewer guides are retained in this local development evidence bundle, not newly connected to n8n",
+    "Later guide-based classification/correction and allocation require a separate authorised decision"
+  ]
+}

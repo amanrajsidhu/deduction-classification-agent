@@ -256,3 +256,113 @@ credential-dependency requirements.
 The repository does not claim production
 accuracy, time saved, recovered revenue or willingness to pay. Those outcomes
 require an authorised real engagement and separately designed measurement.
+
+## Local feasibility checkpoint — 26 October 2026
+
+The saved V2 baseline was independently re-evaluated on Python 3.12.10 with
+openpyxl 3.1.5; all metrics matched except the generation timestamp. All 31 existing
+tests passed on Node 24.13.1/Python 3.12.10. The three regenerated fixture files
+matched byte for byte and the regenerated workflow matched semantically. The V1
+regression again produced nine terminal misroutes and 25/34 unresolvable precision.
+The canonical baseline files and workflow were not changed.
+
+The [offline replay helper](../scripts/feasibility_checkpoint.py) also executed the
+actual exported JavaScript normalisers, matcher, prompt builder, response parser,
+allocator and complete-branch exporter. Replaying persisted final proposals
+reproduced all 250 branch memberships and selected control fields, including the
+allocation balances, as well as the evaluator metrics. This is deterministic
+replay evidence, not a new model run, a raw-response replay or a full n8n execution.
+
+Six [development scenarios](../fixtures/development/context_feasibility.json)
+exercise seven simulated proposal variants. A deliberately wrong category can
+pass allocation when that category has sufficient eligible balance; the evaluator
+correctly flags its wrong category and intended support. A conflict between two
+new guide snippets cannot currently be expressed as an explicit model review
+disposition. These cases identify requirements for a proposed context experiment;
+they do not establish new model performance or change the current product contract.
+
+Evidence is retained under `outputs/feasibility-2026-10-26/`, including baseline
+and historical metrics, test output, replay evidence, and rendered workbook samples.
+The generated workbook's summary and samples from all eight sheets were inspected;
+no Excel error cells were found. The existing chart has crowded zero-value labels,
+and the preview renderer omitted empty-branch merged text in a cropped view;
+the expected text is present in the XLSX. No layout changes were made.
+
+No provider generation, n8n service, credential or deployment was used or changed.
+Checkpoint provider spend is zero. Public model pricing was checked, but account
+access and provider request compatibility were not tested. The experiment design,
+learning observations and decisions remain in the established local build brief
+and build log; no curriculum assessment is implied by these technical checks.
+
+## Offline equal-evidence development comparison — 26 October 2026
+
+The unsent-request trace and small guide lookup are reproducible through
+`scripts/practical_comparison.py`. Three synthetic teaching variants use identical
+source text, disclosed structured mappings and policy in the experimental model-request
+construction and lookup. No request was sent. Expectations were fixed before predictions
+and scoring; the simulated answers remained unchanged. These are development control
+tests, not a model benchmark or independently reviewed finance-policy evaluation.
+
+The lookup handles the explicit mapping, missing mapping and conflicting peer sources
+as specified. Current ledger eligibility checks accept two deliberately unjustified
+simulated classifications because sufficient category balances exist. The lookup's own
+conflict-review disposition passes through the offline adapter; the ledger does not
+independently detect that conflict. Source-specific citation truth is measured separately
+from final-decision justification and actual routing. A citation can accurately describe
+one source without justifying a choice between contradictory sources.
+
+The results expose source/review requirements for a future context extension rather than
+silently patching the production workflow. Evidence is in `outputs/practical-2026-10-26/`.
+All 31 existing tests passed and the canonical workflow, fixtures and baseline outputs
+remain unchanged. No useful model advantage over literal guide lookup is established;
+the larger paid evaluation is parked. Zero provider calls, zero provider spend, no deployment.
+
+## Local acceptance-boundary correction — 26 October 2026
+
+The two unsafe development acceptances are now stopped by the local workflow export.
+The smallest conservative boundary is category authority before balance allocation:
+recompute the configured category from the raw reference, require agreement, and only
+then test eligible balance. An unconfigured or contradictory category proposal goes to
+review without consuming balance. Model confidence, citation text and a method flag
+cannot substitute for category authority. The alias configuration is shared by the parser,
+allocator and Python reference to prevent drift.
+
+This revision is named V2.1 locally and carries acceptance policy
+`configured-reference-only-v1`. Matching rules and frozen fixture version remain 2.0.0.
+It deliberately makes all unconfigured model category proposals review-only, including
+plausible correct ones. It does not add guide ingestion or semantic citation verification,
+resolve arbitrary source conflicts, or create automatic exceptions. Existing abstention
+and exact-candidate conflict behaviour are unchanged.
+
+The evaluator independently rechecks category authority and shows it separately from
+source-ledger integrity. It excludes unsupported categories from controlled resolved
+value even when their balances reconcile, surfaces them in the evidence-gap worklist,
+and blocks Ready for Demo. Allocation arithmetic and category justification remain
+separate observations.
+
+Regression tests first reproduced the unsafe paths against the old code. The final
+41-test suite passes, including the two observed cases, rejection without consuming a
+shared pool, forged provenance, correct-but-unconfigured proposals, configured-category
+agreement, sufficient balance, unchanged answers, pre-existing review stops, and independent evaluator enforcement.
+The actual delivered JavaScript is executed in the tests; the Python mirror is checked too.
+
+In before/after replay, both preserved simulated answers remain incorrect and unchanged;
+their routes change from accepted to review and their allocations from GBP 90 each to zero.
+This is a control correction, not improved model accuracy. Both original guides are retained
+for the P3 reviewer in the local evidence bundle; no live guide integration is implied.
+
+The 250-row baseline was replayed through the corrected export and independently
+evaluated: all existing metrics are unchanged, with 150 matches, 75 configured-alias
+classifications, 25 abstentions and zero terminal misroutes. The new category gate passes.
+All eight workbook sheets were sampled visually, including the separate category-authority
+control; no Excel error cells were found. Original fixtures, outputs and simulated answers
+remain unchanged. The new result is synthetic and local, not a production claim.
+
+Evidence: `outputs/acceptance-boundary-2026-10-26/`, including the before-workflow
+snapshot, before/after regression output, verbatim predictions, `before_after_results.json`,
+full test output, corrected baseline workbook/metrics and previews. Historical scenario
+replay uses `scripts/feasibility_checkpoint.py --workflow` with the before-workflow
+snapshot; its old route expectations must not be mistaken for the corrected policy.
+
+No provider call, n8n service update, commit/push or deployment was performed. The paid
+evaluation stays parked. This is an unreleased local correction; live state was not queried.

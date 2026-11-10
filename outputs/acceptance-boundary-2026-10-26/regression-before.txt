@@ -1,0 +1,151 @@
+test_choice_between_conflicting_guides_cannot_pass_on_balance_alone (test_category_acceptance.CategoryAcceptanceTests.test_choice_between_conflicting_guides_cannot_pass_on_balance_alone) ... FAIL
+test_configured_category_still_requires_sufficient_eligible_balance (test_category_acceptance.CategoryAcceptanceTests.test_configured_category_still_requires_sufficient_eligible_balance) ... ok
+test_configured_reference_must_agree_with_category_at_boundary (test_category_acceptance.CategoryAcceptanceTests.test_configured_reference_must_agree_with_category_at_boundary) ... 
+  test_configured_reference_must_agree_with_category_at_boundary (test_category_acceptance.CategoryAcceptanceTests.test_configured_reference_must_agree_with_category_at_boundary) (runner='run_exported') ... FAIL
+  test_configured_reference_must_agree_with_category_at_boundary (test_category_acceptance.CategoryAcceptanceTests.test_configured_reference_must_agree_with_category_at_boundary) (runner='allocate_evidence') ... FAIL
+test_correct_but_unconfigured_proposal_also_requires_review (test_category_acceptance.CategoryAcceptanceTests.test_correct_but_unconfigured_proposal_also_requires_review) ... 
+  test_correct_but_unconfigured_proposal_also_requires_review (test_category_acceptance.CategoryAcceptanceTests.test_correct_but_unconfigured_proposal_also_requires_review) (runner='run_exported') ... FAIL
+  test_correct_but_unconfigured_proposal_also_requires_review (test_category_acceptance.CategoryAcceptanceTests.test_correct_but_unconfigured_proposal_also_requires_review) (runner='allocate_evidence') ... FAIL
+test_original_simulated_answers_remain_unchanged (test_category_acceptance.CategoryAcceptanceTests.test_original_simulated_answers_remain_unchanged) ... ok
+test_proposal_contradicting_guidance_cannot_pass_on_balance_alone (test_category_acceptance.CategoryAcceptanceTests.test_proposal_contradicting_guidance_cannot_pass_on_balance_alone) ... FAIL
+test_python_reference_rejects_the_same_two_unsupported_proposals (test_category_acceptance.CategoryAcceptanceTests.test_python_reference_rejects_the_same_two_unsupported_proposals) ... 
+  test_python_reference_rejects_the_same_two_unsupported_proposals (test_category_acceptance.CategoryAcceptanceTests.test_python_reference_rejects_the_same_two_unsupported_proposals) (case='P1') ... FAIL
+  test_python_reference_rejects_the_same_two_unsupported_proposals (test_category_acceptance.CategoryAcceptanceTests.test_python_reference_rejects_the_same_two_unsupported_proposals) (case='P3') ... FAIL
+test_rejected_proposal_cannot_consume_balance_before_a_supported_row (test_category_acceptance.CategoryAcceptanceTests.test_rejected_proposal_cannot_consume_balance_before_a_supported_row) ... 
+  test_rejected_proposal_cannot_consume_balance_before_a_supported_row (test_category_acceptance.CategoryAcceptanceTests.test_rejected_proposal_cannot_consume_balance_before_a_supported_row) (runner='run_exported') ... FAIL
+  test_rejected_proposal_cannot_consume_balance_before_a_supported_row (test_category_acceptance.CategoryAcceptanceTests.test_rejected_proposal_cannot_consume_balance_before_a_supported_row) (runner='allocate_evidence') ... FAIL
+
+======================================================================
+FAIL: test_choice_between_conflicting_guides_cannot_pass_on_balance_alone (test_category_acceptance.CategoryAcceptanceTests.test_choice_between_conflicting_guides_cannot_pass_on_balance_alone)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\build-projects\DEMO_deduction-classification\tests\test_category_acceptance.py", line 81, in test_choice_between_conflicting_guides_cannot_pass_on_balance_alone
+    self.assert_rejected_without_rewriting(row, self.run_exported([row], pools)[0])
+  File "C:\build-projects\DEMO_deduction-classification\tests\test_category_acceptance.py", line 68, in assert_rejected_without_rewriting
+    self.assertEqual(actual["_route"], "needs_review")
+AssertionError: 'classified_verified' != 'needs_review'
+- classified_verified
++ needs_review
+
+
+======================================================================
+FAIL: test_configured_reference_must_agree_with_category_at_boundary (test_category_acceptance.CategoryAcceptanceTests.test_configured_reference_must_agree_with_category_at_boundary) (runner='run_exported')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\build-projects\DEMO_deduction-classification\tests\test_category_acceptance.py", line 116, in test_configured_reference_must_agree_with_category_at_boundary
+    self.assert_rejected_without_rewriting(row, runner([row], pools)[0])
+  File "C:\build-projects\DEMO_deduction-classification\tests\test_category_acceptance.py", line 68, in assert_rejected_without_rewriting
+    self.assertEqual(actual["_route"], "needs_review")
+AssertionError: 'classified_verified' != 'needs_review'
+- classified_verified
++ needs_review
+
+
+======================================================================
+FAIL: test_configured_reference_must_agree_with_category_at_boundary (test_category_acceptance.CategoryAcceptanceTests.test_configured_reference_must_agree_with_category_at_boundary) (runner='allocate_evidence')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\build-projects\DEMO_deduction-classification\tests\test_category_acceptance.py", line 116, in test_configured_reference_must_agree_with_category_at_boundary
+    self.assert_rejected_without_rewriting(row, runner([row], pools)[0])
+  File "C:\build-projects\DEMO_deduction-classification\tests\test_category_acceptance.py", line 68, in assert_rejected_without_rewriting
+    self.assertEqual(actual["_route"], "needs_review")
+AssertionError: 'classified_verified' != 'needs_review'
+- classified_verified
++ needs_review
+
+
+======================================================================
+FAIL: test_correct_but_unconfigured_proposal_also_requires_review (test_category_acceptance.CategoryAcceptanceTests.test_correct_but_unconfigured_proposal_also_requires_review) (runner='run_exported')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\build-projects\DEMO_deduction-classification\tests\test_category_acceptance.py", line 108, in test_correct_but_unconfigured_proposal_also_requires_review
+    self.assert_rejected_without_rewriting(row, runner([row], pools)[0])
+  File "C:\build-projects\DEMO_deduction-classification\tests\test_category_acceptance.py", line 68, in assert_rejected_without_rewriting
+    self.assertEqual(actual["_route"], "needs_review")
+AssertionError: 'classified_verified' != 'needs_review'
+- classified_verified
++ needs_review
+
+
+======================================================================
+FAIL: test_correct_but_unconfigured_proposal_also_requires_review (test_category_acceptance.CategoryAcceptanceTests.test_correct_but_unconfigured_proposal_also_requires_review) (runner='allocate_evidence')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\build-projects\DEMO_deduction-classification\tests\test_category_acceptance.py", line 108, in test_correct_but_unconfigured_proposal_also_requires_review
+    self.assert_rejected_without_rewriting(row, runner([row], pools)[0])
+  File "C:\build-projects\DEMO_deduction-classification\tests\test_category_acceptance.py", line 68, in assert_rejected_without_rewriting
+    self.assertEqual(actual["_route"], "needs_review")
+AssertionError: 'classified_verified' != 'needs_review'
+- classified_verified
++ needs_review
+
+
+======================================================================
+FAIL: test_proposal_contradicting_guidance_cannot_pass_on_balance_alone (test_category_acceptance.CategoryAcceptanceTests.test_proposal_contradicting_guidance_cannot_pass_on_balance_alone)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\build-projects\DEMO_deduction-classification\tests\test_category_acceptance.py", line 77, in test_proposal_contradicting_guidance_cannot_pass_on_balance_alone
+    self.assert_rejected_without_rewriting(row, self.run_exported([row], pools)[0])
+  File "C:\build-projects\DEMO_deduction-classification\tests\test_category_acceptance.py", line 68, in assert_rejected_without_rewriting
+    self.assertEqual(actual["_route"], "needs_review")
+AssertionError: 'classified_verified' != 'needs_review'
+- classified_verified
++ needs_review
+
+
+======================================================================
+FAIL: test_python_reference_rejects_the_same_two_unsupported_proposals (test_category_acceptance.CategoryAcceptanceTests.test_python_reference_rejects_the_same_two_unsupported_proposals) (case='P1')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\build-projects\DEMO_deduction-classification\tests\test_category_acceptance.py", line 101, in test_python_reference_rejects_the_same_two_unsupported_proposals
+    self.assert_rejected_without_rewriting(row, allocate_evidence([row], pools)[0])
+  File "C:\build-projects\DEMO_deduction-classification\tests\test_category_acceptance.py", line 68, in assert_rejected_without_rewriting
+    self.assertEqual(actual["_route"], "needs_review")
+AssertionError: 'classified_verified' != 'needs_review'
+- classified_verified
++ needs_review
+
+
+======================================================================
+FAIL: test_python_reference_rejects_the_same_two_unsupported_proposals (test_category_acceptance.CategoryAcceptanceTests.test_python_reference_rejects_the_same_two_unsupported_proposals) (case='P3')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\build-projects\DEMO_deduction-classification\tests\test_category_acceptance.py", line 101, in test_python_reference_rejects_the_same_two_unsupported_proposals
+    self.assert_rejected_without_rewriting(row, allocate_evidence([row], pools)[0])
+  File "C:\build-projects\DEMO_deduction-classification\tests\test_category_acceptance.py", line 68, in assert_rejected_without_rewriting
+    self.assertEqual(actual["_route"], "needs_review")
+AssertionError: 'classified_verified' != 'needs_review'
+- classified_verified
++ needs_review
+
+
+======================================================================
+FAIL: test_rejected_proposal_cannot_consume_balance_before_a_supported_row (test_category_acceptance.CategoryAcceptanceTests.test_rejected_proposal_cannot_consume_balance_before_a_supported_row) (runner='run_exported')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\build-projects\DEMO_deduction-classification\tests\test_category_acceptance.py", line 92, in test_rejected_proposal_cannot_consume_balance_before_a_supported_row
+    self.assert_rejected_without_rewriting(rejected, rows[0])
+  File "C:\build-projects\DEMO_deduction-classification\tests\test_category_acceptance.py", line 68, in assert_rejected_without_rewriting
+    self.assertEqual(actual["_route"], "needs_review")
+AssertionError: 'classified_verified' != 'needs_review'
+- classified_verified
++ needs_review
+
+
+======================================================================
+FAIL: test_rejected_proposal_cannot_consume_balance_before_a_supported_row (test_category_acceptance.CategoryAcceptanceTests.test_rejected_proposal_cannot_consume_balance_before_a_supported_row) (runner='allocate_evidence')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\build-projects\DEMO_deduction-classification\tests\test_category_acceptance.py", line 92, in test_rejected_proposal_cannot_consume_balance_before_a_supported_row
+    self.assert_rejected_without_rewriting(rejected, rows[0])
+  File "C:\build-projects\DEMO_deduction-classification\tests\test_category_acceptance.py", line 68, in assert_rejected_without_rewriting
+    self.assertEqual(actual["_route"], "needs_review")
+AssertionError: 'classified_verified' != 'needs_review'
+- classified_verified
++ needs_review
+
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.708s
+
+FAILED (failures=10)

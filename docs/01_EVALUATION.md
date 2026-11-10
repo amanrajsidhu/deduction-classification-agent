@@ -5,6 +5,12 @@ run recomputable; it does not make the result representative of production.
 
 ## Metrics and denominators
 
+- **Category-evidence integrity:** every accepted classification's raw reference maps
+  to its accepted category in the authoritative configuration. This is a separate gate
+  from source-ledger allocation integrity. An unassessable category population cannot
+  establish a positive result. Unsupported rows are excluded from controlled resolved
+  value even if their balances reconcile, and appear in the evidence-gap worklist.
+
 - **Auto-match precision:** seeded matchable lines routed to Auto-matched / all
   lines routed to Auto-matched.
 - **Auto-match recall:** seeded matchable lines routed to Auto-matched / all

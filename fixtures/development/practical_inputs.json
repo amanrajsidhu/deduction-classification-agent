@@ -1,0 +1,41 @@
+{
+  "schema_version": "offline-practical-1",
+  "purpose": "Development-only prediction exercise. All model answers are AI-authored simulations, not provider results.",
+  "shared_policy": {
+    "missing_information": "Do not infer a category without applicable evidence; abstain when no usable category signal is supplied.",
+    "conflicting_information": "Equally authoritative, equally current sources that disagree require human review. Neither wins by appearing first.",
+    "citations": "Assess whether each cited passage supports its specific claim; assess whether the complete applicable evidence justifies the final decision separately.",
+    "authority": "Classification and ledger support are separate checks. Preserve every observed answer when evaluating it."
+  },
+  "common_row": {"transaction_date": "2026-10-01", "vendor_name": "Amazon", "amount": "90.00", "currency": "GBP", "description": "Settlement adjustment"},
+  "common_pool": {"accrual_date": "2026-10-01", "vendor_name": "Amazon", "amount": "500.00", "currency": "GBP", "evidence_scope": "programme_pool"},
+  "cases": [
+    {
+      "case_id": "P1",
+      "row": {"deduction_id": "P1-D1", "reference_code": "RX-31"},
+      "sources": [{"source_id": "GUIDE-A", "vendor_name": "Amazon", "effective_from": "2026-10-01", "authority": "approved", "text": "RX-31 means Shortage Claim.", "mappings": [{"reference_code": "RX-31", "bucket": "Shortage Claim"}]}],
+      "pools": [{"accrual_id": "P1-A1", "bucket": "Shortage Claim"}, {"accrual_id": "P1-A2", "bucket": "Price Dispute"}],
+      "simulated_model_answer": {"deduction_id": "P1-D1", "bucket": "Price Dispute", "confidence": 0.9, "reasoning": "RX-31 means Price Dispute [GUIDE-A]."},
+      "citation_claims": [{"source_id": "GUIDE-A", "claim": "RX-31 means Price Dispute."}]
+    },
+    {
+      "case_id": "P2",
+      "row": {"deduction_id": "P2-D1", "reference_code": "RX-32"},
+      "sources": [{"source_id": "GUIDE-B", "vendor_name": "Amazon", "effective_from": "2026-10-01", "authority": "approved", "text": "This guide defines RX-34 as Price Dispute. It contains no other reference definitions.", "mappings": [{"reference_code": "RX-34", "bucket": "Price Dispute"}]}],
+      "pools": [{"accrual_id": "P2-A1", "bucket": "Shortage Claim"}, {"accrual_id": "P2-A2", "bucket": "Price Dispute"}],
+      "simulated_model_answer": {"deduction_id": "P2-D1", "bucket": "Unresolvable", "confidence": 0.4, "reasoning": "GUIDE-B defines RX-34, with no definition for RX-32 [GUIDE-B]."},
+      "citation_claims": [{"source_id": "GUIDE-B", "claim": "GUIDE-B defines RX-34, with no definition for RX-32."}]
+    },
+    {
+      "case_id": "P3",
+      "row": {"deduction_id": "P3-D1", "reference_code": "RX-35"},
+      "sources": [
+        {"source_id": "GUIDE-C", "vendor_name": "Amazon", "effective_from": "2026-10-01", "authority": "approved", "text": "RX-35 means Promotional Accrual.", "mappings": [{"reference_code": "RX-35", "bucket": "Promotional Accrual"}]},
+        {"source_id": "GUIDE-D", "vendor_name": "Amazon", "effective_from": "2026-10-01", "authority": "approved", "text": "RX-35 means Price Dispute.", "mappings": [{"reference_code": "RX-35", "bucket": "Price Dispute"}]}
+      ],
+      "pools": [{"accrual_id": "P3-A1", "bucket": "Promotional Accrual"}, {"accrual_id": "P3-A2", "bucket": "Price Dispute"}],
+      "simulated_model_answer": {"deduction_id": "P3-D1", "bucket": "Promotional Accrual", "confidence": 0.9, "reasoning": "GUIDE-C maps RX-35 to Promotional Accrual [GUIDE-C]."},
+      "citation_claims": [{"source_id": "GUIDE-C", "claim": "GUIDE-C maps RX-35 to Promotional Accrual."}]
+    }
+  ]
+}

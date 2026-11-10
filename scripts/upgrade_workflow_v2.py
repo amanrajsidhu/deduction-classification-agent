@@ -5,6 +5,11 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+try:
+    from .deduction_rules import CATEGORY_ACCEPTANCE_POLICY, REFERENCE_ALIAS_PATTERNS
+except ImportError:
+    from deduction_rules import CATEGORY_ACCEPTANCE_POLICY, REFERENCE_ALIAS_PATTERNS
+
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "workflows" / "MVP_VERSION_-_V1_-_DEDUCTION_CLASSIFICATION_(CSV_MATCH-CLASSIFY-VERIFY_XLSX).json"
 DESTINATION = ROOT / "workflows" / "DEDUCTION_RESOLUTION_WORKBENCH_V2.json"
@@ -97,14 +102,25 @@ for (const s of settlements) { if (!s.matchable) results.push({ json: { ...s, _r
 for (const a of accruals) results.push({ json: { ...a, _record_type: 'accrual' } });
 return results;"""
 
-VERIFY_EVIDENCE = r"""const RULESET_VERSION = '2.0.0';
+CONFIGURED_BUCKET_JS = (
+    "function configuredBucket(referenceCode) {\n"
+    "  const ref = String(referenceCode || '').trim().toUpperCase();\n"
+    "  const aliases = " + json.dumps(REFERENCE_ALIAS_PATTERNS) + ";\n"
+    "  const match = aliases.find(([pattern]) => new RegExp(pattern).test(ref));\n"
+    "  return match ? match[1] : null;\n"
+    "}\n"
+)
+
+VERIFY_EVIDENCE = CONFIGURED_BUCKET_JS + (
+    "const CATEGORY_ACCEPTANCE_POLICY = " + json.dumps(CATEGORY_ACCEPTANCE_POLICY) + ";\n"
+) + r"""const RULESET_VERSION = '2.0.0';
 function vendorScore(a, b) { if (!a || !b) return 0; if (a === b) return 100; if (a.includes(b) || b.includes(a)) return 90; const aa = a.split(' ').filter(Boolean), bb = b.split(' ').filter(Boolean), setB = new Set(bb); const overlap = aa.filter(t => setB.has(t) && t.length >= 3); if (!overlap.length) return 0; return overlap.length >= Math.min(aa.length, bb.length) ? 70 : 60; }
 function daysBetween(a, b) { const left = Date.parse(String(a || '') + 'T00:00:00Z'), right = Date.parse(String(b || '') + 'T00:00:00Z'); if (!Number.isFinite(left) || !Number.isFinite(right)) return null; return Math.round(Math.abs(left - right) / 86400000); }
 function cents(n) { return Math.round(Math.abs(Number(n)) * 100); }
 const allAccruals = $('Code (Deterministic Match: one-to-one)').all().map(i => i.json).filter(j => j._record_type === 'accrual' && j.matchable);
 const accrualIds = allAccruals.map(a => String(a.accrual_id || '').trim()); if (accrualIds.some(id => !id) || new Set(accrualIds).size !== accrualIds.length) throw new Error('Evidence allocation stopped: accrual_id values must be present and unique.');
 const pools = allAccruals.filter(a => a.evidence_scope === 'programme_pool' && !a._consumed).map(a => ({ ...a, _available_cents: cents(a.amount) }));
-const input = $input.all().map(i => i.json); const ordered = [...input].sort((a, b) => cents(b.amount) - cents(a.amount) || String(a.deduction_id).localeCompare(String(b.deduction_id))); const routed = new Map();
+const input = $input.all().map(i => ({ ...i.json })); const ordered = [...input].sort((a, b) => cents(b.amount) - cents(a.amount) || String(a.deduction_id).localeCompare(String(b.deduction_id))); const routed = new Map();
 for (const j of ordered) {
   if (j._route === 'needs_review') { routed.set(j.deduction_id, j); continue; }
   const amount = cents(j.amount);
@@ -114,6 +130,14 @@ for (const j of ordered) {
     else routed.set(j.deduction_id, { ...j, _route: 'unresolvable', _evidence_agrees: true, _evidence_note: 'No same-vendor exact-amount near-date candidate exists in the supplied ledger.' });
     continue;
   }
+  const authoritativeBucket = configuredBucket(j.reference_code);
+  if (!authoritativeBucket || authoritativeBucket !== j.llm_bucket) {
+    routed.set(j.deduction_id, { ...j, _route: 'needs_review', _evidence_agrees: false,
+      _category_evidence_status: 'needs_category_review',
+      _evidence_note: 'Category authority is missing or contradicts the proposed bucket; eligible balance alone cannot verify a category. Human review required.' });
+    continue;
+  }
+  j._category_evidence_status = 'configured_alias_agrees';
   const candidates = pools.filter(a => { const delta = daysBetween(j._normalised_date, a._normalised_date); return a.bucket === j.llm_bucket && a._available_cents >= amount && vendorScore(j._normalised_vendor, a._normalised_vendor) >= 60 && Number.isFinite(delta) && delta <= 45; }).sort((a, b) => vendorScore(j._normalised_vendor, b._normalised_vendor) - vendorScore(j._normalised_vendor, a._normalised_vendor) || daysBetween(j._normalised_date, a._normalised_date) - daysBetween(j._normalised_date, b._normalised_date) || a.accrual_id.localeCompare(b.accrual_id));
   if (!candidates.length) { routed.set(j.deduction_id, { ...j, _route: 'needs_review', _evidence_agrees: false, _evidence_note: 'No same-vendor programme balance can support the proposed bucket and amount.' }); continue; }
   const evidence = candidates[0], before = evidence._available_cents; evidence._available_cents -= amount;
@@ -178,22 +202,9 @@ def strengthen_classification_controls(workflow):
     if "response.id" in parse_code or "_llm_call_id" in parse_code:
         raise ValueError("Provider response identifiers were not removed from the public workflow")
     valid_marker = "const validBuckets = new Set(['Promotional Accrual','Shortage Claim','Price Dispute','Damaged Goods','Chargeback/Other','Unresolvable']);\n"
-    alias_function = r"""function configuredBucket(referenceCode) {
-  const ref = String(referenceCode || '').trim().toUpperCase();
-  const aliases = [
-    [/^(PROMO-|MKTG-REBATE-|TRADE-PROMO-)/, 'Promotional Accrual'],
-    [/^(SHORT-|QTY-SHORT-|MISSING-UNITS-)/, 'Shortage Claim'],
-    [/^(PRC-DISP-|PRICE-ADJ-|PPD-)/, 'Price Dispute'],
-    [/^(DMG-CLAIM-|DAMAGED-RMA-|WHSE-DMG-)/, 'Damaged Goods'],
-    [/^(CHB-|MISC-ADJ-|OTHER-DEDUCT-)/, 'Chargeback/Other']
-  ];
-  const match = aliases.find(([pattern]) => pattern.test(ref));
-  return match ? match[1] : null;
-}
-"""
     if valid_marker not in parse_code:
         raise ValueError("Classification parser bucket marker was not found")
-    parse_code = parse_code.replace(valid_marker, valid_marker + alias_function, 1)
+    parse_code = parse_code.replace(valid_marker, valid_marker + CONFIGURED_BUCKET_JS, 1)
     old_block = """    const p = byId.get(orig.deduction_id);
     if (!p || !validBuckets.has(p.bucket)) {
       results.push({ json: { ...orig, _record_type: 'settlement', _route: 'needs_review', _classification_error: 'missing or invalid bucket for this line', _llm_batch_ref: batchRef, input_tokens: usage.input_tokens, output_tokens: usage.output_tokens, cache_creation_input_tokens: usage.cache_creation_input_tokens, cache_read_input_tokens: usage.cache_read_input_tokens } });
@@ -217,7 +228,7 @@ def strengthen_classification_controls(workflow):
 
 def main() -> int:
     workflow = json.loads(SOURCE.read_text(encoding="utf-8"))
-    workflow["name"] = "Deduction Resolution Workbench V2"
+    workflow["name"] = "Deduction Resolution Workbench V2.1"
     workflow["active"] = False
     workflow.setdefault("settings", {})["availableInMCP"] = False
     workflow.pop("id", None)

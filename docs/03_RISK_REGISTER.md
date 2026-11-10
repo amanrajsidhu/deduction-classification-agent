@@ -2,6 +2,7 @@
 
 | Risk | What could go wrong | Control in this build | Stop condition |
 |---|---|---|---|
+| Category authority confused with funding | A proposed category is accepted because a matching bucket has sufficient balance, despite missing or contradictory category evidence. | Recheck raw reference/category agreement before allocation; unconfigured proposals stop for review. Evaluator separately checks category authority and excludes unsupported value from resolved totals. | An unsupported category is accepted, or a stopped proposal consumes balance. |
 | Misleading metrics | Recall is reported as accuracy again, or a denominator is hidden. | Machine-readable metrics, full confusion matrix, named denominators and regression tests on the V1 defect. | Any public number cannot be recomputed from committed synthetic files. |
 | Missing output | A failed branch is presented as zero records. | Every branch is required; empty branches can only be materialised after exact ID coverage is proven. | Duplicate, unknown or omitted input ID. |
 | False ledger authority | A bucket-level coincidence is presented as transaction proof. | V2 calls the evidence a programme-balance allocation, records before/after balance and never claims document-level proof. | Accepted line lacks a reconciling allocation or sufficient balance. |

@@ -1,0 +1,507 @@
+[
+  {
+    "case_id": "P1",
+    "original_unsent_request": {
+      "model": "claude-sonnet-5",
+      "max_tokens": 16384,
+      "system": "You are a deduction classification assistant. You will be given a batch of marketplace settlement deduction lines that could not be automatically matched to an accrual record on amount, date, and vendor alone.\n\nFor each line, classify it into exactly ONE of these six categories, using the reference code, description, vendor, amount, and date as evidence:\n- Promotional Accrual\n- Shortage Claim\n- Price Dispute\n- Damaged Goods\n- Chargeback/Other\n- Unresolvable (use ONLY when there is genuinely no signal pointing to a specific bucket in the reference code or description - do not guess just to avoid this option)\n\nThe finance team's configured reference aliases are authoritative for this demo: PROMO, MKTG-REBATE and TRADE-PROMO = Promotional Accrual; SHORT, QTY-SHORT and MISSING-UNITS = Shortage Claim; PRC-DISP, PRICE-ADJ and PPD = Price Dispute; DMG-CLAIM, DAMAGED-RMA and WHSE-DMG = Damaged Goods; CHB, MISC-ADJ and OTHER-DEDUCT = Chargeback/Other. These are disclosed configuration, not an AI inference.\n\nCall the submit_classifications tool exactly once with your results. Return exactly one classification per input line, in the same order as given. Do not skip any line.",
+      "tools": [
+        {
+          "name": "submit_classifications",
+          "description": "Submit classification results for this batch of deduction lines.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "classifications": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "deduction_id": {
+                      "type": "string"
+                    },
+                    "bucket": {
+                      "type": "string",
+                      "enum": [
+                        "Promotional Accrual",
+                        "Shortage Claim",
+                        "Price Dispute",
+                        "Damaged Goods",
+                        "Chargeback/Other",
+                        "Unresolvable"
+                      ]
+                    },
+                    "confidence": {
+                      "type": "number"
+                    },
+                    "reasoning": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "deduction_id",
+                    "bucket",
+                    "confidence",
+                    "reasoning"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "classifications"
+            ]
+          }
+        }
+      ],
+      "tool_choice": {
+        "type": "tool",
+        "name": "submit_classifications"
+      },
+      "messages": [
+        {
+          "role": "user",
+          "content": "[\n  {\n    \"deduction_id\": \"P1-D1\",\n    \"transaction_date\": \"2026-10-01\",\n    \"vendor_name\": \"Amazon\",\n    \"amount\": \"90.00\",\n    \"reference_code\": \"RX-31\",\n    \"description\": \"Settlement adjustment\"\n  }\n]"
+        }
+      ]
+    },
+    "experimental_unsent_request": {
+      "model": "claude-sonnet-5",
+      "max_tokens": 16384,
+      "system": "You are a deduction classification assistant. You will be given a batch of marketplace settlement deduction lines that could not be automatically matched to an accrual record on amount, date, and vendor alone.\n\nFor each line, classify it into exactly ONE of these six categories, using the reference code, description, vendor, amount, and date as evidence:\n- Promotional Accrual\n- Shortage Claim\n- Price Dispute\n- Damaged Goods\n- Chargeback/Other\n- Unresolvable (use ONLY when there is genuinely no signal pointing to a specific bucket in the reference code or description - do not guess just to avoid this option)\n\nThe finance team's configured reference aliases are authoritative for this demo: PROMO, MKTG-REBATE and TRADE-PROMO = Promotional Accrual; SHORT, QTY-SHORT and MISSING-UNITS = Shortage Claim; PRC-DISP, PRICE-ADJ and PPD = Price Dispute; DMG-CLAIM, DAMAGED-RMA and WHSE-DMG = Damaged Goods; CHB, MISC-ADJ and OTHER-DEDUCT = Chargeback/Other. These are disclosed configuration, not an AI inference.\n\nCall the submit_classifications tool exactly once with your results. Return exactly one classification per input line, in the same order as given. Do not skip any line.",
+      "tools": [
+        {
+          "name": "submit_classifications",
+          "description": "Submit classification results for this batch of deduction lines.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "classifications": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "deduction_id": {
+                      "type": "string"
+                    },
+                    "bucket": {
+                      "type": "string",
+                      "enum": [
+                        "Promotional Accrual",
+                        "Shortage Claim",
+                        "Price Dispute",
+                        "Damaged Goods",
+                        "Chargeback/Other",
+                        "Unresolvable"
+                      ]
+                    },
+                    "confidence": {
+                      "type": "number"
+                    },
+                    "reasoning": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "deduction_id",
+                    "bucket",
+                    "confidence",
+                    "reasoning"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "classifications"
+            ]
+          }
+        }
+      ],
+      "tool_choice": {
+        "type": "tool",
+        "name": "submit_classifications"
+      },
+      "messages": [
+        {
+          "role": "user",
+          "content": "{\n  \"deduction_lines\": [\n    {\n      \"deduction_id\": \"P1-D1\",\n      \"transaction_date\": \"2026-10-01\",\n      \"vendor_name\": \"Amazon\",\n      \"amount\": \"90.00\",\n      \"reference_code\": \"RX-31\",\n      \"description\": \"Settlement adjustment\"\n    }\n  ],\n  \"guide_sources\": [\n    {\n      \"source_id\": \"GUIDE-A\",\n      \"vendor_name\": \"Amazon\",\n      \"effective_from\": \"2026-10-01\",\n      \"authority\": \"approved\",\n      \"text\": \"RX-31 means Shortage Claim.\",\n      \"mappings\": [\n        {\n          \"reference_code\": \"RX-31\",\n          \"bucket\": \"Shortage Claim\"\n        }\n      ]\n    }\n  ],\n  \"shared_policy\": {\n    \"missing_information\": \"Do not infer a category without applicable evidence; abstain when no usable category signal is supplied.\",\n    \"conflicting_information\": \"Equally authoritative, equally current sources that disagree require human review. Neither wins by appearing first.\",\n    \"citations\": \"Assess whether each cited passage supports its specific claim; assess whether the complete applicable evidence justifies the final decision separately.\",\n    \"authority\": \"Classification and ledger support are separate checks. Preserve every observed answer when evaluating it.\"\n  }\n}"
+        }
+      ]
+    },
+    "lookup_input": {
+      "system_instructions": "You are a deduction classification assistant. You will be given a batch of marketplace settlement deduction lines that could not be automatically matched to an accrual record on amount, date, and vendor alone.\n\nFor each line, classify it into exactly ONE of these six categories, using the reference code, description, vendor, amount, and date as evidence:\n- Promotional Accrual\n- Shortage Claim\n- Price Dispute\n- Damaged Goods\n- Chargeback/Other\n- Unresolvable (use ONLY when there is genuinely no signal pointing to a specific bucket in the reference code or description - do not guess just to avoid this option)\n\nThe finance team's configured reference aliases are authoritative for this demo: PROMO, MKTG-REBATE and TRADE-PROMO = Promotional Accrual; SHORT, QTY-SHORT and MISSING-UNITS = Shortage Claim; PRC-DISP, PRICE-ADJ and PPD = Price Dispute; DMG-CLAIM, DAMAGED-RMA and WHSE-DMG = Damaged Goods; CHB, MISC-ADJ and OTHER-DEDUCT = Chargeback/Other. These are disclosed configuration, not an AI inference.\n\nCall the submit_classifications tool exactly once with your results. Return exactly one classification per input line, in the same order as given. Do not skip any line.",
+      "deduction_lines": [
+        {
+          "deduction_id": "P1-D1",
+          "transaction_date": "2026-10-01",
+          "vendor_name": "Amazon",
+          "amount": "90.00",
+          "reference_code": "RX-31",
+          "description": "Settlement adjustment"
+        }
+      ],
+      "guide_sources": [
+        {
+          "source_id": "GUIDE-A",
+          "vendor_name": "Amazon",
+          "effective_from": "2026-10-01",
+          "authority": "approved",
+          "text": "RX-31 means Shortage Claim.",
+          "mappings": [
+            {
+              "reference_code": "RX-31",
+              "bucket": "Shortage Claim"
+            }
+          ]
+        }
+      ],
+      "shared_policy": {
+        "missing_information": "Do not infer a category without applicable evidence; abstain when no usable category signal is supplied.",
+        "conflicting_information": "Equally authoritative, equally current sources that disagree require human review. Neither wins by appearing first.",
+        "citations": "Assess whether each cited passage supports its specific claim; assess whether the complete applicable evidence justifies the final decision separately.",
+        "authority": "Classification and ledger support are separate checks. Preserve every observed answer when evaluating it."
+      }
+    },
+    "provenance": "Original builder executed from export; contextual envelope is an offline experiment only"
+  },
+  {
+    "case_id": "P2",
+    "original_unsent_request": {
+      "model": "claude-sonnet-5",
+      "max_tokens": 16384,
+      "system": "You are a deduction classification assistant. You will be given a batch of marketplace settlement deduction lines that could not be automatically matched to an accrual record on amount, date, and vendor alone.\n\nFor each line, classify it into exactly ONE of these six categories, using the reference code, description, vendor, amount, and date as evidence:\n- Promotional Accrual\n- Shortage Claim\n- Price Dispute\n- Damaged Goods\n- Chargeback/Other\n- Unresolvable (use ONLY when there is genuinely no signal pointing to a specific bucket in the reference code or description - do not guess just to avoid this option)\n\nThe finance team's configured reference aliases are authoritative for this demo: PROMO, MKTG-REBATE and TRADE-PROMO = Promotional Accrual; SHORT, QTY-SHORT and MISSING-UNITS = Shortage Claim; PRC-DISP, PRICE-ADJ and PPD = Price Dispute; DMG-CLAIM, DAMAGED-RMA and WHSE-DMG = Damaged Goods; CHB, MISC-ADJ and OTHER-DEDUCT = Chargeback/Other. These are disclosed configuration, not an AI inference.\n\nCall the submit_classifications tool exactly once with your results. Return exactly one classification per input line, in the same order as given. Do not skip any line.",
+      "tools": [
+        {
+          "name": "submit_classifications",
+          "description": "Submit classification results for this batch of deduction lines.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "classifications": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "deduction_id": {
+                      "type": "string"
+                    },
+                    "bucket": {
+                      "type": "string",
+                      "enum": [
+                        "Promotional Accrual",
+                        "Shortage Claim",
+                        "Price Dispute",
+                        "Damaged Goods",
+                        "Chargeback/Other",
+                        "Unresolvable"
+                      ]
+                    },
+                    "confidence": {
+                      "type": "number"
+                    },
+                    "reasoning": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "deduction_id",
+                    "bucket",
+                    "confidence",
+                    "reasoning"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "classifications"
+            ]
+          }
+        }
+      ],
+      "tool_choice": {
+        "type": "tool",
+        "name": "submit_classifications"
+      },
+      "messages": [
+        {
+          "role": "user",
+          "content": "[\n  {\n    \"deduction_id\": \"P2-D1\",\n    \"transaction_date\": \"2026-10-01\",\n    \"vendor_name\": \"Amazon\",\n    \"amount\": \"90.00\",\n    \"reference_code\": \"RX-32\",\n    \"description\": \"Settlement adjustment\"\n  }\n]"
+        }
+      ]
+    },
+    "experimental_unsent_request": {
+      "model": "claude-sonnet-5",
+      "max_tokens": 16384,
+      "system": "You are a deduction classification assistant. You will be given a batch of marketplace settlement deduction lines that could not be automatically matched to an accrual record on amount, date, and vendor alone.\n\nFor each line, classify it into exactly ONE of these six categories, using the reference code, description, vendor, amount, and date as evidence:\n- Promotional Accrual\n- Shortage Claim\n- Price Dispute\n- Damaged Goods\n- Chargeback/Other\n- Unresolvable (use ONLY when there is genuinely no signal pointing to a specific bucket in the reference code or description - do not guess just to avoid this option)\n\nThe finance team's configured reference aliases are authoritative for this demo: PROMO, MKTG-REBATE and TRADE-PROMO = Promotional Accrual; SHORT, QTY-SHORT and MISSING-UNITS = Shortage Claim; PRC-DISP, PRICE-ADJ and PPD = Price Dispute; DMG-CLAIM, DAMAGED-RMA and WHSE-DMG = Damaged Goods; CHB, MISC-ADJ and OTHER-DEDUCT = Chargeback/Other. These are disclosed configuration, not an AI inference.\n\nCall the submit_classifications tool exactly once with your results. Return exactly one classification per input line, in the same order as given. Do not skip any line.",
+      "tools": [
+        {
+          "name": "submit_classifications",
+          "description": "Submit classification results for this batch of deduction lines.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "classifications": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "deduction_id": {
+                      "type": "string"
+                    },
+                    "bucket": {
+                      "type": "string",
+                      "enum": [
+                        "Promotional Accrual",
+                        "Shortage Claim",
+                        "Price Dispute",
+                        "Damaged Goods",
+                        "Chargeback/Other",
+                        "Unresolvable"
+                      ]
+                    },
+                    "confidence": {
+                      "type": "number"
+                    },
+                    "reasoning": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "deduction_id",
+                    "bucket",
+                    "confidence",
+                    "reasoning"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "classifications"
+            ]
+          }
+        }
+      ],
+      "tool_choice": {
+        "type": "tool",
+        "name": "submit_classifications"
+      },
+      "messages": [
+        {
+          "role": "user",
+          "content": "{\n  \"deduction_lines\": [\n    {\n      \"deduction_id\": \"P2-D1\",\n      \"transaction_date\": \"2026-10-01\",\n      \"vendor_name\": \"Amazon\",\n      \"amount\": \"90.00\",\n      \"reference_code\": \"RX-32\",\n      \"description\": \"Settlement adjustment\"\n    }\n  ],\n  \"guide_sources\": [\n    {\n      \"source_id\": \"GUIDE-B\",\n      \"vendor_name\": \"Amazon\",\n      \"effective_from\": \"2026-10-01\",\n      \"authority\": \"approved\",\n      \"text\": \"This guide defines RX-34 as Price Dispute. It contains no other reference definitions.\",\n      \"mappings\": [\n        {\n          \"reference_code\": \"RX-34\",\n          \"bucket\": \"Price Dispute\"\n        }\n      ]\n    }\n  ],\n  \"shared_policy\": {\n    \"missing_information\": \"Do not infer a category without applicable evidence; abstain when no usable category signal is supplied.\",\n    \"conflicting_information\": \"Equally authoritative, equally current sources that disagree require human review. Neither wins by appearing first.\",\n    \"citations\": \"Assess whether each cited passage supports its specific claim; assess whether the complete applicable evidence justifies the final decision separately.\",\n    \"authority\": \"Classification and ledger support are separate checks. Preserve every observed answer when evaluating it.\"\n  }\n}"
+        }
+      ]
+    },
+    "lookup_input": {
+      "system_instructions": "You are a deduction classification assistant. You will be given a batch of marketplace settlement deduction lines that could not be automatically matched to an accrual record on amount, date, and vendor alone.\n\nFor each line, classify it into exactly ONE of these six categories, using the reference code, description, vendor, amount, and date as evidence:\n- Promotional Accrual\n- Shortage Claim\n- Price Dispute\n- Damaged Goods\n- Chargeback/Other\n- Unresolvable (use ONLY when there is genuinely no signal pointing to a specific bucket in the reference code or description - do not guess just to avoid this option)\n\nThe finance team's configured reference aliases are authoritative for this demo: PROMO, MKTG-REBATE and TRADE-PROMO = Promotional Accrual; SHORT, QTY-SHORT and MISSING-UNITS = Shortage Claim; PRC-DISP, PRICE-ADJ and PPD = Price Dispute; DMG-CLAIM, DAMAGED-RMA and WHSE-DMG = Damaged Goods; CHB, MISC-ADJ and OTHER-DEDUCT = Chargeback/Other. These are disclosed configuration, not an AI inference.\n\nCall the submit_classifications tool exactly once with your results. Return exactly one classification per input line, in the same order as given. Do not skip any line.",
+      "deduction_lines": [
+        {
+          "deduction_id": "P2-D1",
+          "transaction_date": "2026-10-01",
+          "vendor_name": "Amazon",
+          "amount": "90.00",
+          "reference_code": "RX-32",
+          "description": "Settlement adjustment"
+        }
+      ],
+      "guide_sources": [
+        {
+          "source_id": "GUIDE-B",
+          "vendor_name": "Amazon",
+          "effective_from": "2026-10-01",
+          "authority": "approved",
+          "text": "This guide defines RX-34 as Price Dispute. It contains no other reference definitions.",
+          "mappings": [
+            {
+              "reference_code": "RX-34",
+              "bucket": "Price Dispute"
+            }
+          ]
+        }
+      ],
+      "shared_policy": {
+        "missing_information": "Do not infer a category without applicable evidence; abstain when no usable category signal is supplied.",
+        "conflicting_information": "Equally authoritative, equally current sources that disagree require human review. Neither wins by appearing first.",
+        "citations": "Assess whether each cited passage supports its specific claim; assess whether the complete applicable evidence justifies the final decision separately.",
+        "authority": "Classification and ledger support are separate checks. Preserve every observed answer when evaluating it."
+      }
+    },
+    "provenance": "Original builder executed from export; contextual envelope is an offline experiment only"
+  },
+  {
+    "case_id": "P3",
+    "original_unsent_request": {
+      "model": "claude-sonnet-5",
+      "max_tokens": 16384,
+      "system": "You are a deduction classification assistant. You will be given a batch of marketplace settlement deduction lines that could not be automatically matched to an accrual record on amount, date, and vendor alone.\n\nFor each line, classify it into exactly ONE of these six categories, using the reference code, description, vendor, amount, and date as evidence:\n- Promotional Accrual\n- Shortage Claim\n- Price Dispute\n- Damaged Goods\n- Chargeback/Other\n- Unresolvable (use ONLY when there is genuinely no signal pointing to a specific bucket in the reference code or description - do not guess just to avoid this option)\n\nThe finance team's configured reference aliases are authoritative for this demo: PROMO, MKTG-REBATE and TRADE-PROMO = Promotional Accrual; SHORT, QTY-SHORT and MISSING-UNITS = Shortage Claim; PRC-DISP, PRICE-ADJ and PPD = Price Dispute; DMG-CLAIM, DAMAGED-RMA and WHSE-DMG = Damaged Goods; CHB, MISC-ADJ and OTHER-DEDUCT = Chargeback/Other. These are disclosed configuration, not an AI inference.\n\nCall the submit_classifications tool exactly once with your results. Return exactly one classification per input line, in the same order as given. Do not skip any line.",
+      "tools": [
+        {
+          "name": "submit_classifications",
+          "description": "Submit classification results for this batch of deduction lines.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "classifications": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "deduction_id": {
+                      "type": "string"
+                    },
+                    "bucket": {
+                      "type": "string",
+                      "enum": [
+                        "Promotional Accrual",
+                        "Shortage Claim",
+                        "Price Dispute",
+                        "Damaged Goods",
+                        "Chargeback/Other",
+                        "Unresolvable"
+                      ]
+                    },
+                    "confidence": {
+                      "type": "number"
+                    },
+                    "reasoning": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "deduction_id",
+                    "bucket",
+                    "confidence",
+                    "reasoning"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "classifications"
+            ]
+          }
+        }
+      ],
+      "tool_choice": {
+        "type": "tool",
+        "name": "submit_classifications"
+      },
+      "messages": [
+        {
+          "role": "user",
+          "content": "[\n  {\n    \"deduction_id\": \"P3-D1\",\n    \"transaction_date\": \"2026-10-01\",\n    \"vendor_name\": \"Amazon\",\n    \"amount\": \"90.00\",\n    \"reference_code\": \"RX-35\",\n    \"description\": \"Settlement adjustment\"\n  }\n]"
+        }
+      ]
+    },
+    "experimental_unsent_request": {
+      "model": "claude-sonnet-5",
+      "max_tokens": 16384,
+      "system": "You are a deduction classification assistant. You will be given a batch of marketplace settlement deduction lines that could not be automatically matched to an accrual record on amount, date, and vendor alone.\n\nFor each line, classify it into exactly ONE of these six categories, using the reference code, description, vendor, amount, and date as evidence:\n- Promotional Accrual\n- Shortage Claim\n- Price Dispute\n- Damaged Goods\n- Chargeback/Other\n- Unresolvable (use ONLY when there is genuinely no signal pointing to a specific bucket in the reference code or description - do not guess just to avoid this option)\n\nThe finance team's configured reference aliases are authoritative for this demo: PROMO, MKTG-REBATE and TRADE-PROMO = Promotional Accrual; SHORT, QTY-SHORT and MISSING-UNITS = Shortage Claim; PRC-DISP, PRICE-ADJ and PPD = Price Dispute; DMG-CLAIM, DAMAGED-RMA and WHSE-DMG = Damaged Goods; CHB, MISC-ADJ and OTHER-DEDUCT = Chargeback/Other. These are disclosed configuration, not an AI inference.\n\nCall the submit_classifications tool exactly once with your results. Return exactly one classification per input line, in the same order as given. Do not skip any line.",
+      "tools": [
+        {
+          "name": "submit_classifications",
+          "description": "Submit classification results for this batch of deduction lines.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "classifications": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "deduction_id": {
+                      "type": "string"
+                    },
+                    "bucket": {
+                      "type": "string",
+                      "enum": [
+                        "Promotional Accrual",
+                        "Shortage Claim",
+                        "Price Dispute",
+                        "Damaged Goods",
+                        "Chargeback/Other",
+                        "Unresolvable"
+                      ]
+                    },
+                    "confidence": {
+                      "type": "number"
+                    },
+                    "reasoning": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "deduction_id",
+                    "bucket",
+                    "confidence",
+                    "reasoning"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "classifications"
+            ]
+          }
+        }
+      ],
+      "tool_choice": {
+        "type": "tool",
+        "name": "submit_classifications"
+      },
+      "messages": [
+        {
+          "role": "user",
+          "content": "{\n  \"deduction_lines\": [\n    {\n      \"deduction_id\": \"P3-D1\",\n      \"transaction_date\": \"2026-10-01\",\n      \"vendor_name\": \"Amazon\",\n      \"amount\": \"90.00\",\n      \"reference_code\": \"RX-35\",\n      \"description\": \"Settlement adjustment\"\n    }\n  ],\n  \"guide_sources\": [\n    {\n      \"source_id\": \"GUIDE-C\",\n      \"vendor_name\": \"Amazon\",\n      \"effective_from\": \"2026-10-01\",\n      \"authority\": \"approved\",\n      \"text\": \"RX-35 means Promotional Accrual.\",\n      \"mappings\": [\n        {\n          \"reference_code\": \"RX-35\",\n          \"bucket\": \"Promotional Accrual\"\n        }\n      ]\n    },\n    {\n      \"source_id\": \"GUIDE-D\",\n      \"vendor_name\": \"Amazon\",\n      \"effective_from\": \"2026-10-01\",\n      \"authority\": \"approved\",\n      \"text\": \"RX-35 means Price Dispute.\",\n      \"mappings\": [\n        {\n          \"reference_code\": \"RX-35\",\n          \"bucket\": \"Price Dispute\"\n        }\n      ]\n    }\n  ],\n  \"shared_policy\": {\n    \"missing_information\": \"Do not infer a category without applicable evidence; abstain when no usable category signal is supplied.\",\n    \"conflicting_information\": \"Equally authoritative, equally current sources that disagree require human review. Neither wins by appearing first.\",\n    \"citations\": \"Assess whether each cited passage supports its specific claim; assess whether the complete applicable evidence justifies the final decision separately.\",\n    \"authority\": \"Classification and ledger support are separate checks. Preserve every observed answer when evaluating it.\"\n  }\n}"
+        }
+      ]
+    },
+    "lookup_input": {
+      "system_instructions": "You are a deduction classification assistant. You will be given a batch of marketplace settlement deduction lines that could not be automatically matched to an accrual record on amount, date, and vendor alone.\n\nFor each line, classify it into exactly ONE of these six categories, using the reference code, description, vendor, amount, and date as evidence:\n- Promotional Accrual\n- Shortage Claim\n- Price Dispute\n- Damaged Goods\n- Chargeback/Other\n- Unresolvable (use ONLY when there is genuinely no signal pointing to a specific bucket in the reference code or description - do not guess just to avoid this option)\n\nThe finance team's configured reference aliases are authoritative for this demo: PROMO, MKTG-REBATE and TRADE-PROMO = Promotional Accrual; SHORT, QTY-SHORT and MISSING-UNITS = Shortage Claim; PRC-DISP, PRICE-ADJ and PPD = Price Dispute; DMG-CLAIM, DAMAGED-RMA and WHSE-DMG = Damaged Goods; CHB, MISC-ADJ and OTHER-DEDUCT = Chargeback/Other. These are disclosed configuration, not an AI inference.\n\nCall the submit_classifications tool exactly once with your results. Return exactly one classification per input line, in the same order as given. Do not skip any line.",
+      "deduction_lines": [
+        {
+          "deduction_id": "P3-D1",
+          "transaction_date": "2026-10-01",
+          "vendor_name": "Amazon",
+          "amount": "90.00",
+          "reference_code": "RX-35",
+          "description": "Settlement adjustment"
+        }
+      ],
+      "guide_sources": [
+        {
+          "source_id": "GUIDE-C",
+          "vendor_name": "Amazon",
+          "effective_from": "2026-10-01",
+          "authority": "approved",
+          "text": "RX-35 means Promotional Accrual.",
+          "mappings": [
+            {
+              "reference_code": "RX-35",
+              "bucket": "Promotional Accrual"
+            }
+          ]
+        },
+        {
+          "source_id": "GUIDE-D",
+          "vendor_name": "Amazon",
+          "effective_from": "2026-10-01",
+          "authority": "approved",
+          "text": "RX-35 means Price Dispute.",
+          "mappings": [
+            {
+              "reference_code": "RX-35",
+              "bucket": "Price Dispute"
+            }
+          ]
+        }
+      ],
+      "shared_policy": {
+        "missing_information": "Do not infer a category without applicable evidence; abstain when no usable category signal is supplied.",
+        "conflicting_information": "Equally authoritative, equally current sources that disagree require human review. Neither wins by appearing first.",
+        "citations": "Assess whether each cited passage supports its specific claim; assess whether the complete applicable evidence justifies the final decision separately.",
+        "authority": "Classification and ledger support are separate checks. Preserve every observed answer when evaluating it."
+      }
+    },
+    "provenance": "Original builder executed from export; contextual envelope is an offline experiment only"
+  }
+]

@@ -1,0 +1,10 @@
+{
+  "schema_version": "offline-practical-expectations-1",
+  "basis": "Manually worked from the written synthetic sources and shared policy before user predictions; not derived from comparator implementation or simulated model answers.",
+  "not_independent_holdout": "Teaching follows earlier worked examples. These are development exercises, not independent generalisation evidence or independently reviewed domain labels.",
+  "cases": {
+    "P1": {"expected_decision": "classify", "expected_bucket": "Shortage Claim", "expected_source_ids": ["GUIDE-A"], "citation_support": [false], "simulated_model_decision_correct": false, "desired_model_route": "needs_review", "desired_lookup_route": "classified_verified", "intended_support_id": "P1-A1", "basis": "GUIDE-A explicitly supplies the category. The simulated sentence contradicts it. The wrong category should not be accepted simply because it has a pool."},
+    "P2": {"expected_decision": "abstain", "expected_bucket": null, "expected_source_ids": [], "citation_support": [true], "simulated_model_decision_correct": true, "desired_model_route": "unresolvable", "desired_lookup_route": "unresolvable", "intended_support_id": null, "basis": "The only supplied guide explicitly covers RX-34 and contains no other definitions. No source defines RX-32. The citation truthfully describes that limited source; it does not supply a category for RX-32."},
+    "P3": {"expected_decision": "review", "expected_bucket": null, "expected_source_ids": ["GUIDE-C", "GUIDE-D"], "citation_support": [true], "simulated_model_decision_correct": false, "desired_model_route": "needs_review", "desired_lookup_route": "needs_review", "intended_support_id": null, "basis": "The citation accurately reports GUIDE-C, but GUIDE-D has equal authority/date and contradicts its category. The shared policy requires review; a supported individual sentence does not justify the final decision."}
+  }
+}

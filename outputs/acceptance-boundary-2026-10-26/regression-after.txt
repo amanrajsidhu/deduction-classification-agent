@@ -1,0 +1,13 @@
+test_choice_between_conflicting_guides_cannot_pass_on_balance_alone (test_category_acceptance.CategoryAcceptanceTests.test_choice_between_conflicting_guides_cannot_pass_on_balance_alone) ... ok
+test_configured_category_still_requires_sufficient_eligible_balance (test_category_acceptance.CategoryAcceptanceTests.test_configured_category_still_requires_sufficient_eligible_balance) ... ok
+test_configured_reference_must_agree_with_category_at_boundary (test_category_acceptance.CategoryAcceptanceTests.test_configured_reference_must_agree_with_category_at_boundary) ... ok
+test_correct_but_unconfigured_proposal_also_requires_review (test_category_acceptance.CategoryAcceptanceTests.test_correct_but_unconfigured_proposal_also_requires_review) ... ok
+test_original_simulated_answers_remain_unchanged (test_category_acceptance.CategoryAcceptanceTests.test_original_simulated_answers_remain_unchanged) ... ok
+test_proposal_contradicting_guidance_cannot_pass_on_balance_alone (test_category_acceptance.CategoryAcceptanceTests.test_proposal_contradicting_guidance_cannot_pass_on_balance_alone) ... ok
+test_python_reference_rejects_the_same_two_unsupported_proposals (test_category_acceptance.CategoryAcceptanceTests.test_python_reference_rejects_the_same_two_unsupported_proposals) ... ok
+test_rejected_proposal_cannot_consume_balance_before_a_supported_row (test_category_acceptance.CategoryAcceptanceTests.test_rejected_proposal_cannot_consume_balance_before_a_supported_row) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.718s
+
+OK

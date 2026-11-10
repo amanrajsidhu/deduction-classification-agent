@@ -11,6 +11,16 @@ from datetime import date
 from typing import Any
 
 RULESET_VERSION = "2.0.0"
+CATEGORY_ACCEPTANCE_POLICY = "configured-reference-only-v1"
+
+# Shared with the generated parser and acceptance-boundary JavaScript.
+REFERENCE_ALIAS_PATTERNS = [
+    (r"^(PROMO-|MKTG-REBATE-|TRADE-PROMO-)", "Promotional Accrual"),
+    (r"^(SHORT-|QTY-SHORT-|MISSING-UNITS-)", "Shortage Claim"),
+    (r"^(PRC-DISP-|PRICE-ADJ-|PPD-)", "Price Dispute"),
+    (r"^(DMG-CLAIM-|DAMAGED-RMA-|WHSE-DMG-)", "Damaged Goods"),
+    (r"^(CHB-|MISC-ADJ-|OTHER-DEDUCT-)", "Chargeback/Other"),
+]
 
 VENDOR_ALIAS_PATTERNS = {
     "amazon": ("amazon", "amzn", "mktp"),
@@ -58,6 +68,12 @@ def to_cents(value: float | str) -> int:
     return round(abs(float(value)) * 100)
 
 
+def configured_bucket(reference_code: str | None) -> str | None:
+    reference = str(reference_code or "").strip().upper()
+    return next((bucket for pattern, bucket in REFERENCE_ALIAS_PATTERNS
+                 if re.match(pattern, reference)), None)
+
+
 def allocate_evidence(
     classifications: list[dict[str, Any]],
     accruals: list[dict[str, Any]],
@@ -84,6 +100,9 @@ def allocate_evidence(
     routed: dict[str, dict[str, Any]] = {}
 
     for row in ordered:
+        if row.get("_route") == "needs_review":
+            routed[row["deduction_id"]] = dict(row)
+            continue
         amount_cents = to_cents(row.get("amount", 0))
         settlement_date = row.get("_normalised_date") or row.get("transaction_date")
         settlement_vendor = row.get("_normalised_vendor") or row.get("vendor_name")
@@ -117,6 +136,21 @@ def allocate_evidence(
                     "_evidence_note": "No exact-amount near-date candidate exists in the supplied ledger.",
                 }
             continue
+
+        authoritative_bucket = configured_bucket(row.get("reference_code"))
+        if authoritative_bucket is None or authoritative_bucket != bucket:
+            routed[row["deduction_id"]] = {
+                **row,
+                "_route": "needs_review",
+                "_evidence_agrees": False,
+                "_category_evidence_status": "needs_category_review",
+                "_evidence_note": (
+                    "Category authority is missing or contradicts the proposed bucket; "
+                    "eligible balance alone cannot verify a category. Human review required."
+                ),
+            }
+            continue
+        row = {**row, "_category_evidence_status": "configured_alias_agrees"}
 
         candidates = []
         for pool in pools.values():

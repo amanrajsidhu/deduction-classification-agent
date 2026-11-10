@@ -1,0 +1,23 @@
+{
+  "provenance": "AI-authored simulated answers, not model/provider results; preserve unchanged",
+  "answers": {
+    "P1": {
+      "deduction_id": "P1-D1",
+      "bucket": "Price Dispute",
+      "confidence": 0.9,
+      "reasoning": "RX-31 means Price Dispute [GUIDE-A]."
+    },
+    "P2": {
+      "deduction_id": "P2-D1",
+      "bucket": "Unresolvable",
+      "confidence": 0.4,
+      "reasoning": "GUIDE-B defines RX-34, with no definition for RX-32 [GUIDE-B]."
+    },
+    "P3": {
+      "deduction_id": "P3-D1",
+      "bucket": "Promotional Accrual",
+      "confidence": 0.9,
+      "reasoning": "GUIDE-C maps RX-35 to Promotional Accrual [GUIDE-C]."
+    }
+  }
+}

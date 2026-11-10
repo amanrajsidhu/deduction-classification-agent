@@ -38,10 +38,12 @@ visible without treating AI as an accounting decision-maker.
 2. **Matches clean cases deterministically.** Exact-value, near-date,
    same-counterparty accruals are assigned globally and one-to-one. These cases
    never need an AI classification.
-3. **Applies finance configuration before AI.** Approved reference aliases take
-   priority. When no alias exists, Claude may propose one configured category or
-   abstain as `Unresolvable`.
-4. **Allocates supporting evidence once.** An accepted category must have an
+3. **Establishes category authority.** Approved reference aliases take priority
+   and are rechecked at the acceptance boundary. Other AI-proposed categories go
+   to human review; an eligible balance or a model citation cannot authorise them.
+   The model may abstain as `Unresolvable` from the supplied data. Alias rows still
+   enter the current model batch; this control does not eliminate those calls.
+4. **Checks balance separately and allocates it once.** A configured category must have an
    eligible same-counterparty programme balance in the same bucket, within the
    date window and with sufficient remaining value. Consumed balance cannot be
    reused indefinitely.
@@ -91,13 +93,15 @@ Therefore, 100% accepted-classification precision is **not** 100% AI accuracy.
 ## Why it is designed this way
 
 - **Rules first:** predictable matching should not consume model calls.
-- **AI for bounded ambiguity:** the model proposes inside a configured category
-  set; it cannot create accounting policy.
+- **AI for review assistance:** the model may propose inside a configured category
+  set; current automatic category acceptance requires a configured reference alias.
 - **Ledger evidence over confidence:** a high model score cannot replace an
   eligible source balance.
 - **Human authority:** uncertainty creates a work item, not an automated posting.
 - **Source-bound evaluation:** the evaluator independently checks the raw
   counterparty, date, bucket, intended synthetic support and balance chain.
+- **Category evidence before funding:** the evaluator separately checks configured
+  category authority and excludes unsupported categories from controlled resolved value.
 - **Synthetic and local:** the public proof does not require prospect data or a
   hosted upload.
 

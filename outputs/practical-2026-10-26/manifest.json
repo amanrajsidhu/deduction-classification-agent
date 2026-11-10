@@ -1,0 +1,29 @@
+{
+  "prepared_at_utc": "2026-10-26T14:12:33.690314+00:00",
+  "provider_calls": 0,
+  "provider_spend_gbp": 0,
+  "requests_sent": false,
+  "inputs_sha256": "6938064af5053d0e0abae0f0260ca91513b6709e8fa7595a90b52e760085d58c",
+  "expectations_sha256": "934997dbc0cbe9985b0078dbfe79e9713590c444740949e79ca063e7ba38fb19",
+  "workflow_sha256": "afbe77057fb8b81e4087b0d7ec577036c308b682b48e2612932959fc5d3cafb5",
+  "request_trace_sha256": "cad158728a5fa62aa332f973c8eb1d8300f26f6def9d1ba1f82e208d456f57b8",
+  "observed_answers_sha256": "f1d3155232054cdd97ab32aaaa76d98c54f06df23002689127a134bfb06da3a4",
+  "evidence_parity": [
+    {
+      "case_id": "P1",
+      "same_factual_evidence": true,
+      "evidence_sha256": "286fe6708f84460f936036f57ce33e91809a75a2feb9413fabb012e72765fba6"
+    },
+    {
+      "case_id": "P2",
+      "same_factual_evidence": true,
+      "evidence_sha256": "c2c59427d65b08679583899fdfc51678019afc532a5b92c5e61cef0484283f02"
+    },
+    {
+      "case_id": "P3",
+      "same_factual_evidence": true,
+      "evidence_sha256": "ef5687ead9cf6a16489c8b825582385d70175209e3befe64ee81fe050926e375"
+    }
+  ],
+  "state": "prepared; predictions required before scoring or expected-answer feedback"
+}

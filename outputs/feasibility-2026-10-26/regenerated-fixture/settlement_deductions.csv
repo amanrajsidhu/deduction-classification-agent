@@ -1,0 +1,251 @@
+deduction_id,transaction_date,vendor_name,amount,currency,reference_code,description
+DED-2026-00523,2026-06-11,Walmart Marketplace LLC,-178.92,GBP,NOTE-524,Deduction per remittance advice
+DED-2026-00613,2026-06-08,Walmart Marketplace LLC,-2536.58,GBP,TRADE-PROMO-614,Marketing rebate accrual drawdown
+DED-2026-00361,2026-06-29,WALMART.COM,-399.46,GBP,REF-362,Adjustment applied at settlement
+DED-2026-00601,2026-06-29,Walmart Marketplace LLC,-2196.64,GBP,TRADE-PROMO-602,Aggregated promo rebate - multiple campaigns
+DED-2026-00723,2026-06-15,Amazon EU SARL,-435.72,GBP,MISC-ADJ-724,Other adjustment - multiple references
+DED-2026-00635,2026-06-08,WALMART.COM,-219.99,GBP,SHORT-636,Units short on receipt - claim filed
+DED-2026-00539,2026-06-07,SHOPIFY INC,-397.38,GBP,ADJ-540,Account adjustment - refer to statement
+DED-2026-00345,2026-06-07,Target Plus Marketplace,-1499.48,GBP,NOTE-346,Account adjustment - refer to statement
+DED-2026-00709,2026-06-07,Costco Marketplace,-243.93,GBP,DMG-CLAIM-710,Inbound damage adjustment
+DED-2026-00603,2026-06-02,Target Plus Marketplace,-2629.02,GBP,MKTG-REBATE-604,Marketing rebate accrual drawdown
+DED-2026-00339,2026-06-21,Amazon EU SARL,-1115.33,GBP,SETTLEMENT-340,Deduction per remittance advice
+DED-2026-00445,2026-06-18,SHOPIFY INC,-159.72,GBP,NOTE-446,Adjustment applied at settlement
+DED-2026-00565,2026-06-30,Amazon EU Sarl - UK Branch,-360.29,GBP,ADJ-566,Deduction per remittance advice
+DED-2026-00629,2026-06-24,Costco Marketplace,-1502.1,GBP,TRADE-PROMO-630,Trade promotion funding adjustment
+DED-2026-00525,2026-06-28,COSTCO.COM,-309.33,GBP,NOTE-526,Reimbursement adjustment - see portal
+DED-2026-00527,2026-06-21,Target Corporation,-531.86,GBP,DED-528,Reimbursement adjustment - see portal
+DED-2026-00329,2026-06-25,Amazon Services Europe,-1740.44,GBP,ADJ-330,Deduction per remittance advice
+DED-2026-00337,2026-06-08,SHOPIFY INC,-2402.35,GBP,SETTLEMENT-338,Deduction per remittance advice
+DED-2026-00359,2026-06-12,Target Plus Marketplace,-1222.91,GBP,DED-360,Deduction per remittance advice
+DED-2026-00355,2026-06-09,Shopify Payments,-2348.46,GBP,REF-356,Account adjustment - refer to statement
+DED-2026-00607,2026-06-26,Walmart Marketplace LLC,-1041.92,GBP,MKTG-REBATE-608,Marketing rebate accrual drawdown
+DED-2026-00701,2026-06-14,SHOPIFY INC,-143.41,GBP,DAMAGED-RMA-702,Warehouse damage claim - multiple units
+DED-2026-00681,2026-06-18,Target Corporation,-256.72,GBP,PPD-682,Price protection dispute adjustment
+DED-2026-00821,2026-06-17,Unknown Remitter,-201.7,GBP,ADJ-822,Balance adjustment - no further detail
+DED-2026-00443,2026-06-06,Costco Marketplace,-178.67,GBP,DED-444,Deduction per remittance advice
+DED-2026-00487,2026-06-18,Amazon EU SARL,-406.55,GBP,DED-488,Account adjustment - refer to statement
+DED-2026-00743,2026-06-20,SHOPIFY INC,-635.26,GBP,OTHER-DEDUCT-744,Miscellaneous marketplace deduction
+DED-2026-00307,2026-06-02,Shopify Payments,-2094.33,GBP,SETTLEMENT-308,Reimbursement adjustment - see portal
+DED-2026-00435,2026-06-03,Amazon Services Europe,-226.72,GBP,SETTLEMENT-436,Adjustment applied at settlement
+DED-2026-00437,2026-06-09,AMZN Mktp UK,-44.21,GBP,NOTE-438,Account adjustment - refer to statement
+DED-2026-00703,2026-06-11,Target Plus Marketplace,-192.75,GBP,WHSE-DMG-704,Warehouse damage claim - multiple units
+DED-2026-00621,2026-06-20,Walmart Marketplace LLC,-1773.36,GBP,MKTG-REBATE-622,Marketing rebate accrual drawdown
+DED-2026-00823,2026-06-07,Unknown Remitter,-72.3,GBP,SETTLEMENT-824,Miscellaneous deduction - refer to portal
+DED-2026-00843,2026-06-28,Marketplace Services Ltd,-203.46,GBP,REF-844,Account adjustment - see remittance advice
+DED-2026-00367,2026-06-05,Costco Wholesale Corp,-155.37,GBP,REF-368,Account adjustment - refer to statement
+DED-2026-00407,2026-06-16,Target Corporation,-67.01,GBP,NOTE-408,Account adjustment - refer to statement
+DED-2026-00441,2026-06-07,Shopify Direct Sales,-104.37,GBP,DED-442,Account adjustment - refer to statement
+DED-2026-00405,2026-06-29,Shopify Payments,-60.2,GBP,REF-406,Adjustment applied at settlement
+DED-2026-00819,2026-06-21,Unknown Remitter,-76.09,GBP,DED-820,Account adjustment - see remittance advice
+DED-2026-00381,2026-06-03,Shopify Payments,-198.52,GBP,REF-382,Miscellaneous deduction - see note
+DED-2026-00507,2026-06-07,Target Corporation,-373.21,GBP,REF-508,Miscellaneous deduction - see note
+DED-2026-00587,2026-06-12,Costco Marketplace,-309.52,GBP,REF-588,Miscellaneous deduction - see note
+DED-2026-00425,2026-06-23,WALMART.COM,-113.84,GBP,NOTE-426,Account adjustment - refer to statement
+DED-2026-00417,2026-06-25,Shopify Payments,-105.27,GBP,ADJ-418,Account adjustment - refer to statement
+DED-2026-00419,2026-06-18,COSTCO.COM,-119.45,GBP,NOTE-420,Adjustment applied at settlement
+DED-2026-00573,2026-06-28,WALMART.COM,-171.81,GBP,DED-574,Deduction per remittance advice
+DED-2026-00695,2026-06-09,Target Plus Marketplace,-49.99,GBP,DAMAGED-RMA-696,Inbound damage adjustment
+DED-2026-00397,2026-06-29,Shopify Direct Sales,-98.3,GBP,ADJ-398,Deduction per remittance advice
+DED-2026-00475,2026-06-06,Costco Marketplace,-271.43,GBP,ADJ-476,Deduction per remittance advice
+DED-2026-00827,2026-06-27,Marketplace Services Ltd,-152.71,GBP,REF-828,Miscellaneous deduction - refer to portal
+DED-2026-00685,2026-06-24,Costco Wholesale Corp,-272.78,GBP,PRICE-ADJ-686,Price protection dispute adjustment
+DED-2026-00715,2026-06-10,AMAZON.COM LLC,-39.25,GBP,DMG-CLAIM-716,Inbound damage adjustment
+DED-2026-00543,2026-06-16,Target Plus Marketplace,-486.44,GBP,SETTLEMENT-544,Account adjustment - refer to statement
+DED-2026-00317,2026-06-08,SHOPIFY INC,-2685.46,GBP,SETTLEMENT-318,Deduction per remittance advice
+DED-2026-00305,2026-06-23,Amazon EU SARL,-2499.79,GBP,SETTLEMENT-306,Adjustment applied at settlement
+DED-2026-00687,2026-06-19,Target Plus Marketplace,-124.99,GBP,PRC-DISP-688,Retroactive price adjustment - multiple POs
+DED-2026-00401,2026-06-08,SHOPIFY INC,-115.03,GBP,DED-402,Reimbursement adjustment - see portal
+DED-2026-00501,2026-06-07,SHOPIFY INC,-327.35,GBP,NOTE-502,Miscellaneous deduction - see note
+DED-2026-00749,2026-06-02,COSTCO.COM,-451.47,GBP,MISC-ADJ-750,Aggregated chargeback - see case file
+DED-2026-00453,2026-06-21,Amazon Services Europe,-211.22,GBP,DED-454,Miscellaneous deduction - see note
+DED-2026-00489,2026-06-25,Amazon Services Europe,-193.36,GBP,SETTLEMENT-490,Reimbursement adjustment - see portal
+DED-2026-00735,2026-06-07,Amazon Services Europe,-526.8,GBP,MISC-ADJ-736,Other adjustment - multiple references
+DED-2026-00547,2026-06-02,Target Plus Marketplace,-18.42,GBP,DED-548,Adjustment applied at settlement
+DED-2026-00733,2026-06-25,Target Corporation,-229.19,GBP,CHB-734,Other adjustment - multiple references
+DED-2026-00589,2026-06-08,WALMART.COM,-37.84,GBP,SETTLEMENT-590,Reimbursement adjustment - see portal
+DED-2026-00551,2026-06-25,Walmart Marketplace LLC,-441.38,GBP,SETTLEMENT-552,Miscellaneous deduction - see note
+DED-2026-00717,2026-06-01,TARGET.COM,-200.47,GBP,WHSE-DMG-718,Inbound damage adjustment
+DED-2026-00829,2026-06-06,3rd Party Payment Processor,-148.77,GBP,NOTE-830,Miscellaneous deduction - refer to portal
+DED-2026-00747,2026-06-12,Target Plus Marketplace,-585.49,GBP,CHB-748,Miscellaneous marketplace deduction
+DED-2026-00479,2026-06-09,Costco Wholesale Corp,-289.06,GBP,REF-480,Account adjustment - refer to statement
+DED-2026-00533,2026-06-29,AMAZON.COM LLC,-102.83,GBP,SETTLEMENT-534,Adjustment applied at settlement
+DED-2026-00625,2026-06-02,Costco Wholesale Corp,-815.4,GBP,MKTG-REBATE-626,Trade promotion funding adjustment
+DED-2026-00457,2026-06-26,TARGET.COM,-270.59,GBP,DED-458,Reimbursement adjustment - see portal
+DED-2026-00585,2026-06-07,COSTCO.COM,-207.59,GBP,REF-586,Adjustment applied at settlement
+DED-2026-00711,2026-06-22,Costco Marketplace,-91.37,GBP,WHSE-DMG-712,Inbound damage adjustment
+DED-2026-00645,2026-06-07,Shopify Payments,-134.35,GBP,QTY-SHORT-646,Aggregated shortage adjustment - multiple SKUs
+DED-2026-00609,2026-06-27,Shopify Payments,-2966.78,GBP,MKTG-REBATE-610,Trade promotion funding adjustment
+DED-2026-00495,2026-06-02,Shopify Direct Sales,-464.94,GBP,REF-496,Adjustment applied at settlement
+DED-2026-00831,2026-06-14,Unknown Remitter,-199.38,GBP,DED-832,General ledger adjustment
+DED-2026-00379,2026-06-27,Walmart Inc,-304.97,GBP,SETTLEMENT-380,Deduction per remittance advice
+DED-2026-00599,2026-06-29,AMAZON.COM LLC,-951.44,GBP,NOTE-600,Account adjustment - refer to statement
+DED-2026-00469,2026-06-27,Shopify Direct Sales,-29.21,GBP,SETTLEMENT-470,Account adjustment - refer to statement
+DED-2026-00591,2026-06-12,Walmart Marketplace LLC,-331.78,GBP,REF-592,Adjustment applied at settlement
+DED-2026-00847,2026-06-29,Unknown Remitter,-63.17,GBP,ADJ-848,General ledger adjustment
+DED-2026-00383,2026-06-15,SHOPIFY INC,-250.48,GBP,REF-384,Account adjustment - refer to statement
+DED-2026-00811,2026-06-26,Unknown Remitter,-200.98,GBP,ADJ-812,Balance adjustment - no further detail
+DED-2026-00549,2026-06-21,WALMART.COM,-960.51,GBP,ADJ-550,Account adjustment - refer to statement
+DED-2026-00739,2026-06-25,Shopify Direct Sales,-162.29,GBP,CHB-740,Aggregated chargeback - see case file
+DED-2026-00813,2026-06-13,Unknown Remitter,-40.58,GBP,REF-814,Miscellaneous deduction - refer to portal
+DED-2026-00511,2026-06-21,Walmart Inc,-360.99,GBP,REF-512,Account adjustment - refer to statement
+DED-2026-00639,2026-06-04,TARGET.COM,-128.7,GBP,SHORT-640,Units short on receipt - claim filed
+DED-2026-00409,2026-06-28,TARGET.COM,-414.73,GBP,ADJ-410,Miscellaneous deduction - see note
+DED-2026-00561,2026-06-05,Costco Marketplace,-55.35,GBP,SETTLEMENT-562,Reimbursement adjustment - see portal
+DED-2026-00663,2026-06-30,AMZN Mktp UK,-164.5,GBP,PRC-DISP-664,Retroactive price adjustment - multiple POs
+DED-2026-00433,2026-06-07,Shopify Payments,-192.71,GBP,SETTLEMENT-434,Deduction per remittance advice
+DED-2026-00651,2026-06-26,AMAZON.COM LLC,-189.34,GBP,MISSING-UNITS-652,Inventory receipt shortfall claim
+DED-2026-00837,2026-06-15,Payments Clearing House,-204.47,GBP,REF-838,General ledger adjustment
+DED-2026-00683,2026-06-04,SHOPIFY INC,-118.72,GBP,PRICE-ADJ-684,Price protection dispute adjustment
+DED-2026-00427,2026-06-16,Target Plus Marketplace,-281.39,GBP,DED-428,Reimbursement adjustment - see portal
+DED-2026-00347,2026-06-22,Walmart Marketplace LLC,-1220.83,GBP,NOTE-348,Miscellaneous deduction - see note
+DED-2026-00387,2026-06-22,Amazon EU Sarl - UK Branch,-378.52,GBP,ADJ-388,Account adjustment - refer to statement
+DED-2026-00399,2026-06-27,Target Plus Marketplace,-290.02,GBP,ADJ-400,Account adjustment - refer to statement
+DED-2026-00413,2026-06-02,Shopify Direct Sales,-90.83,GBP,REF-414,Adjustment applied at settlement
+DED-2026-00659,2026-06-30,Amazon EU Sarl - UK Branch,-322.18,GBP,QTY-SHORT-660,Inventory receipt shortfall claim
+DED-2026-00675,2026-06-04,COSTCO.COM,-143.33,GBP,PRICE-ADJ-676,Cost price discrepancy claim
+DED-2026-00727,2026-06-11,AMAZON.COM LLC,-405.63,GBP,OTHER-DEDUCT-728,Miscellaneous marketplace deduction
+DED-2026-00649,2026-06-04,Target Plus Marketplace,-347.23,GBP,SHORT-650,Aggregated shortage adjustment - multiple SKUs
+DED-2026-00505,2026-06-18,SHOPIFY INC,-299.02,GBP,SETTLEMENT-506,Account adjustment - refer to statement
+DED-2026-00331,2026-07-01,AMAZON.COM LLC,-1522.04,GBP,DED-332,Deduction per remittance advice
+DED-2026-00577,2026-06-23,Walmart Marketplace LLC,-907.13,GBP,SETTLEMENT-578,Adjustment applied at settlement
+DED-2026-00385,2026-06-28,SHOPIFY INC,-399.28,GBP,REF-386,Reimbursement adjustment - see portal
+DED-2026-00467,2026-06-05,Shopify Direct Sales,-39.42,GBP,SETTLEMENT-468,Miscellaneous deduction - see note
+DED-2026-00531,2026-06-11,Shopify Direct Sales,-505.54,GBP,REF-532,Miscellaneous deduction - see note
+DED-2026-00313,2026-06-08,Shopify Direct Sales,-2433.25,GBP,REF-314,Miscellaneous deduction - see note
+DED-2026-00617,2026-06-18,Costco Wholesale Corp,-537.95,GBP,MKTG-REBATE-618,Trade promotion funding adjustment
+DED-2026-00521,2026-06-30,TARGET.COM,-69.74,GBP,SETTLEMENT-522,Miscellaneous deduction - see note
+DED-2026-00391,2026-06-09,Amazon EU SARL,-216.52,GBP,NOTE-392,Deduction per remittance advice
+DED-2026-00669,2026-06-20,TARGET.COM,-154.68,GBP,PRC-DISP-670,Price protection dispute adjustment
+DED-2026-00349,2026-06-21,AMAZON.COM LLC,-2214.45,GBP,SETTLEMENT-350,Miscellaneous deduction - see note
+DED-2026-00465,2026-06-14,AMZN Mktp UK,-255.28,GBP,NOTE-466,Adjustment applied at settlement
+DED-2026-00493,2026-06-07,SHOPIFY INC,-63.73,GBP,ADJ-494,Adjustment applied at settlement
+DED-2026-00719,2026-06-18,Walmart Marketplace LLC,-100.61,GBP,DMG-CLAIM-720,Damaged inventory write-down claim
+DED-2026-00365,2026-06-29,Costco Marketplace,-389.23,GBP,ADJ-366,Adjustment applied at settlement
+DED-2026-00707,2026-06-22,AMZN Mktp UK,-172.78,GBP,DAMAGED-RMA-708,Damaged inventory write-down claim
+DED-2026-00439,2026-06-28,Amazon Services Europe,-119.18,GBP,REF-440,Account adjustment - refer to statement
+DED-2026-00509,2026-06-09,TARGET.COM,-169.15,GBP,SETTLEMENT-510,Adjustment applied at settlement
+DED-2026-00553,2026-06-19,COSTCO.COM,-24.33,GBP,ADJ-554,Deduction per remittance advice
+DED-2026-00845,2026-06-15,3rd Party Payment Processor,-321.6,GBP,SETTLEMENT-846,Account adjustment - see remittance advice
+DED-2026-00459,2026-06-07,Walmart Inc,-79.22,GBP,ADJ-460,Miscellaneous deduction - see note
+DED-2026-00461,2026-06-05,Costco Marketplace,-145.24,GBP,ADJ-462,Deduction per remittance advice
+DED-2026-00321,2026-06-10,COSTCO.COM,-1250.25,GBP,DED-322,Miscellaneous deduction - see note
+DED-2026-00567,2026-06-23,Walmart Inc,-114.2,GBP,ADJ-568,Miscellaneous deduction - see note
+DED-2026-00653,2026-06-02,AMAZON.COM LLC,-122.5,GBP,MISSING-UNITS-654,Inventory receipt shortfall claim
+DED-2026-00403,2026-06-19,Walmart Inc,-403.26,GBP,REF-404,Adjustment applied at settlement
+DED-2026-00451,2026-06-15,Target Corporation,-142.15,GBP,REF-452,Reimbursement adjustment - see portal
+DED-2026-00807,2026-06-15,Payments Clearing House,-37.48,GBP,NOTE-808,Miscellaneous deduction - refer to portal
+DED-2026-00691,2026-06-19,AMAZON.COM LLC,-420.49,GBP,DAMAGED-RMA-692,Damaged inventory write-down claim
+DED-2026-00745,2026-06-16,WALMART.COM,-439.74,GBP,OTHER-DEDUCT-746,Miscellaneous marketplace deduction
+DED-2026-00721,2026-06-26,SHOPIFY INC,-819.56,GBP,CHB-722,Miscellaneous marketplace deduction
+DED-2026-00393,2026-05-31,COSTCO.COM,-403.37,GBP,ADJ-394,Adjustment applied at settlement
+DED-2026-00545,2026-06-03,Amazon EU Sarl - UK Branch,-627.07,GBP,SETTLEMENT-546,Miscellaneous deduction - see note
+DED-2026-00537,2026-06-06,Shopify Payments,-172.54,GBP,REF-538,Miscellaneous deduction - see note
+DED-2026-00389,2026-06-24,Target Plus Marketplace,-290.75,GBP,ADJ-390,Reimbursement adjustment - see portal
+DED-2026-00473,2026-06-05,WALMART.COM,-140.83,GBP,ADJ-474,Deduction per remittance advice
+DED-2026-00817,2026-06-13,3rd Party Payment Processor,-201.98,GBP,NOTE-818,Account adjustment - see remittance advice
+DED-2026-00799,2026-06-28,Marketplace Services Ltd,-203.64,GBP,NOTE-800,General ledger adjustment
+DED-2026-00693,2026-06-21,Shopify Direct Sales,-344.62,GBP,DMG-CLAIM-694,Damaged inventory write-down claim
+DED-2026-00369,2026-06-24,Walmart Marketplace LLC,-262.1,GBP,NOTE-370,Adjustment applied at settlement
+DED-2026-00815,2026-06-22,3rd Party Payment Processor,-71.32,GBP,REF-816,Balance adjustment - no further detail
+DED-2026-00597,2026-06-12,SHOPIFY INC,-921.37,GBP,DED-598,Adjustment applied at settlement
+DED-2026-00353,2026-06-13,COSTCO.COM,-1228.86,GBP,SETTLEMENT-354,Reimbursement adjustment - see portal
+DED-2026-00655,2026-06-03,SHOPIFY INC,-101.28,GBP,QTY-SHORT-656,Inventory receipt shortfall claim
+DED-2026-00477,2026-06-05,AMZN Mktp UK,-133.02,GBP,NOTE-478,Miscellaneous deduction - see note
+DED-2026-00637,2026-06-21,TARGET.COM,-255.78,GBP,SHORT-638,Inventory receipt shortfall claim
+DED-2026-00483,2026-06-23,Shopify Direct Sales,-397.79,GBP,DED-484,Miscellaneous deduction - see note
+DED-2026-00679,2026-06-03,AMZN Mktp UK,-261.82,GBP,PRC-DISP-680,Price protection dispute adjustment
+DED-2026-00429,2026-06-03,COSTCO.COM,-95.66,GBP,NOTE-430,Deduction per remittance advice
+DED-2026-00833,2026-06-24,Payments Clearing House,-147.85,GBP,DED-834,Miscellaneous deduction - refer to portal
+DED-2026-00677,2026-06-05,Target Plus Marketplace,-132.05,GBP,PRICE-ADJ-678,Retroactive price adjustment - multiple POs
+DED-2026-00323,2026-06-26,Walmart Marketplace LLC,-1408.8,GBP,REF-324,Miscellaneous deduction - see note
+DED-2026-00741,2026-06-19,Costco Marketplace,-463.08,GBP,MISC-ADJ-742,Other adjustment - multiple references
+DED-2026-00499,2026-06-14,Walmart Marketplace LLC,-95.54,GBP,REF-500,Adjustment applied at settlement
+DED-2026-00311,2026-06-16,Walmart Marketplace LLC,-2125.45,GBP,REF-312,Reimbursement adjustment - see portal
+DED-2026-00583,2026-06-13,AMZN Mktp UK,-856.64,GBP,REF-584,Adjustment applied at settlement
+DED-2026-00631,2026-06-05,SHOPIFY INC,-327.59,GBP,MISSING-UNITS-632,Aggregated shortage adjustment - multiple SKUs
+DED-2026-00559,2026-06-19,Target Corporation,-548.19,GBP,SETTLEMENT-560,Account adjustment - refer to statement
+DED-2026-00579,2026-06-27,COSTCO.COM,-661.46,GBP,NOTE-580,Deduction per remittance advice
+DED-2026-00647,2026-06-28,Shopify Payments,-61.39,GBP,SHORT-648,Units short on receipt - claim filed
+DED-2026-00335,2026-06-28,SHOPIFY INC,-2826.62,GBP,NOTE-336,Deduction per remittance advice
+DED-2026-00485,2026-06-06,Walmart Inc,-184.83,GBP,DED-486,Account adjustment - refer to statement
+DED-2026-00569,2026-06-28,SHOPIFY INC,-859.1,GBP,DED-570,Account adjustment - refer to statement
+DED-2026-00343,2026-06-12,AMZN Mktp UK,-1250.53,GBP,DED-344,Miscellaneous deduction - see note
+DED-2026-00643,2026-06-26,Walmart Marketplace LLC,-416.35,GBP,SHORT-644,Aggregated shortage adjustment - multiple SKUs
+DED-2026-00641,2026-06-20,Walmart Inc,-290.78,GBP,SHORT-642,Inventory receipt shortfall claim
+DED-2026-00395,2026-06-16,Target Plus Marketplace,-334.32,GBP,REF-396,Account adjustment - refer to statement
+DED-2026-00513,2026-06-11,COSTCO.COM,-504.15,GBP,NOTE-514,Reimbursement adjustment - see portal
+DED-2026-00593,2026-06-25,Amazon EU SARL,-284.36,GBP,SETTLEMENT-594,Account adjustment - refer to statement
+DED-2026-00671,2026-06-21,Amazon EU Sarl - UK Branch,-267.82,GBP,PPD-672,Retroactive price adjustment - multiple POs
+DED-2026-00481,2026-06-11,Costco Wholesale Corp,-248.63,GBP,DED-482,Account adjustment - refer to statement
+DED-2026-00737,2026-06-05,WALMART.COM,-243.37,GBP,CHB-738,Aggregated chargeback - see case file
+DED-2026-00301,2026-05-31,Amazon Services Europe,-2502.18,GBP,ADJ-302,Reimbursement adjustment - see portal
+DED-2026-00519,2026-06-18,Walmart Inc,-168.94,GBP,DED-520,Account adjustment - refer to statement
+DED-2026-00449,2026-06-03,AMAZON.COM LLC,-212.81,GBP,REF-450,Reimbursement adjustment - see portal
+DED-2026-00373,2026-06-13,SHOPIFY INC,-190.32,GBP,REF-374,Miscellaneous deduction - see note
+DED-2026-00667,2026-06-11,SHOPIFY INC,-181.05,GBP,PPD-668,Price protection dispute adjustment
+DED-2026-00699,2026-06-24,Costco Marketplace,-70.51,GBP,DMG-CLAIM-700,Warehouse damage claim - multiple units
+DED-2026-00595,2026-06-12,Shopify Direct Sales,-670.72,GBP,ADJ-596,Adjustment applied at settlement
+DED-2026-00563,2026-06-29,TARGET.COM,-915.42,GBP,REF-564,Miscellaneous deduction - see note
+DED-2026-00623,2026-06-21,WALMART.COM,-2248.43,GBP,TRADE-PROMO-624,Trade promotion funding adjustment
+DED-2026-00731,2026-06-03,SHOPIFY INC,-401.2,GBP,MISC-ADJ-732,Other adjustment - multiple references
+DED-2026-00575,2026-06-30,Walmart Marketplace LLC,-412.87,GBP,DED-576,Deduction per remittance advice
+DED-2026-00605,2026-06-10,WALMART.COM,-743.73,GBP,TRADE-PROMO-606,Trade promotion funding adjustment
+DED-2026-00555,2026-06-30,Amazon Services Europe,-681.82,GBP,ADJ-556,Miscellaneous deduction - see note
+DED-2026-00713,2026-06-02,Shopify Payments,-371.67,GBP,DAMAGED-RMA-714,Damaged inventory write-down claim
+DED-2026-00333,2026-06-09,Shopify Payments,-2739.39,GBP,SETTLEMENT-334,Adjustment applied at settlement
+DED-2026-00535,2026-06-28,AMAZON.COM LLC,-89.06,GBP,NOTE-536,Adjustment applied at settlement
+DED-2026-00619,2026-06-27,Target Plus Marketplace,-2078.08,GBP,MKTG-REBATE-620,Aggregated promo rebate - multiple campaigns
+DED-2026-00627,2026-06-29,Amazon EU Sarl - UK Branch,-762.19,GBP,PROMO-628,Trade promotion funding adjustment
+DED-2026-00515,2026-06-02,AMZN Mktp UK,-266.42,GBP,SETTLEMENT-516,Reimbursement adjustment - see portal
+DED-2026-00423,2026-06-30,WALMART.COM,-178.7,GBP,DED-424,Account adjustment - refer to statement
+DED-2026-00325,2026-06-13,AMAZON.COM LLC,-761.14,GBP,NOTE-326,Miscellaneous deduction - see note
+DED-2026-00363,2026-06-07,Target Corporation,-295.97,GBP,DED-364,Miscellaneous deduction - see note
+DED-2026-00455,2026-06-01,Amazon EU Sarl - UK Branch,-139.75,GBP,REF-456,Miscellaneous deduction - see note
+DED-2026-00839,2026-06-06,3rd Party Payment Processor,-150.27,GBP,NOTE-840,Miscellaneous deduction - refer to portal
+DED-2026-00805,2026-06-27,Unknown Remitter,-43.11,GBP,ADJ-806,Miscellaneous deduction - refer to portal
+DED-2026-00697,2026-06-28,Target Corporation,-37.85,GBP,WHSE-DMG-698,Damaged inventory write-down claim
+DED-2026-00357,2026-06-08,Amazon EU SARL,-2718.86,GBP,DED-358,Deduction per remittance advice
+DED-2026-00517,2026-06-03,SHOPIFY INC,-71.99,GBP,NOTE-518,Miscellaneous deduction - see note
+DED-2026-00571,2026-06-23,SHOPIFY INC,-164.14,GBP,ADJ-572,Account adjustment - refer to statement
+DED-2026-00611,2026-06-11,Target Corporation,-2515.48,GBP,MKTG-REBATE-612,Aggregated promo rebate - multiple campaigns
+DED-2026-00673,2026-06-08,COSTCO.COM,-154.06,GBP,PRICE-ADJ-674,Cost price discrepancy claim
+DED-2026-00581,2026-06-08,Walmart Marketplace LLC,-168.64,GBP,REF-582,Miscellaneous deduction - see note
+DED-2026-00377,2026-06-29,AMZN Mktp UK,-99.47,GBP,NOTE-378,Adjustment applied at settlement
+DED-2026-00411,2026-06-08,Target Plus Marketplace,-80.86,GBP,DED-412,Miscellaneous deduction - see note
+DED-2026-00431,2026-06-12,AMZN Mktp UK,-31.0,GBP,SETTLEMENT-432,Reimbursement adjustment - see portal
+DED-2026-00309,2026-06-02,AMAZON.COM LLC,-752.97,GBP,REF-310,Miscellaneous deduction - see note
+DED-2026-00835,2026-06-26,Payments Clearing House,-80.16,GBP,DED-836,Balance adjustment - no further detail
+DED-2026-00303,2026-06-09,WALMART.COM,-876.76,GBP,REF-304,Miscellaneous deduction - see note
+DED-2026-00615,2026-06-26,Costco Marketplace,-3111.4,GBP,MKTG-REBATE-616,Aggregated promo rebate - multiple campaigns
+DED-2026-00529,2026-06-01,Shopify Direct Sales,-372.27,GBP,DED-530,Miscellaneous deduction - see note
+DED-2026-00801,2026-06-26,Marketplace Services Ltd,-100.8,GBP,SETTLEMENT-802,Miscellaneous deduction - refer to portal
+DED-2026-00661,2026-06-16,AMZN Mktp UK,-42.71,GBP,PRICE-ADJ-662,Price protection dispute adjustment
+DED-2026-00689,2026-06-04,COSTCO.COM,-89.28,GBP,PPD-690,Cost price discrepancy claim
+DED-2026-00809,2026-06-10,Payments Clearing House,-74.23,GBP,SETTLEMENT-810,Balance adjustment - no further detail
+DED-2026-00803,2026-06-17,3rd Party Payment Processor,-76.55,GBP,ADJ-804,General ledger adjustment
+DED-2026-00657,2026-06-15,Shopify Direct Sales,-273.49,GBP,SHORT-658,Units short on receipt - claim filed
+DED-2026-00541,2026-06-23,Walmart Marketplace LLC,-627.04,GBP,NOTE-542,Miscellaneous deduction - see note
+DED-2026-00725,2026-06-23,Costco Marketplace,-568.7,GBP,MISC-ADJ-726,Miscellaneous marketplace deduction
+DED-2026-00447,2026-06-27,Costco Wholesale Corp,-141.01,GBP,DED-448,Account adjustment - refer to statement
+DED-2026-00319,2026-06-26,Amazon Services Europe,-2675.7,GBP,SETTLEMENT-320,Adjustment applied at settlement
+DED-2026-00371,2026-06-23,Target Corporation,-270.46,GBP,REF-372,Miscellaneous deduction - see note
+DED-2026-00375,2026-06-18,WALMART.COM,-237.67,GBP,DED-376,Adjustment applied at settlement
+DED-2026-00705,2026-06-25,Amazon EU Sarl - UK Branch,-113.34,GBP,DMG-CLAIM-706,Damaged inventory write-down claim
+DED-2026-00471,2026-07-01,Amazon EU SARL,-239.76,GBP,NOTE-472,Reimbursement adjustment - see portal
+DED-2026-00633,2026-06-09,Costco Wholesale Corp,-281.4,GBP,MISSING-UNITS-634,Inventory receipt shortfall claim
+DED-2026-00665,2026-06-03,Target Corporation,-198.73,GBP,PRICE-ADJ-666,Price protection dispute adjustment
+DED-2026-00729,2026-06-28,Target Corporation,-100.42,GBP,CHB-730,Miscellaneous marketplace deduction
+DED-2026-00351,2026-06-24,Shopify Direct Sales,-1160.99,GBP,REF-352,Adjustment applied at settlement
+DED-2026-00825,2026-06-05,Marketplace Services Ltd,-65.0,GBP,REF-826,Account adjustment - see remittance advice
+DED-2026-00463,2026-06-14,TARGET.COM,-96.18,GBP,ADJ-464,Deduction per remittance advice
+DED-2026-00315,2026-06-14,Shopify Direct Sales,-1095.2,GBP,REF-316,Adjustment applied at settlement
+DED-2026-00415,2026-06-28,COSTCO.COM,-84.93,GBP,SETTLEMENT-416,Adjustment applied at settlement
+DED-2026-00841,2026-06-21,Payments Clearing House,-322.5,GBP,REF-842,Account adjustment - see remittance advice
+DED-2026-00341,2026-06-02,TARGET.COM,-2809.35,GBP,ADJ-342,Adjustment applied at settlement
+DED-2026-00497,2026-06-20,Amazon EU SARL,-69.32,GBP,DED-498,Adjustment applied at settlement
+DED-2026-00421,2026-06-29,SHOPIFY INC,-197.89,GBP,ADJ-422,Miscellaneous deduction - see note
+DED-2026-00491,2026-06-19,AMZN Mktp UK,-275.78,GBP,REF-492,Adjustment applied at settlement
+DED-2026-00557,2026-06-17,WALMART.COM,-49.76,GBP,ADJ-558,Deduction per remittance advice
+DED-2026-00503,2026-06-20,Amazon EU Sarl - UK Branch,-76.4,GBP,SETTLEMENT-504,Miscellaneous deduction - see note
+DED-2026-00327,2026-06-21,Target Plus Marketplace,-1214.21,GBP,ADJ-328,Account adjustment - refer to statement
